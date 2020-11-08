@@ -55,8 +55,10 @@ protected static final Connection conn = CONNECTION.SpectacleConnection.getInsta
 		return new ReservationDAO(conn);
 	}
 	
+	
 	public DAO<Spectacle> getSpectacleDAO(){
 		return new SpectacleDAO(conn);
 	}
+
 
 }

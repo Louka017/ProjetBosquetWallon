@@ -30,7 +30,7 @@ public abstract class AbstractDAOFactory {
 	
 	public abstract DAO<Reservation> getReservationDAO();
 	
-	public abstract DAO<Spectacle> getCSpectacleDAO();
+	public abstract DAO<Spectacle> getSpectacleDAO();
 	
 	
 	
