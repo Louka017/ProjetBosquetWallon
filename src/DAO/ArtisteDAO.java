@@ -16,7 +16,18 @@ public class ArtisteDAO extends DAO<Artiste> {
 	
 	//Fonctions
 	public  boolean create(Artiste obj) {
-		
+		try {
+			
+		String ajout = "INSERT INTO Personne (Nom,Prenom,Adresse,Discriminator,Email,MotDePasse) "
+				+ "values ('" + obj.getNom() + "','" + obj.getPrenom() + "','" + obj.getAdresse() + "','Artiste','"+ obj.getEmail() + "','" + obj.getPassword() + "');";
+		System.out.println(ajout);
+		connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+				.executeUpdate(ajout);
+		}
+		catch(Exception e) {
+			return false;
+		}
+		return true;
 	}
 	
 	public  boolean delete(Artiste obj) {
