@@ -27,7 +27,7 @@ public class SpectacleDAO extends DAO<Spectacle> {
 	}
 	
 	public Spectacle find(int Id) {
-	
+		
 	}
 
 }
