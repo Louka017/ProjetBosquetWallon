@@ -27,7 +27,7 @@ public class OrganisateurDAO extends DAO<Organisateur> {
 	}
 	
 	public Organisateur find(int Id) {
-		
+		;
 	}
 
 }

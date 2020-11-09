@@ -27,7 +27,7 @@ public class CategorieDAO extends DAO<Categorie> {
 	}
 	
 	public  Categorie find(int Id) {
-		
+		;
 	}
 
 }
