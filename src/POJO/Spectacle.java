@@ -4,12 +4,14 @@ import java.io.Serializable;
 import java.util.*;
 
 import DAO.AbstractDAOFactory;
+import DAO.DAO;
 
 public class Spectacle implements Serializable{
 
 	//Attributs
 	private static final long serialVersionUID = -3582331972992320638L;
 	AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+	DAO<Spectacle> dao = adf.getSpectacleDAO();
 	private String titre;
 	private int nbrPlaceParClient;
 	private Configuration configuration;

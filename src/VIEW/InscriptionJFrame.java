@@ -1,6 +1,5 @@
 package VIEW;
-import java.sql.Connection;
-import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,14 +8,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import DAO.AbstractDAOFactory;
-import DAO.*;
+
 import POJO.*;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -31,7 +28,10 @@ public class InscriptionJFrame extends JFrame {
 	private JTextField Prenom;
 	private JTextField Email;
 	private JTextField Mdp;
-	private JTextField Adresse;
+	private JTextField Rue;
+	private JTextField Numero;
+	private JTextField CodePostal;
+	private JTextField Ville;
 	
 
 	
@@ -42,7 +42,7 @@ public class InscriptionJFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InscriptionJFrame frame = new InscriptionJFrame();
+					LoginJFrame frame = new LoginJFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -68,17 +68,17 @@ public class InscriptionJFrame extends JFrame {
 		contentPane.add(lblNom);
 		
 		Nom = new JTextField();
-		Nom.setBounds(75, 21, 111, 19);
+		Nom.setBounds(54, 21, 111, 19);
 		contentPane.add(Nom);
 		Nom.setColumns(10);
 		
 		//PRENOM
 		JLabel lblPrenom = new JLabel("Pr\u00E9nom : ");
-		lblPrenom.setBounds(217, 24, 73, 13);
+		lblPrenom.setBounds(232, 24, 73, 13);
 		contentPane.add(lblPrenom);
 		
 		Prenom = new JTextField();
-		Prenom.setBounds(300, 21, 111, 19);
+		Prenom.setBounds(315, 21, 111, 19);
 		contentPane.add(Prenom);
 		Prenom.setColumns(10);
 		
@@ -88,65 +88,107 @@ public class InscriptionJFrame extends JFrame {
 		contentPane.add(lblEmail);
 		
 		Email = new JTextField();
-		Email.setBounds(75, 64, 111, 19);
+		Email.setBounds(54, 64, 138, 19);
 		contentPane.add(Email);
 		Email.setColumns(10);
 		
 		//MOT DE PASSE
 		JLabel lblMdp = new JLabel("Mot de passe :");
-		lblMdp.setBounds(202, 67, 96, 13);
+		lblMdp.setBounds(217, 67, 96, 13);
 		contentPane.add(lblMdp);
 		
 		Mdp = new JTextField();
-		Mdp.setBounds(300, 64, 111, 19);
+		Mdp.setBounds(315, 64, 111, 19);
 		contentPane.add(Mdp);
 		Mdp.setColumns(10);
 		
-		//ADRESSE
-		JLabel lblAdresse = new JLabel("Adresse : ");
-		lblAdresse.setBounds(10, 101, 66, 13);
-		contentPane.add(lblAdresse);
+		//RUE
+		JLabel lblRue = new JLabel("Rue : ");
+		lblRue.setBounds(10, 101, 66, 13);
+		contentPane.add(lblRue);
 		
-		Adresse = new JTextField();
-		Adresse.setBounds(75, 98, 336, 19);
-		contentPane.add(Adresse);
-		Adresse.setColumns(10);
+		Rue = new JTextField();
+		Rue.setBounds(54, 98, 111, 19);
+		contentPane.add(Rue);
+		Rue.setColumns(10);
+		
+		//NUMERO
+		JLabel lblNumero = new JLabel("n\u00B0 : ");
+		lblNumero.setBounds(265, 140, 40, 13);
+		contentPane.add(lblNumero);
+		
+		Numero = new JTextField();
+		Numero.setBounds(313, 137, 45, 19);
+		contentPane.add(Numero);
+		Numero.setColumns(10);
+		
+		//CODE POSTAL
+		JLabel lblCp = new JLabel("Code Postal : ");
+		lblCp.setBounds(220, 101, 70, 13);
+		contentPane.add(lblCp);
+		
+		CodePostal = new JTextField();
+		CodePostal.setBounds(315, 98, 111, 19);
+		contentPane.add(CodePostal);
+		CodePostal.setColumns(10);
+		
+		//VILLE
+		JLabel lblVille = new JLabel("Ville :");
+		lblVille.setBounds(10, 140, 45, 13);
+		contentPane.add(lblVille);
+		
+		Ville = new JTextField();
+		Ville.setBounds(54, 137, 111, 19);
+		contentPane.add(Ville);
+		Ville.setColumns(10);
 		
 		//CHOIX
 		JLabel lblChoix = new JLabel("Vous \u00EAtes :");
-		lblChoix.setBounds(10, 139, 66, 13);
+		lblChoix.setBounds(10, 184, 66, 13);
 		contentPane.add(lblChoix);
 		
 			//CLIENT
 			JRadioButton rdbtnClient = new JRadioButton("Client");
 			rdbtnClient.setSelected(true);
-			rdbtnClient.setBounds(89, 135, 103, 21);
+			rdbtnClient.setBounds(89, 180, 103, 21);
 			contentPane.add(rdbtnClient);
 			
 			//ORGANISATEUR
 			JRadioButton rdbtnOrganisateur = new JRadioButton("Organisateur");
-			rdbtnOrganisateur.setBounds(89, 158, 103, 21);
+			rdbtnOrganisateur.setBounds(89, 203, 103, 21);
 			contentPane.add(rdbtnOrganisateur);
+			
+			//ARTISTE
+			JRadioButton rdbtnArtiste = new JRadioButton("Artiste");
+			rdbtnArtiste.setBounds(89, 226, 103, 21);
+			contentPane.add(rdbtnArtiste);
 			
 			
 		ButtonGroup bgroup = new ButtonGroup();
 		bgroup.add(rdbtnClient);
 		bgroup.add(rdbtnOrganisateur);
+		bgroup.add(rdbtnArtiste);
 
 			
 		//BOUTTON INSCRIPTION
 		JButton btnInscription = new JButton("S'inscrire");
-		btnInscription.setBounds(144, 200, 164, 31);
+		btnInscription.setBounds(237, 203, 164, 31);
 		contentPane.add(btnInscription);
+		
+
+		
+		
+		
 		btnInscription.addActionListener(new ActionListener() 
 		{
-			//@SuppressWarnings("null")
+
 			public void actionPerformed(ActionEvent e)
-			{				
+			{		
+				
 				if(rdbtnClient.isSelected())
 				{
-					Client c = new Client(Nom.getText(),Prenom.getText(),Adresse.getText(),Email.getText(),Mdp.getText());
-					if(c.verifierChamps(Nom.getText(), Prenom.getText(),Adresse.getText(),Email.getText(),Mdp.getText())) 
+					Client c = new Client(Nom.getText(),Prenom.getText(),Rue.getText(),Integer.parseInt(Numero.getText()),Ville.getText(),Integer.parseInt(CodePostal.getText()),Email.getText(),Mdp.getText());
+					if(c.verifierChamps(Nom.getText(),Prenom.getText(),Rue.getText(),Integer.parseInt(Numero.getText()),Ville.getText(),Integer.parseInt(CodePostal.getText()),Email.getText(),Mdp.getText())) 
 					{	
 						c.ajoutClient();
 						JOptionPane.showMessageDialog(null, "Client creer");
@@ -159,8 +201,8 @@ public class InscriptionJFrame extends JFrame {
 				
 				if(rdbtnOrganisateur.isSelected())
 				{
-					Organisateur o = new Organisateur(Nom.getText(),Prenom.getText(),Adresse.getText(),Email.getText(),Mdp.getText());
-					if(o.verifierChamps(Nom.getText(), Prenom.getText(),Adresse.getText(),Email.getText(),Mdp.getText())) 
+					Organisateur o = new Organisateur(Nom.getText(),Prenom.getText(),Rue.getText(),Integer.parseInt(Numero.getText()),Ville.getText(),Integer.parseInt(CodePostal.getText()),Email.getText(),Mdp.getText());
+					if(o.verifierChamps(Nom.getText(),Prenom.getText(),Rue.getText(),Integer.parseInt(Numero.getText()),Ville.getText(),Integer.parseInt(CodePostal.getText()),Email.getText(),Mdp.getText())) 
 					{	
 						o.ajoutOrganisateur();
 						JOptionPane.showMessageDialog(null, "Organisateur creer");
@@ -168,6 +210,20 @@ public class InscriptionJFrame extends JFrame {
 					else 
 					{
 						JOptionPane.showMessageDialog(null, "Erreur. L'organisateur n'a pas été créer ! ");
+					}
+				}
+				
+				if(rdbtnArtiste.isSelected())
+				{
+					Artiste a = new Artiste(Nom.getText(),Prenom.getText(),Rue.getText(),Integer.parseInt(Numero.getText()),Ville.getText(),Integer.parseInt(CodePostal.getText()),Email.getText(),Mdp.getText());
+					if(a.verifierChamps(Nom.getText(),Prenom.getText(),Rue.getText(),Integer.parseInt(Numero.getText()),Ville.getText(),Integer.parseInt(CodePostal.getText()),Email.getText(),Mdp.getText())) 
+					{	
+						a.ajoutArtiste();
+						JOptionPane.showMessageDialog(null, "Artiste creer");
+					}
+					else 
+					{
+						JOptionPane.showMessageDialog(null, "Erreur. L'artiste n'a pas été créer ! ");
 					}
 				}
 			}

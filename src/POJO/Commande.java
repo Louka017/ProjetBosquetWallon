@@ -4,12 +4,14 @@ import java.io.Serializable;
 import java.util.List;
 
 import DAO.AbstractDAOFactory;
+import DAO.DAO;
 
 public class Commande implements Serializable {
 
 	//Attributs
 	private static final long serialVersionUID = -7833218115888236671L;
 	AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+	DAO<Commande> dao = adf.getCommandeDAO();
 	private String modePayement;
 	private String modeLivraison;
 	private int cout;

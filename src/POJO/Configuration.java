@@ -2,10 +2,15 @@ package POJO;
 
 import java.io.Serializable;
 
+import DAO.AbstractDAOFactory;
+import DAO.DAO;
+
 public class Configuration implements Serializable {
 
 	//Attributs
 	private static final long serialVersionUID = -4973296506746715437L;
+	AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+	DAO<Configuration> dao = adf.getConfigurationDAO();
 	private String type;
 	private String description;
 	private Categorie categorie;

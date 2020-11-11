@@ -18,7 +18,7 @@ public class AcceuilJFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AcceuilJFrame frame = new AcceuilJFrame();
+					LoginJFrame frame = new LoginJFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
