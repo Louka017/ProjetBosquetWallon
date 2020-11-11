@@ -15,19 +15,20 @@ public class PlanningSalleDAO extends DAO<PlanningSalle> {
 	
 	//Fonctions
 	public  boolean create(PlanningSalle obj) {
-		
+		return false;
 	}
 	
 	public  boolean delete(PlanningSalle obj) {
-		
+		return false;
 	}
 	
 	public  boolean update(PlanningSalle obj) {
-		
+		return false;
 	}
 	
 	public PlanningSalle find(int Id) {
-		
+		PlanningSalle s = null;
+		return s;
 	}
 
 }

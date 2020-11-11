@@ -7,17 +7,19 @@ import POJO.*;
 
 public class ClientDAO extends DAO<Client> {
 	
+
 	//Constructeur
 	public ClientDAO(Connection conn) {
 		super(conn);
 	}
-	
+
+
 	//Fonctions
 	public  boolean create(Client obj) {
 		
 		try {
 		String create = "INSERT INTO Personne (Nom,Prenom,Adresse,Discriminator,Email,MotDePasse) "
-				+ "values ('" + obj.getNom() + "','" + obj.getPrenom()+"','"+obj.getAdresse()+"','Client',"+ obj.getEmail()+"','" + obj.getPassword()+ "');";
+				+ "values ('" + obj.getNom() + "','" + obj.getPrenom()+"','"+obj.getAdresse()+"','Client','"+ obj.getEmail()+"','" + obj.getPassword()+ "');";
 		System.out.println(create);
 		connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY).executeUpdate(create);
 		}

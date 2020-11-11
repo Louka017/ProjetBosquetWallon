@@ -15,19 +15,20 @@ public class PersonneDAO extends DAO<Personne> {
 	
 	//Fonctions
 	public  boolean create(Personne obj) {
-		
+		return false;
 	}
 	
 	public  boolean delete(Personne obj) {
-		
+		return false;
 	}
 	
 	public  boolean update(Personne obj) {
-		
+		return false;
 	}
 	
 	public Personne find(int Id) {
-		
+		Personne s = null;
+		return s;
 	}
 
 }

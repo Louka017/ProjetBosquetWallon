@@ -15,19 +15,20 @@ public class CategorieDAO extends DAO<Categorie> {
 	
 	//Fonctions
 	public  boolean create(Categorie obj) {
-		
+		return false;
 	}
 	
 	public  boolean delete(Categorie obj) {
-		
+		return false;
 	}
 	
 	public  boolean update(Categorie obj) {
-		
+		return false;
 	}
 	
 	public  Categorie find(int Id) {
-		
+		Categorie s = null;
+		return s;
 	}
 
 }

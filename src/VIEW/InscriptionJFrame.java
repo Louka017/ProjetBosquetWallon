@@ -1,12 +1,20 @@
 package VIEW;
-
+import java.sql.Connection;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import DAO.AbstractDAOFactory;
+import DAO.*;
+import POJO.*;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JRadioButton;
@@ -15,13 +23,18 @@ import javax.swing.JButton;
 
 public class InscriptionJFrame extends JFrame {
 
+ static final long serialVersionUID = 2538226678514688194L;
+ 
+	//Attributs
 	private JPanel contentPane;
 	private JTextField Nom;
 	private JTextField Prenom;
 	private JTextField Email;
 	private JTextField Mdp;
 	private JTextField Adresse;
+	
 
+	
 	/**
 	 * Launch the application.
 	 */
@@ -115,21 +128,49 @@ public class InscriptionJFrame extends JFrame {
 			rdbtnOrganisateur.setBounds(89, 158, 103, 21);
 			contentPane.add(rdbtnOrganisateur);
 			
-			//GESTIONNAIRE
-			JRadioButton rdbtnGestionnaire = new JRadioButton("Gestionnaire");
-			rdbtnGestionnaire.setBounds(89, 182, 103, 21);
-			contentPane.add(rdbtnGestionnaire);
-		
 			
-			ButtonGroup bgroup = new ButtonGroup();
-			bgroup.add(rdbtnClient);
-			bgroup.add(rdbtnOrganisateur);
-			bgroup.add(rdbtnGestionnaire);
-			
-			//BOUTTON INSCRIPTION
-		JButton btnInscription = new JButton("S'inscrire");
-		btnInscription.setBounds(153, 222, 164, 31);
-		contentPane.add(btnInscription);
-	}
+		ButtonGroup bgroup = new ButtonGroup();
+		bgroup.add(rdbtnClient);
+		bgroup.add(rdbtnOrganisateur);
 
+			
+		//BOUTTON INSCRIPTION
+		JButton btnInscription = new JButton("S'inscrire");
+		btnInscription.setBounds(144, 200, 164, 31);
+		contentPane.add(btnInscription);
+		btnInscription.addActionListener(new ActionListener() 
+		{
+			//@SuppressWarnings("null")
+			public void actionPerformed(ActionEvent e)
+			{				
+				if(rdbtnClient.isSelected())
+				{
+					Client c = new Client(Nom.getText(),Prenom.getText(),Adresse.getText(),Email.getText(),Mdp.getText());
+					if(c.verifierChamps(Nom.getText(), Prenom.getText(),Adresse.getText(),Email.getText(),Mdp.getText())) 
+					{	
+						c.ajoutClient();
+						JOptionPane.showMessageDialog(null, "Client creer");
+					}
+					else 
+					{
+						JOptionPane.showMessageDialog(null, "Erreur. Le Client n'a pas été créer ! ");
+					}
+				}
+				
+				if(rdbtnOrganisateur.isSelected())
+				{
+					Organisateur o = new Organisateur(Nom.getText(),Prenom.getText(),Adresse.getText(),Email.getText(),Mdp.getText());
+					if(o.verifierChamps(Nom.getText(), Prenom.getText(),Adresse.getText(),Email.getText(),Mdp.getText())) 
+					{	
+						o.ajoutOrganisateur();
+						JOptionPane.showMessageDialog(null, "Organisateur creer");
+					}
+					else 
+					{
+						JOptionPane.showMessageDialog(null, "Erreur. L'organisateur n'a pas été créer ! ");
+					}
+				}
+			}
+		});	
+	}
 }

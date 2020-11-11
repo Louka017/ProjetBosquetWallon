@@ -3,10 +3,13 @@ package POJO;
 import java.io.Serializable;
 import java.util.List;
 
+import DAO.AbstractDAOFactory;
+
 public class Commande implements Serializable {
 
 	//Attributs
 	private static final long serialVersionUID = -7833218115888236671L;
+	AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 	private String modePayement;
 	private String modeLivraison;
 	private int cout;

@@ -15,19 +15,20 @@ public class ReservationDAO extends DAO<Reservation> {
 	
 	//Fonctions
 	public  boolean create(Reservation obj) {
-		
+		return false;
 	}
 	
 	public  boolean delete(Reservation obj) {
-		
+		return false;
 	}
 	
 	public  boolean update(Reservation obj) {
-		
+		return false;
 	}
 	
 	public Reservation find(int Id) {
-		
+		Reservation s = null;
+		return s;
 	}
 
 }

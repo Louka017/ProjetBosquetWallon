@@ -3,10 +3,13 @@ package POJO;
 import java.io.Serializable;
 import java.util.*;
 
+import DAO.AbstractDAOFactory;
+
 public class PlanningSalle implements Serializable{
 
 	//Attributs
 	private static final long serialVersionUID = 8581140104258101507L;
+	AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 	private Date dateDebutRes;
 	private Date dateFinRes;
 	private List<Spectacle> spectacle;

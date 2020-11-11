@@ -15,19 +15,20 @@ public class ConfigurationDAO extends DAO<Configuration> {
 	
 	//Fonctions
 	public  boolean create(Configuration obj) {
-		
+		return false;
 	}
 	
 	public  boolean delete(Configuration obj) {
-		
+		return false;
 	}
 	
 	public  boolean update(Configuration obj) {
-		
+		return false;
 	}
 	
 	public Configuration find(int Id) {
-		
+		Configuration s = null;
+		return s;
 	}
 
 }

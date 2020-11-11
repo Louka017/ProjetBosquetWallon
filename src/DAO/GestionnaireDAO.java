@@ -17,7 +17,7 @@ public class GestionnaireDAO extends DAO<Gestionnaire> {
 		
 		try {
 			String create = "INSERT INTO Personne (Nom,Prenom,Adresse,Discriminator,Email,MotDePasse) "
-					+ "values ('" + obj.getNom() + "','" + obj.getPrenom() + "','" + obj.getAdresse() + "','Artiste','"+ obj.getEmail() + "','" + obj.getPassword() + "');";
+					+ "values ('" + obj.getNom() + "','" + obj.getPrenom() + "','" + obj.getAdresse() + "','Gestionnaire','"+ obj.getEmail() + "','" + obj.getPassword() + "');";
 			System.out.println(create);
 			connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeUpdate(create);
 			}

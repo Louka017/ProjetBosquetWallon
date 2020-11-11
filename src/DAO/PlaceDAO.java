@@ -15,19 +15,20 @@ public class PlaceDAO extends DAO<Place> {
 	
 	//Fonctions
 	public  boolean create(Place obj) {
-		
+		return false;
 	}
 	
 	public  boolean delete(Place obj) {
-		
+		return false;
 	}
 	
 	public  boolean update(Place obj) {
-		
+		return false;
 	}
 	
 	public Place find(int Id) {
-		
+		Place s = null;
+		return s;
 	}
 
 }

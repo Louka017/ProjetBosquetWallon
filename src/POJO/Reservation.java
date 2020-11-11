@@ -2,10 +2,13 @@ package POJO;
 
 import java.io.Serializable;
 
+import DAO.AbstractDAOFactory;
+
 public class Reservation implements Serializable {
 
 	//Attributs
 	private static final long serialVersionUID = 2752339235768498033L;
+	AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 	private int accompte;
 	private int solde;
 	private String statut;
