@@ -86,14 +86,12 @@ public class LoginJFrame extends JFrame {
 					else 
 					{
 						acc.setVisible(false);
-
 					}
 					
 				}
 				else
 				{
 					acc.setVisible(false);
-
 				}
 			}
 		});
