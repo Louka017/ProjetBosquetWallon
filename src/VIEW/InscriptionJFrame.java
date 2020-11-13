@@ -74,7 +74,7 @@ public class InscriptionJFrame extends JFrame {
 		
 		//PRENOM
 		JLabel lblPrenom = new JLabel("Pr\u00E9nom : ");
-		lblPrenom.setBounds(232, 24, 73, 13);
+		lblPrenom.setBounds(248, 24, 73, 13);
 		contentPane.add(lblPrenom);
 		
 		Prenom = new JTextField();
@@ -88,7 +88,7 @@ public class InscriptionJFrame extends JFrame {
 		contentPane.add(lblEmail);
 		
 		Email = new JTextField();
-		Email.setBounds(54, 64, 138, 19);
+		Email.setBounds(54, 64, 153, 19);
 		contentPane.add(Email);
 		Email.setColumns(10);
 		
@@ -114,7 +114,7 @@ public class InscriptionJFrame extends JFrame {
 		
 		//NUMERO
 		JLabel lblNumero = new JLabel("n\u00B0 : ");
-		lblNumero.setBounds(265, 140, 40, 13);
+		lblNumero.setBounds(281, 140, 40, 13);
 		contentPane.add(lblNumero);
 		
 		Numero = new JTextField();
@@ -124,7 +124,7 @@ public class InscriptionJFrame extends JFrame {
 		
 		//CODE POSTAL
 		JLabel lblCp = new JLabel("Code Postal : ");
-		lblCp.setBounds(220, 101, 70, 13);
+		lblCp.setBounds(224, 101, 89, 13);
 		contentPane.add(lblCp);
 		
 		CodePostal = new JTextField();

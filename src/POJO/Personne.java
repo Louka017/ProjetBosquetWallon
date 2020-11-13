@@ -64,7 +64,7 @@ public class Personne implements Serializable{
 	
 	
 	public String getPrenom() {
-		return nom;
+		return prenom;
 	}
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;

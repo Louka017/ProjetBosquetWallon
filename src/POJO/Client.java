@@ -30,7 +30,7 @@ public class Client  extends Personne implements Serializable {
 	
 	//Regarder si tous les champs sont correct grâce à des REGEX
 	String regnom = "^[A-Za-z]+$" ;
-	String regmail = "^[A-Za-z0-9]+@[A-Za-z]+.(com|be|eu|fr)$";
+	String regmail = "^[A-Za-z0-9.-]+@[A-Za-z]+.(com|be|eu|fr)$";
 	String regrue = "^[A-Za-z -]+$" ;
 	String regnum = "^[0-9]+$";
 	String regcp = "^[0-9]{4}$";

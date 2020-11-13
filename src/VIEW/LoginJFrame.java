@@ -16,7 +16,6 @@ public class LoginJFrame extends JFrame {
 	
 	AcceuilJFrame acc = new AcceuilJFrame();
 	InscriptionJFrame inscription = new InscriptionJFrame();
-	
 	private JPanel contentPane;
 	private JTextField Email;
 	private JTextField Mdp;
