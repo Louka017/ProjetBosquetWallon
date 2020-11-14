@@ -1,64 +1,75 @@
 package DAO;
 
 import java.sql.Connection;
-import POJO.*;
 
 
 public class DAOFactory extends AbstractDAOFactory{
 protected static final Connection conn = CONNECTION.SpectacleConnection.getInstance();
 	
-	public DAO<Artiste> getArtisteDAO(){
+	public ArtisteDAO getArtisteDAO() {
 		return new ArtisteDAO(conn);
 	}
-	
-	public DAO<Categorie> getCategorieDAO(){
+
+	public CategorieDAO getCategorieDAO()
+	{
 		return new CategorieDAO(conn);
 	}
-	
-	public DAO<Client> getClientDAO(){
+
+	public ClientDAO getClientDAO()
+	{
 		return new ClientDAO(conn);
 	}
 	
-	public DAO<Commande> getCommandeDAO(){
+	public CommandeDAO getCommandeDAO()
+	{
 		return new CommandeDAO(conn);
 	}
 	
-	public DAO<Configuration> getConfigurationDAO(){
+	public ConfigurationDAO getConfigurationDAO()
+	{
 		return new ConfigurationDAO(conn);
 	}
 	
-	public DAO<Gestionnaire> getGestionnaireDAO(){
+	public GestionnaireDAO getGestionnaireDAO()
+	{
 		return new GestionnaireDAO(conn);
 	}
 	
-	public DAO<Organisateur> getOrganisateurDAO(){
+	public OrganisateurDAO getOrganisateurDAO()
+	{
 		return new OrganisateurDAO(conn);
 	}
 	
-	public DAO<Personne> getPersonneDAO(){
+	public PersonneDAO getPersonneDAO()
+	{
 		return new PersonneDAO(conn);
 	}
 	
-	public DAO<Place> getPlaceDAO(){
+	public PlaceDAO getPlaceDAO()
+	{
 		return new PlaceDAO(conn);
 	}
 	
-	public DAO<PlanningSalle> getPlanningSalleDAO(){
+	public PlanningSalleDAO getPlanningSalleDAO()
+	{
 		return new PlanningSalleDAO(conn);
 	}
-	
-	public DAO<Representation> getRepresentationDAO(){
+
+	public RepresentationDAO getRepresentationDAO()
+	{
 		return new RepresentationDAO(conn);
 	}
 	
-	public DAO<Reservation> getReservationDAO(){
+	public ReservationDAO getReservationDAO()
+	{
 		return new ReservationDAO(conn);
 	}
 	
-	
-	public DAO<Spectacle> getSpectacleDAO(){
+	public SpectacleDAO getSpectacleDAO()
+	{
 		return new SpectacleDAO(conn);
 	}
 
 
 }
+

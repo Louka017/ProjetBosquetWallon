@@ -2,16 +2,15 @@ package POJO;
 
 import java.io.Serializable;
 
-import DAO.AbstractDAOFactory;
-import DAO.DAO;
+import DAO.*;
 
 public class Organisateur extends Personne implements Serializable{
 
 	//Attribut
 	private static final long serialVersionUID = 8324249115653293376L;
-	AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
-	DAO<Organisateur> dao = adf.getOrganisateurDAO();
 	
+	protected static DAOFactory factory = (DAOFactory)DAOFactory.getFactory(0);
+	protected static OrganisateurDAO dao = factory.getOrganisateurDAO();
 	
 	//Constructeurs
 	public Organisateur(String nom, String prenom, String rue, int numero, String ville, int cp, String email, String password, int id) {

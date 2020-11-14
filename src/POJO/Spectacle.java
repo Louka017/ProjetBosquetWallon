@@ -3,15 +3,16 @@ package POJO;
 import java.io.Serializable;
 import java.util.*;
 
-import DAO.AbstractDAOFactory;
-import DAO.DAO;
+import DAO.*;
 
 public class Spectacle implements Serializable{
 
 	//Attributs
 	private static final long serialVersionUID = -3582331972992320638L;
-	AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
-	DAO<Spectacle> dao = adf.getSpectacleDAO();
+
+	protected static DAOFactory factory = (DAOFactory)DAOFactory.getFactory(0);
+	protected static SpectacleDAO dao = factory.getSpectacleDAO();
+	
 	private String titre;
 	private int nbrPlaceParClient;
 	private Configuration configuration;

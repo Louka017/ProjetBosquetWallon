@@ -2,15 +2,15 @@ package POJO;
 
 import java.io.Serializable;
 
-import DAO.AbstractDAOFactory;
-import DAO.DAO;
+import DAO.*;
 
 public class Artiste extends Personne implements Serializable {
 
 	//Attributs
 	private static final long serialVersionUID = 9149868084737096938L;
-	AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
-	DAO<Artiste> dao = adf.getArtisteDAO();
+	
+	protected static DAOFactory factory = (DAOFactory)DAOFactory.getFactory(0);
+	protected static ArtisteDAO dao = factory.getArtisteDAO();
 	
 	//Constructeur
 	public Artiste(String nom, String prenom, String rue, int numero, String ville, int cp, String email, String password, int id) {
@@ -41,7 +41,6 @@ public class Artiste extends Personne implements Serializable {
 	
 	//Regarder si tous les champs sont correct grâce à des REGEX
 	public boolean verifierChamps(String nom, String prenom, String rue, int numero, String ville, int cp, String email, String password) {
-		
 		String num =  String. valueOf(numero);
 		String cdp = String. valueOf(cp);
 		

@@ -1,18 +1,16 @@
 package DAO;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.*;
 import POJO.*;
 
-public class SpectacleDAO extends DAO<Spectacle> {
+public class SpectacleDAO implements DAO<Spectacle> {
 	
+	protected Connection connect = null;
 	//Constructeur
 	public SpectacleDAO(Connection conn) {
-		super(conn);
+		this.connect=conn;
 	}
-	
+
 	//Fonctions
 	public  boolean create(Spectacle obj) {
 		return false;
@@ -30,5 +28,7 @@ public class SpectacleDAO extends DAO<Spectacle> {
 		Spectacle s = null;
 		return s;
 	}
+
+
 
 }

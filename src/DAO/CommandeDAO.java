@@ -1,16 +1,19 @@
 package DAO;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.*;
 import POJO.*;
 
-public class CommandeDAO extends DAO<Commande> {
+public class CommandeDAO implements DAO<Commande> {
+	
+	private Connection connect = null;
 	
 	//Constructeur
 	public CommandeDAO(Connection conn) {
-		super(conn);
+		this.connect = conn;
+	}
+	
+	public CommandeDAO() {
+		super();
 	}
 	
 	//Fonctions
@@ -30,5 +33,7 @@ public class CommandeDAO extends DAO<Commande> {
 		Commande s = null;
 		return s;
 	}
+
+
 
 }

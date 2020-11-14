@@ -3,15 +3,16 @@ package POJO;
 import java.io.Serializable;
 import java.util.*;
 
-import DAO.AbstractDAOFactory;
-import DAO.DAO;
+import DAO.*;
 
 public class Representation implements Serializable {
 
 	//Attributs
 	private static final long serialVersionUID = -7253524476235799528L;
-	AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
-	DAO<Representation> dao = adf.getRepresentationDAO();
+
+	protected static DAOFactory factory = (DAOFactory) DAOFactory.getFactory(0);
+	protected static RepresentationDAO dao = factory.getRepresentationDAO();
+	
 	private Date date;
 	private Date heureDebut;
 	private Date heureFin;

@@ -1,17 +1,17 @@
 package POJO;
 
 import java.io.Serializable;
-
-
-import DAO.AbstractDAOFactory;
-import DAO.DAO;
+import DAO.DAOFactory;
+import DAO.PersonneDAO;
 
 public class Personne implements Serializable{
 
 	//Attributs
 	private static final long serialVersionUID = -6819381459685578597L;
-	AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
-	DAO<Personne> dao = adf.getPersonneDAO();
+	
+	protected static DAOFactory factory = (DAOFactory)DAOFactory.getFactory(0);
+	protected static PersonneDAO dao = factory.getPersonneDAO();
+	
 	protected int id;
 	protected String nom;
 	protected String prenom;
@@ -43,6 +43,11 @@ public class Personne implements Serializable{
 		this.ville = ville;
 		this.cp = cp;
 		this.email = email;
+		this.password = password;
+	}
+	
+	public Personne(String email, String password) {
+		this.email=email;
 		this.password = password;
 	}
 	
@@ -123,12 +128,10 @@ public class Personne implements Serializable{
 	//Méthodes	
 	
 	String regnom = "^[A-Za-z]+$" ;
-	String regmail = "^[A-Za-z0-9]+@[A-Za-z]+.(com|be|eu|fr)$";
+	String regmail = "^[A-Za-z0-9-.]+@[A-Za-z]+.(com|be|eu|fr)$";
 	String regrue = "^[A-Za-z -]+$" ;
 	String regnum = "^(([0-9]+) | ([0-9]+(a|b|c|d))) $";
 	String regcp = "^[0-9]{4}$";
-	
-	
 	//Regarder si tous les champs sont correct grâce à des REGEX
 	public boolean verifierChamps(String nom, String prenom, String rue, int numero, String ville, int cp, String email, String password) {
 		
@@ -145,6 +148,18 @@ public class Personne implements Serializable{
 		return false;
 	}
 	
+
+	//Verifier mail et mdp
+	public int verifer(String email, String mdp)
+	{
+		return dao.verify(email, mdp);
+	}
+
+		
 	
+
+	
+	
+
 	
 }

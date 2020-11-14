@@ -1,17 +1,16 @@
 package DAO;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.*;
 import POJO.*;
 
-public class ConfigurationDAO extends DAO<Configuration> {
+public class ConfigurationDAO implements DAO<Configuration> {
 	
-	//Constructeur
+	private Connection connect = null;
+	//Constructeurs
 	public ConfigurationDAO(Connection conn) {
-		super(conn);
+		this.connect = conn;
 	}
+
 	
 	//Fonctions
 	public  boolean create(Configuration obj) {
@@ -30,5 +29,7 @@ public class ConfigurationDAO extends DAO<Configuration> {
 		Configuration s = null;
 		return s;
 	}
+
+
 
 }

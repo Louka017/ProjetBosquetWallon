@@ -1,16 +1,15 @@
 package DAO;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.*;
 import POJO.*;
 
-public class CategorieDAO extends DAO<Categorie> {
+public class CategorieDAO implements DAO<Categorie> {
+	
+	private Connection connect = null;
 	
 	//Constructeur
 	public CategorieDAO(Connection conn) {
-		super(conn);
+		this.connect = conn;
 	}
 	
 	//Fonctions
@@ -30,5 +29,6 @@ public class CategorieDAO extends DAO<Categorie> {
 		Categorie s = null;
 		return s;
 	}
+
 
 }

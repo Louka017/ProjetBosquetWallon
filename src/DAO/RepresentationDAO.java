@@ -1,16 +1,14 @@
 package DAO;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.*;
 import POJO.*;
 
-public class RepresentationDAO extends DAO<Representation> {
+public class RepresentationDAO implements DAO<Representation> {
 	
+	protected Connection connect = null;
 	//Constructeur
 	public RepresentationDAO(Connection conn) {
-		super(conn);
+		this.connect=conn;
 	}
 	
 	//Fonctions
@@ -30,5 +28,7 @@ public class RepresentationDAO extends DAO<Representation> {
 		Representation s = null;
 		return s;
 	}
+
+
 
 }

@@ -1,6 +1,9 @@
 package VIEW;
 
 import java.awt.EventQueue;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,6 +20,8 @@ import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JPasswordField;
+import java.awt.Color;
 
 public class InscriptionJFrame extends JFrame {
 
@@ -27,13 +32,11 @@ public class InscriptionJFrame extends JFrame {
 	private JTextField Nom;
 	private JTextField Prenom;
 	private JTextField Email;
-	private JTextField Mdp;
 	private JTextField Rue;
 	private JTextField Numero;
 	private JTextField CodePostal;
 	private JTextField Ville;
-	
-
+	private JPasswordField Mdp;
 	
 	/**
 	 * Launch the application.
@@ -57,13 +60,20 @@ public class InscriptionJFrame extends JFrame {
 	public InscriptionJFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
+		contentPane = new JPanel() {
+			private static final long serialVersionUID = 3827614812064042101L;
+			public void paintComponent(Graphics g) {
+                Image img = Toolkit.getDefaultToolkit().getImage(LoginJFrame.class.getResource("theatre.jpg"));
+                g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
+            }
+          };
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		//NOM
 		JLabel lblNom = new JLabel("Nom :");
+		lblNom.setForeground(Color.WHITE);
 		lblNom.setBounds(10, 24, 45, 13);
 		contentPane.add(lblNom);
 		
@@ -74,6 +84,7 @@ public class InscriptionJFrame extends JFrame {
 		
 		//PRENOM
 		JLabel lblPrenom = new JLabel("Pr\u00E9nom : ");
+		lblPrenom.setForeground(Color.WHITE);
 		lblPrenom.setBounds(248, 24, 73, 13);
 		contentPane.add(lblPrenom);
 		
@@ -84,6 +95,7 @@ public class InscriptionJFrame extends JFrame {
 		
 		//EMAIL
 		JLabel lblEmail = new JLabel("Email :");
+		lblEmail.setForeground(Color.WHITE);
 		lblEmail.setBounds(10, 67, 45, 13);
 		contentPane.add(lblEmail);
 		
@@ -94,16 +106,17 @@ public class InscriptionJFrame extends JFrame {
 		
 		//MOT DE PASSE
 		JLabel lblMdp = new JLabel("Mot de passe :");
+		lblMdp.setForeground(Color.WHITE);
 		lblMdp.setBounds(217, 67, 96, 13);
 		contentPane.add(lblMdp);
 		
-		Mdp = new JTextField();
-		Mdp.setBounds(315, 64, 111, 19);
+		Mdp = new JPasswordField();
+		Mdp.setBounds(320, 64, 106, 19);
 		contentPane.add(Mdp);
-		Mdp.setColumns(10);
 		
 		//RUE
 		JLabel lblRue = new JLabel("Rue : ");
+		lblRue.setForeground(Color.WHITE);
 		lblRue.setBounds(10, 101, 66, 13);
 		contentPane.add(lblRue);
 		
@@ -114,6 +127,7 @@ public class InscriptionJFrame extends JFrame {
 		
 		//NUMERO
 		JLabel lblNumero = new JLabel("n\u00B0 : ");
+		lblNumero.setForeground(Color.WHITE);
 		lblNumero.setBounds(281, 140, 40, 13);
 		contentPane.add(lblNumero);
 		
@@ -124,6 +138,7 @@ public class InscriptionJFrame extends JFrame {
 		
 		//CODE POSTAL
 		JLabel lblCp = new JLabel("Code Postal : ");
+		lblCp.setForeground(Color.WHITE);
 		lblCp.setBounds(224, 101, 89, 13);
 		contentPane.add(lblCp);
 		
@@ -134,6 +149,7 @@ public class InscriptionJFrame extends JFrame {
 		
 		//VILLE
 		JLabel lblVille = new JLabel("Ville :");
+		lblVille.setForeground(Color.WHITE);
 		lblVille.setBounds(10, 140, 45, 13);
 		contentPane.add(lblVille);
 		
@@ -144,6 +160,7 @@ public class InscriptionJFrame extends JFrame {
 		
 		//CHOIX
 		JLabel lblChoix = new JLabel("Vous \u00EAtes :");
+		lblChoix.setForeground(Color.WHITE);
 		lblChoix.setBounds(10, 184, 66, 13);
 		contentPane.add(lblChoix);
 		
@@ -160,6 +177,7 @@ public class InscriptionJFrame extends JFrame {
 			
 			//ARTISTE
 			JRadioButton rdbtnArtiste = new JRadioButton("Artiste");
+			rdbtnArtiste.setBackground(Color.WHITE);
 			rdbtnArtiste.setBounds(89, 226, 103, 21);
 			contentPane.add(rdbtnArtiste);
 			
@@ -174,14 +192,10 @@ public class InscriptionJFrame extends JFrame {
 		JButton btnInscription = new JButton("S'inscrire");
 		btnInscription.setBounds(237, 203, 164, 31);
 		contentPane.add(btnInscription);
-		
-
-		
-		
-		
 		btnInscription.addActionListener(new ActionListener() 
 		{
 
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e)
 			{		
 				
@@ -192,6 +206,7 @@ public class InscriptionJFrame extends JFrame {
 					{	
 						c.ajoutClient();
 						JOptionPane.showMessageDialog(null, "Client creer");
+						
 					}
 					else 
 					{

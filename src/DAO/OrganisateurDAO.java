@@ -5,11 +5,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import POJO.*;
 
-public class OrganisateurDAO extends DAO<Organisateur> {
+public class OrganisateurDAO implements DAO<Organisateur> {
 	
+	protected Connection connect = null;
 	//Constructeur
 	public OrganisateurDAO(Connection conn) {
-		super(conn);
+		this.connect = conn;
 	}
 	
 	//Fonctions
@@ -57,7 +58,7 @@ public class OrganisateurDAO extends DAO<Organisateur> {
 		
 		Organisateur organisateur = null;
 		try {
-			ResultSet result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+			ResultSet result = connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
 					.executeQuery("SELECT * FROM Personne WHERE idPersonne = " + Id + ";");
 			if (result.first())
 				organisateur = new Organisateur(result.getString("Nom"), result.getString("Prenom"), result.getString("Rue"),result.getInt("Numero"),result.getString("Ville"),result.getInt("CodePostal"),result.getString("Email"), result.getString("MotDePasse"), result.getInt("IdPersonne"));
@@ -68,5 +69,7 @@ public class OrganisateurDAO extends DAO<Organisateur> {
 		
 		return organisateur;
 	}
+
+
 
 }

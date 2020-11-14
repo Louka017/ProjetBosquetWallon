@@ -1,16 +1,14 @@
 package DAO;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.*;
 import POJO.*;
 
-public class PlaceDAO extends DAO<Place> {
+public class PlaceDAO implements DAO<Place> {
 	
+	private Connection connect = null;
 	//Constructeur
 	public PlaceDAO(Connection conn) {
-		super(conn);
+		this.connect = conn;
 	}
 	
 	//Fonctions
@@ -30,5 +28,6 @@ public class PlaceDAO extends DAO<Place> {
 		Place s = null;
 		return s;
 	}
+
 
 }

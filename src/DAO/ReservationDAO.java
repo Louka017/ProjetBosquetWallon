@@ -1,16 +1,17 @@
 package DAO;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.*;
 import POJO.*;
 
-public class ReservationDAO extends DAO<Reservation> {
-	
+public class ReservationDAO implements DAO<Reservation> {
+	protected Connection connect = null;
 	//Constructeur
 	public ReservationDAO(Connection conn) {
-		super(conn);
+		super();
+	}
+	
+	public ReservationDAO() {
+		super();
 	}
 	
 	//Fonctions
@@ -30,5 +31,7 @@ public class ReservationDAO extends DAO<Reservation> {
 		Reservation s = null;
 		return s;
 	}
+
+
 
 }

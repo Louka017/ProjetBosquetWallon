@@ -5,12 +5,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import POJO.*;
 
+public class ArtisteDAO implements DAO<Artiste> {
 
-public class ArtisteDAO extends DAO<Artiste> {
+	private Connection connect = null;
 	
 	//Constructeur
 	public ArtisteDAO(Connection conn) {
-		super(conn);
+		this.connect = conn;
 	}
 	
 	//Fonctions
@@ -58,7 +59,7 @@ public class ArtisteDAO extends DAO<Artiste> {
 		Artiste artiste = null;
 		
 		try {
-			ResultSet result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+			ResultSet result = connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
 					.executeQuery("SELECT * FROM Personne WHERE idPersonne = " + Id + ";");
 			if (result.first())
 				artiste = new Artiste(result.getString("Nom"), result.getString("Prenom"), result.getString("Rue"),result.getInt("Numero"),result.getString("Ville"),result.getInt("CodePostal"),result.getString("Email"), result.getString("MotDePasse"), result.getInt("IdPersonne"));
@@ -68,5 +69,7 @@ public class ArtisteDAO extends DAO<Artiste> {
 		
 		return artiste;
 	}
+
+	
 
 }

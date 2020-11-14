@@ -7,8 +7,9 @@ public class Client  extends Personne implements Serializable {
 
 	//Attributs
 	private static final long serialVersionUID = 1328773664957190670L;
-	AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
-	DAO<Client> dao = adf.getClientDAO();
+	
+	protected static DAOFactory factory = (DAOFactory)DAOFactory.getFactory(0);
+	protected static ClientDAO dao = factory.getClientDAO();
 
 	//Constructeurs
 	public Client(String nom, String prenom, String rue, int numero, String ville, int cp, String email, String password, int id) {

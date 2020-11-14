@@ -1,17 +1,19 @@
 package POJO;
 
 import java.io.Serializable;
+import DAO.CategorieDAO;
+import DAO.DAOFactory;
 
-import DAO.AbstractDAOFactory;
-import DAO.DAO;
 
 
 public class Categorie implements Serializable {
 
 	//Attributs
 	private static final long serialVersionUID = 3633610078969934440L;
-	AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
-	DAO<Categorie> dao = adf.getCategorieDAO();
+
+	protected static DAOFactory factory = (DAOFactory)DAOFactory.getFactory(0);
+	protected static CategorieDAO dao = factory.getCategorieDAO();
+	
 	private String type;
 	private int prix;
 	private int nbrPlaceDispo;
