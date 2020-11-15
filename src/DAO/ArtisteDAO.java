@@ -4,6 +4,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import POJO.*;
+import java.util.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ArtisteDAO implements DAO<Artiste> {
 
@@ -69,7 +73,24 @@ public class ArtisteDAO implements DAO<Artiste> {
 		
 		return artiste;
 	}
-
 	
+	
+
+	public List<Artiste> TESTONS() {
+		List<Artiste> artistes = new ArrayList<Artiste>();
+		try {
+
+			String query = "SELECT * from Personne where Discriminator ='Artiste'";
+			ResultSet result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeQuery(query);
+				while(result.next()) {
+					Artiste artiste = new Artiste(result.getString("Nom"), result.getString("Prenom"), result.getString("Rue"),result.getInt("Numero"),result.getString("Ville"),result.getInt("CodePostal"),result.getString("Email"), result.getString("MotDePasse"), result.getInt("IdPersonne"));
+					artistes.add(artiste);
+				}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return artistes;
+	}
 
 }

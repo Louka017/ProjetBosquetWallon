@@ -6,6 +6,7 @@ import POJO.*;
 public class SpectacleDAO implements DAO<Spectacle> {
 	
 	protected Connection connect = null;
+	
 	//Constructeur
 	public SpectacleDAO(Connection conn) {
 		this.connect=conn;

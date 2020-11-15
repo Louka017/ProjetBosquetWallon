@@ -4,15 +4,14 @@ import java.sql.Connection;
 import POJO.*;
 
 public class ReservationDAO implements DAO<Reservation> {
+	
 	protected Connection connect = null;
+	
 	//Constructeur
 	public ReservationDAO(Connection conn) {
 		super();
 	}
-	
-	public ReservationDAO() {
-		super();
-	}
+
 	
 	//Fonctions
 	public  boolean create(Reservation obj) {

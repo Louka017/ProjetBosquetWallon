@@ -1,6 +1,8 @@
 package POJO;
 
 import java.io.Serializable;
+import java.util.List;
+
 import DAO.*;
 
 public class Client  extends Personne implements Serializable {
@@ -23,7 +25,6 @@ public class Client  extends Personne implements Serializable {
 	
 	//Méthodes
 	
-	
 	//Ajouter un client
 	public boolean ajoutClient() {
 		return dao.create(this);
@@ -39,7 +40,6 @@ public class Client  extends Personne implements Serializable {
 	
 	//Regarder si tous les champs sont correct grâce à des REGEX
 	public boolean verifierChamps(String nom, String prenom, String rue, int numero, String ville, int cp, String email, String password) {
-		
 		String num =  String. valueOf(numero);
 		String cdp = String. valueOf(cp);
 		
@@ -52,6 +52,8 @@ public class Client  extends Personne implements Serializable {
 									return true;
 		return false;
 	}
+	
+
 	
 	
 	

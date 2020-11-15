@@ -51,6 +51,10 @@ public class Personne implements Serializable{
 		this.password = password;
 	}
 	
+	public Personne() {
+		
+	}
+	
 	//Accesseurs
 	public int getId() {
 		return id;

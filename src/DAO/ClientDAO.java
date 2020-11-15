@@ -9,7 +9,7 @@ public class ClientDAO implements DAO<Client> {
 	
 	private Connection connect = null;
 
-	//Constructeurs
+	//Constructeur
 	public ClientDAO(Connection conn) {
 		this.connect = conn;
 	}

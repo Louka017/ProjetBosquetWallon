@@ -6,6 +6,7 @@ import POJO.*;
 public class PlaceDAO implements DAO<Place> {
 	
 	private Connection connect = null;
+	
 	//Constructeur
 	public PlaceDAO(Connection conn) {
 		this.connect = conn;

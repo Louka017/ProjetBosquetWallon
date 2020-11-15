@@ -6,7 +6,7 @@ import POJO.*;
 public class ConfigurationDAO implements DAO<Configuration> {
 	
 	private Connection connect = null;
-	//Constructeurs
+	//Constructeur
 	public ConfigurationDAO(Connection conn) {
 		this.connect = conn;
 	}

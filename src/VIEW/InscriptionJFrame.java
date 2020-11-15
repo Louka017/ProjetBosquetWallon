@@ -214,7 +214,7 @@ public class InscriptionJFrame extends JFrame {
 					}
 				}
 				
-				if(rdbtnOrganisateur.isSelected())
+				else if(rdbtnOrganisateur.isSelected())
 				{
 					Organisateur o = new Organisateur(Nom.getText(),Prenom.getText(),Rue.getText(),Integer.parseInt(Numero.getText()),Ville.getText(),Integer.parseInt(CodePostal.getText()),Email.getText(),Mdp.getText());
 					if(o.verifierChamps(Nom.getText(),Prenom.getText(),Rue.getText(),Integer.parseInt(Numero.getText()),Ville.getText(),Integer.parseInt(CodePostal.getText()),Email.getText(),Mdp.getText())) 
@@ -228,7 +228,7 @@ public class InscriptionJFrame extends JFrame {
 					}
 				}
 				
-				if(rdbtnArtiste.isSelected())
+				else if(rdbtnArtiste.isSelected())
 				{
 					Artiste a = new Artiste(Nom.getText(),Prenom.getText(),Rue.getText(),Integer.parseInt(Numero.getText()),Ville.getText(),Integer.parseInt(CodePostal.getText()),Email.getText(),Mdp.getText());
 					if(a.verifierChamps(Nom.getText(),Prenom.getText(),Rue.getText(),Integer.parseInt(Numero.getText()),Ville.getText(),Integer.parseInt(CodePostal.getText()),Email.getText(),Mdp.getText())) 

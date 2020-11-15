@@ -1,7 +1,7 @@
 package POJO;
 
 import java.io.Serializable;
-
+import java.util.List;
 import DAO.*;
 
 public class Artiste extends Personne implements Serializable {
@@ -21,6 +21,7 @@ public class Artiste extends Personne implements Serializable {
 		super(nom, prenom, rue, numero, ville, cp, email, password);
 	}
 
+	public Artiste() {}
 	
 	
 	//Méthodes
@@ -54,4 +55,13 @@ public class Artiste extends Personne implements Serializable {
 		return false;
 	}
 	
+	//Liste
+	public List<Artiste> TESTONS(){
+		return dao.TESTONS();
+	}
+	
+	//Afficher les infos
+	public String toString() {
+		return nom + " " + prenom;
+	}
 }

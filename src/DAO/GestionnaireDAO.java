@@ -8,6 +8,7 @@ import POJO.*;
 public class GestionnaireDAO implements DAO<Gestionnaire> {
 	
 	protected Connection connect = null;
+	
 	//Constructeur
 	public GestionnaireDAO(Connection conn) {
 		this.connect = conn;

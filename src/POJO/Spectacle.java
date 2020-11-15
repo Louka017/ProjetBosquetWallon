@@ -67,5 +67,10 @@ public class Spectacle implements Serializable{
 	public void setRepresentations(List<Representation> representations) {
 		this.representations = representations;
 	}
-
+	
+	//Méthodes
+	public String toString()
+	{
+		return titre;
+	}
 }

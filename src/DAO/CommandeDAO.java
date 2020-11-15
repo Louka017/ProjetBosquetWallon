@@ -11,10 +11,7 @@ public class CommandeDAO implements DAO<Commande> {
 	public CommandeDAO(Connection conn) {
 		this.connect = conn;
 	}
-	
-	public CommandeDAO() {
-		super();
-	}
+
 	
 	//Fonctions
 	public  boolean create(Commande obj) {

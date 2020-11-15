@@ -8,6 +8,7 @@ import POJO.*;
 public class PersonneDAO implements DAO<Personne> {
 	
 	protected Connection connect = null;
+	
 	//Constructeur
 	public PersonneDAO(Connection conn) {
 		this.connect = conn;

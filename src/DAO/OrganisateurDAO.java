@@ -8,6 +8,7 @@ import POJO.*;
 public class OrganisateurDAO implements DAO<Organisateur> {
 	
 	protected Connection connect = null;
+	
 	//Constructeur
 	public OrganisateurDAO(Connection conn) {
 		this.connect = conn;
