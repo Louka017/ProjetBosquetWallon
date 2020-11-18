@@ -13,6 +13,5 @@
 	<classpathentry kind="lib" path="C:/dev/java/projects/ProjetGaspariLouka/ucanaccess-5.0.0.jar"/>
 	<classpathentry kind="lib" path="C:/dev/java/projects/ProjetGaspariLouka/jgoodies-common-1.8.0.jar"/>
 	<classpathentry kind="lib" path="C:/dev/java/projects/ProjetGaspariLouka/jgoodies-forms-1.8.0.jar"/>
-	<classpathentry kind="lib" path="C:/dev/java/projects/ProjetGaspariLouka/jcalendar-1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
