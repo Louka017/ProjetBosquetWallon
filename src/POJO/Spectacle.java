@@ -19,13 +19,18 @@ public class Spectacle implements Serializable{
 	private List<Artiste> artistes;
 	private List<Representation> representations;
 	
-	//Constructeur
+	//Constructeurs
 	public Spectacle(String titre, int nbrPlaceParClient, Configuration configuration,List<Artiste> artistes,List<Representation> representations) {
 		this.titre = titre;
 		this.nbrPlaceParClient = nbrPlaceParClient;
 		this.configuration = configuration;
 		this.artistes = artistes;
 		this.representations = representations;
+	}
+	
+	public Spectacle()
+	{
+		
 	}
 	
 	//Accesseurs

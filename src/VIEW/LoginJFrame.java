@@ -24,11 +24,11 @@ public class LoginJFrame extends JFrame {
 
 	//Attributs
 	private static final long serialVersionUID = 3490463710947193409L;
-	AcceuilJFrame acc = new AcceuilJFrame();
 	InscriptionJFrame inscription = new InscriptionJFrame();
 	private JPanel contentPane;
 	private JTextField Email;
 	private JPasswordField Mdp;
+
 
 	/**
 	 * Launch the application.
@@ -101,20 +101,26 @@ public class LoginJFrame extends JFrame {
 				String email = Email.getText();
 				@SuppressWarnings("deprecation")
 				String mdp = Mdp.getText();
+				
 				Personne p = new Personne (email,mdp);
 				
 				if (p.verifer(email,mdp) == 1) {
-					
 					JOptionPane.showMessageDialog(null, "Vous êtes connecté !");
+					
+					p = p.findbyMail(email);
+					AcceuilJFrame acc = new AcceuilJFrame(p);
 					acc.setVisible(true);
+					
 				}
 				else if(p.verifer(email,mdp) == 0) {
 					
 					JOptionPane.showMessageDialog(null, "Aucun compte n'existe avec cette adresse ! Inscrivez-vous.");
+					AcceuilJFrame acc = new AcceuilJFrame(p);
 					acc.setVisible(false);
 				}
 				else if(p.verifer(email,mdp) == 2){
 					JOptionPane.showMessageDialog(null, "Erreur dans le mot de passe !");
+					AcceuilJFrame acc = new AcceuilJFrame(p);
 					acc.setVisible(false);
 				}
 				

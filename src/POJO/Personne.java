@@ -21,6 +21,7 @@ public class Personne implements Serializable{
 	protected int cp;
 	protected String email;
 	protected String password;
+	protected String discriminator;
 
 
 	//Constructeurs
@@ -44,6 +45,19 @@ public class Personne implements Serializable{
 		this.cp = cp;
 		this.email = email;
 		this.password = password;
+	}
+	
+	public Personne(String nom, String prenom,String rue, int numero, String ville, int cp, String email, String password, int id, String discriminator) {
+		this.nom = nom;
+		this.prenom = prenom;
+		this.rue = rue;
+		this.numero = numero;
+		this.ville = ville;
+		this.cp = cp;
+		this.email = email;
+		this.password = password;
+		this.id = id;
+		this.discriminator = discriminator;
 	}
 	
 	public Personne(String email, String password) {
@@ -129,6 +143,14 @@ public class Personne implements Serializable{
 	}
 	
 	
+	public String getDiscriminator() {
+		return discriminator;
+	}
+	public void setDiscriminator(String discriminator) {
+		this.discriminator = discriminator;
+	}
+	
+	
 	//Méthodes	
 	
 	String regnom = "^[A-Za-z]+$" ;
@@ -138,10 +160,8 @@ public class Personne implements Serializable{
 	String regcp = "^[0-9]{4}$";
 	//Regarder si tous les champs sont correct grâce à des REGEX
 	public boolean verifierChamps(String nom, String prenom, String rue, int numero, String ville, int cp, String email, String password) {
-		
 		String num =  String. valueOf(numero);
 		String cdp = String. valueOf(cp);
-		
 		if(nom.matches(regnom))
 			if(prenom.matches(regnom))
 				if(rue.matches(regrue))
@@ -159,11 +179,16 @@ public class Personne implements Serializable{
 		return dao.verify(email, mdp);
 	}
 
-		
+	//Afficher une personne
+	public String ToString()
+	{
+		return nom + " " + prenom;
+	}
 	
-
-	
-	
+	//Trouver une personne par mail
+	public Personne findbyMail(String email) {
+			return dao.findbyMail(email);
+	}
 
 	
 }

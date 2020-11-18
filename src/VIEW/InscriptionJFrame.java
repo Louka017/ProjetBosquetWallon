@@ -166,19 +166,21 @@ public class InscriptionJFrame extends JFrame {
 		
 			//CLIENT
 			JRadioButton rdbtnClient = new JRadioButton("Client");
+			rdbtnClient.setBackground(Color.WHITE);
 			rdbtnClient.setSelected(true);
-			rdbtnClient.setBounds(89, 180, 103, 21);
+			rdbtnClient.setBounds(89, 172, 103, 31);
 			contentPane.add(rdbtnClient);
 			
 			//ORGANISATEUR
 			JRadioButton rdbtnOrganisateur = new JRadioButton("Organisateur");
+			rdbtnOrganisateur.setBackground(Color.WHITE);
 			rdbtnOrganisateur.setBounds(89, 203, 103, 21);
 			contentPane.add(rdbtnOrganisateur);
 			
 			//ARTISTE
 			JRadioButton rdbtnArtiste = new JRadioButton("Artiste");
 			rdbtnArtiste.setBackground(Color.WHITE);
-			rdbtnArtiste.setBounds(89, 226, 103, 21);
+			rdbtnArtiste.setBounds(89, 220, 103, 37);
 			contentPane.add(rdbtnArtiste);
 			
 			

@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import POJO.*;
-import java.util.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +75,7 @@ public class ArtisteDAO implements DAO<Artiste> {
 	
 	
 
-	public List<Artiste> TESTONS() {
+	public List<Artiste> listeArtistes() {
 		List<Artiste> artistes = new ArrayList<Artiste>();
 		try {
 

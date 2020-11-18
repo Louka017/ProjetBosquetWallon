@@ -7,16 +7,23 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import DAO.ArtisteDAO;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JList;
-import POJO.Artiste;
+import javax.swing.JOptionPane;
+
+import POJO.*;
 import javax.swing.ListModel;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import java.awt.Color;
@@ -32,6 +39,15 @@ public class CreationSpectacleJFrame extends JFrame {
 	private JTextField Or;
 	private JTextField Diamant;
 	private JTextField Libre;
+	private JTextField Bronze2;
+	private JTextField Argent2;
+	private JTextField Or2;
+	private JTextField Diamant2;
+	private JTextField textField;
+	private JTextField Libre2;
+	private JList<Artiste> listeToutLesArtistes;
+	LoginJFrame frame1 = new LoginJFrame();
+
 
 	/**
 	 * Launch the application.
@@ -40,8 +56,7 @@ public class CreationSpectacleJFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					//LoginJFrame frame = new LoginJFrame();
-					CreationSpectacleJFrame frame = new CreationSpectacleJFrame();
+					LoginJFrame frame = new LoginJFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,7 +71,7 @@ public class CreationSpectacleJFrame extends JFrame {
 	public CreationSpectacleJFrame() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 735, 452);
 		contentPane = new JPanel() {
 			private static final long serialVersionUID = 3827614812064042101L;
 			public void paintComponent(Graphics g) {
@@ -76,30 +91,60 @@ public class CreationSpectacleJFrame extends JFrame {
 		
 		NomSpectacle = new JTextField();
 		NomSpectacle.setColumns(10);
-		NomSpectacle.setBounds(10, 28, 116, 19);
+		NomSpectacle.setBounds(10, 28, 151, 19);
 		contentPane.add(NomSpectacle);
 		
-		//ARTiSTES
+		//ARTISTES DISPONIBLES
+		JLabel lblArtistesPresent = new JLabel("Liste d'artistes :");
+		lblArtistesPresent.setForeground(Color.WHITE);
+		lblArtistesPresent.setBounds(226, 10, 121, 13);
+		contentPane.add(lblArtistesPresent);
+		
+		Artiste a = new Artiste();
+		DefaultListModel<Artiste> model = new DefaultListModel<>();
+		model.addAll(a.listeArtistes());
+		listeToutLesArtistes = new JList<>(model);
+		listeToutLesArtistes.setBounds(226, 28, 103, 127);
+		contentPane.add(listeToutLesArtistes);
+		
+		//ARTISTES CHOISIT
 		JLabel lblChoixArtistes = new JLabel("Artistes choisi :");
 		lblChoixArtistes.setHorizontalAlignment(SwingConstants.CENTER);
 		lblChoixArtistes.setForeground(Color.WHITE);
-		lblChoixArtistes.setBounds(320, 10, 116, 13);
+		lblChoixArtistes.setBounds(454, 10, 116, 13);
 		contentPane.add(lblChoixArtistes);
 		
-	
-		JButton btnChoisir = new JButton("Choisir");
-		btnChoisir.setBounds(235, 40, 85, 21);
-		contentPane.add(btnChoisir);	
-
+		DefaultListModel<Artiste> ArtistesSelectionner = new DefaultListModel<>();
+		JList<Artiste> listeChoisit = new JList<>(ArtistesSelectionner);
+		listeChoisit.setBounds(464, 30, 103, 123);
+		contentPane.add(listeChoisit);
+				
 		
-		JButton btnRetirer = new JButton("Retirer");
-		btnRetirer.setBounds(235, 73, 85, 21);
+		
+		//CHOSIR -->
+		JButton btnChoisir = new JButton("Choisir >>");
+		btnChoisir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					if (!ArtistesSelectionner.contains(listeToutLesArtistes.getSelectedValue()))
+					ArtistesSelectionner.addElement(listeToutLesArtistes.getSelectedValue());
+			}
+		});
+		btnChoisir.setBounds(339, 58, 115, 21);
+		contentPane.add(btnChoisir);	
+		
+		
+		//RETIRER <--
+		JButton btnRetirer = new JButton("<< Retirer");
+		btnRetirer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ArtistesSelectionner.removeElement(listeChoisit.getSelectedValue());
+			}
+		});
+		btnRetirer.setBounds(339, 94, 115, 21);
 		contentPane.add(btnRetirer);
 		
-		JLabel lblArtistesPresent = new JLabel("Liste d'artistes :");
-		lblArtistesPresent.setForeground(Color.WHITE);
-		lblArtistesPresent.setBounds(141, 10, 121, 13);
-		contentPane.add(lblArtistesPresent);
+		
+
 		
 		//CONFIGURATION
 		JLabel lblConfiguration = new JLabel("Configuration:");
@@ -142,20 +187,20 @@ public class CreationSpectacleJFrame extends JFrame {
 			
 			JLabel lblOr = new JLabel("Or : ");
 			lblOr.setForeground(Color.WHITE);
-			lblOr.setBounds(181, 206, 35, 13);
+			lblOr.setBounds(36, 262, 35, 13);
 			contentPane.add(lblOr);
 			Or = new JTextField();
-			Or.setBounds(212, 203, 35, 19);
+			Or.setBounds(65, 259, 35, 19);
 			contentPane.add(Or);
 			Or.setColumns(10);
 		
 			
 			JLabel lblDiamant = new JLabel("Diamant : ");
 			lblDiamant.setForeground(Color.WHITE);
-			lblDiamant.setBounds(148, 233, 68, 17);
+			lblDiamant.setBounds(10, 285, 68, 17);
 			contentPane.add(lblDiamant);
 			Diamant = new JTextField();
-			Diamant.setBounds(212, 232, 35, 19);
+			Diamant.setBounds(65, 284, 35, 19);
 			contentPane.add(Diamant);
 			Diamant.setColumns(10);
 		
@@ -164,7 +209,7 @@ public class CreationSpectacleJFrame extends JFrame {
 			lblLibre.setBounds(10, 206, 45, 13);
 			contentPane.add(lblLibre);
 			Libre = new JTextField();
-			Libre.setBounds(55, 203, 35, 19);
+			Libre.setBounds(65, 203, 35, 19);
 			contentPane.add(Libre);
 			Libre.setColumns(10);
 			
@@ -174,10 +219,6 @@ public class CreationSpectacleJFrame extends JFrame {
 	bgroup.add(RadioConcert);
 	bgroup.add(RadioCirque);
 	
-	//VALIDER
-	JButton btnValider = new JButton("VALIDER");
-	btnValider.setBounds(320, 190, 85, 44);
-	contentPane.add(btnValider);
 	
 	//PRIX DES PLACES
 	JLabel lblPrix = new JLabel("Prix des places :");
@@ -201,42 +242,103 @@ public class CreationSpectacleJFrame extends JFrame {
 	JLabel lblEuro3 = new JLabel("\u20AC");
 	lblEuro3.setVisible(false);
 	lblEuro3.setForeground(Color.WHITE);
-	lblEuro3.setBounds(253, 206, 16, 13);
+	lblEuro3.setBounds(110, 262, 16, 13);
 	contentPane.add(lblEuro3);
 	
 	JLabel lblEuro4 = new JLabel("\u20AC");
 	lblEuro4.setVisible(false);
 	lblEuro4.setForeground(Color.WHITE);
-	lblEuro4.setBounds(253, 235, 16, 13);
+	lblEuro4.setBounds(110, 287, 16, 13);
 	contentPane.add(lblEuro4);
 	
-	JList list = new JList();
-	list.setBounds(330, 30, 89, 86);
-	contentPane.add(list);
+
+	//NOMBRE DE PLACES
+	JLabel lblNbrPlace = new JLabel("Nombre de places :");
+	lblNbrPlace.setForeground(Color.WHITE);
+	lblNbrPlace.setBounds(208, 175, 121, 13);
+	contentPane.add(lblNbrPlace);
 	
-	JList list_1 = new JList();
-	list_1.setBounds(136, 30, 89, 86);
-	contentPane.add(list_1);
+	
+	JLabel lblBronze_1 = new JLabel("Bronze : ");
+	lblBronze_1.setForeground(Color.WHITE);
+	lblBronze_1.setBounds(224, 206, 60, 13);
+	contentPane.add(lblBronze_1);
+	Bronze2 = new JTextField();
+	Bronze2.setColumns(10);
+	Bronze2.setBounds(294, 203, 35, 19);
+	contentPane.add(Bronze2);
+	
+	JLabel lblArgent_1 = new JLabel("Argent  : ");
+	lblArgent_1.setForeground(Color.WHITE);
+	lblArgent_1.setBounds(224, 235, 60, 13);
+	contentPane.add(lblArgent_1);
+	Argent2 = new JTextField();
+	Argent2.setColumns(10);
+	Argent2.setBounds(294, 232, 35, 19);
+	contentPane.add(Argent2);
+	
+	JLabel lblOr_1 = new JLabel("Or : ");
+	lblOr_1.setForeground(Color.WHITE);
+	lblOr_1.setBounds(249, 262, 35, 13);
+	contentPane.add(lblOr_1);
+	Or2 = new JTextField();
+	Or2.setColumns(10);
+	Or2.setBounds(294, 259, 35, 19);
+	contentPane.add(Or2);
+	
+	JLabel lblDiamant_1 = new JLabel("Diamant : ");
+	lblDiamant_1.setForeground(Color.WHITE);
+	lblDiamant_1.setBounds(216, 285, 68, 17);
+	contentPane.add(lblDiamant_1);
+	Diamant2 = new JTextField();
+	Diamant2.setColumns(10);
+	Diamant2.setBounds(294, 284, 35, 19);
+	contentPane.add(Diamant2);
+	
+	JLabel lblLibre_1 = new JLabel("Libre :");
+	lblLibre_1.setForeground(Color.WHITE);
+	lblLibre_1.setBounds(226, 206, 45, 13);
+	contentPane.add(lblLibre_1);
+	Libre2 = new JTextField();
+	Libre2.setColumns(10);
+	Libre2.setBounds(294, 203, 35, 19);
+	contentPane.add(Libre2);
+	
+	textField = new JTextField();
+	textField.setColumns(10);
+	textField.setBounds(294, 203, 35, 19);
+	contentPane.add(textField);
+	
 	
 	//CONFIGURATION CHOISIE
-	
 	RadioDebout.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == RadioDebout) {
 				lblBronze.setVisible(false);
 				Bronze.setVisible(false);
+				lblBronze_1.setVisible(false);
+				Bronze2.setVisible(false);
 				lblArgent.setVisible(false);
 				Argent.setVisible(false);
+				lblArgent_1.setVisible(false);
+				Argent2.setVisible(false);
 				lblOr.setVisible(false);
 				Or.setVisible(false);
+				lblOr_1.setVisible(false);
+				Or2.setVisible(false);
 				lblDiamant.setVisible(false);
 				Diamant.setVisible(false);
-				lblLibre.setVisible(true);
-				Libre.setVisible(true);
+				lblDiamant_1.setVisible(false);
+				Diamant2.setVisible(false);
 				lblEuro1.setVisible(true);
 				lblEuro2.setVisible(false);
 				lblEuro3.setVisible(false);
 				lblEuro4.setVisible(false);
+				lblLibre.setVisible(true);
+				Libre.setVisible(true);
+				lblLibre_1.setVisible(true);
+				Libre2.setVisible(true);
+				
 			}
 		}
 	});
@@ -244,20 +346,30 @@ public class CreationSpectacleJFrame extends JFrame {
 	RadioConcert.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == RadioConcert) {
+				lblEuro4.setVisible(false);
 				lblLibre.setVisible(false);
 				Libre.setVisible(false);
+				lblLibre_1.setVisible(false);
+				Libre2.setVisible(false);
 				lblDiamant.setVisible(false);
 				Diamant.setVisible(false);
+				lblDiamant_1.setVisible(false);
+				Diamant2.setVisible(false);
 				lblBronze.setVisible(true);
 				Bronze.setVisible(true);
+				lblBronze_1.setVisible(true);
+				Bronze2.setVisible(true);
 				lblArgent.setVisible(true);
 				Argent.setVisible(true);
+				lblArgent_1.setVisible(true);
+				Argent2.setVisible(true);
 				lblOr.setVisible(true);
 				Or.setVisible(true);
+				lblOr_1.setVisible(true);
+				Or2.setVisible(true);
 				lblEuro1.setVisible(true);
 				lblEuro2.setVisible(true);
 				lblEuro3.setVisible(true);
-				lblEuro4.setVisible(false);
 			}
 		}
 	});
@@ -267,23 +379,42 @@ public class CreationSpectacleJFrame extends JFrame {
 			if (e.getSource() == RadioCirque) {
 				lblLibre.setVisible(false);
 				Libre.setVisible(false);
+				lblLibre_1.setVisible(false);
+				Libre2.setVisible(false);
 				lblBronze.setVisible(true);
 				Bronze.setVisible(true);
+				lblBronze_1.setVisible(true);
+				Bronze2.setVisible(true);
 				lblArgent.setVisible(true);
 				Argent.setVisible(true);
+				lblArgent_1.setVisible(true);
+				Argent2.setVisible(true);
 				lblOr.setVisible(true);
 				Or.setVisible(true);
+				lblOr_1.setVisible(true);
+				Or2.setVisible(true);
 				lblDiamant.setVisible(true);
 				Diamant.setVisible(true);
+				lblDiamant_1.setVisible(true);
+				Diamant2.setVisible(true);
 				lblEuro1.setVisible(true);
 				lblEuro2.setVisible(true);
 				lblEuro3.setVisible(true);
 				lblEuro4.setVisible(true);
-			}
+			}	
 		}
 	});
 	
-		
-		
+	//VALIDER
+	JButton btnValider = new JButton("VALIDER");
+	btnValider.setBounds(502, 331, 127, 51);
+	contentPane.add(btnValider);
+	btnValider.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				JOptionPane.showMessageDialog(null, "Spectacle Ajouter 'A MODIFIER' !");
+			}
+		});
 	}
 }

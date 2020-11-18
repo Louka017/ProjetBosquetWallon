@@ -56,8 +56,8 @@ public class Artiste extends Personne implements Serializable {
 	}
 	
 	//Liste
-	public List<Artiste> TESTONS(){
-		return dao.TESTONS();
+	public List<Artiste> listeArtistes(){
+		return dao.listeArtistes();
 	}
 	
 	//Afficher les infos
