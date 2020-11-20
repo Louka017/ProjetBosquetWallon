@@ -13,31 +13,59 @@ public class PlanningSalle implements Serializable{
 	protected static DAOFactory factory = (DAOFactory)DAOFactory.getFactory(0);
 	protected static PlanningSalleDAO dao = factory.getPlanningSalleDAO();
 	
-	private Date dateDebutRes;
-	private Date dateFinRes;
+	private int id;
+	private Date dateDebutSal;
+	private Date dateFinSal;
 	private List<Spectacle> spectacle;
 	
-	//Constructeur
-	public PlanningSalle(Date dateDebutRes, Date dateFinRes, List<Spectacle> spectacle) {
-		this.dateDebutRes = dateDebutRes;
-		this.dateFinRes = dateFinRes;
+	//Constructeurs
+	public PlanningSalle(int id, Date dateDebutSal, Date dateFinSal, List<Spectacle> spectacle) {
+		this.id = id;
+		this.dateDebutSal = dateDebutSal;
+		this.dateFinSal = dateFinSal;
 		this.spectacle = spectacle;
 	}
 	
+	public PlanningSalle(Date dateDebutSal, Date dateFinSal, List<Spectacle> spectacle) {
+		this.dateDebutSal = dateDebutSal;
+		this.dateFinSal = dateFinSal;
+		this.spectacle = spectacle;
+	}
+	
+	public PlanningSalle(int id,Date dateDebutSal, Date dateFinSal) {
+		this.id = id;
+		this.dateDebutSal = dateDebutSal;
+		this.dateFinSal = dateFinSal;
+	}
+	
+	public PlanningSalle(Date dateDebutSal, Date dateFinSal) {
+		this.dateDebutSal = dateDebutSal;
+		this.dateFinSal = dateFinSal;
+	}
+	
 	//Accesseurs
-	public Date getDateDebutRes() {
-		return dateDebutRes;
+	public int getId() {
+		return id;
 	}
-	public void setDateDebutRes(Date dateDebutRes) {
-		this.dateDebutRes = dateDebutRes;
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	
-	public Date getDateFinRes() {
-		return dateFinRes;
+	
+	public Date getDateDebutSal() {
+		return dateDebutSal;
 	}
-	public void setDateFinRes(Date dateFinRes) {
-		this.dateFinRes = dateFinRes;
+	public void setDateDebutSal(Date dateDebutSal) {
+		this.dateDebutSal = dateDebutSal;
+	}
+	
+	
+	public Date getDateFinSal() {
+		return dateFinSal;
+	}
+	public void setDateFinSal(Date dateFinSal) {
+		this.dateFinSal = dateFinSal;
 	}
 	
 	
@@ -47,5 +75,27 @@ public class PlanningSalle implements Serializable{
 	public void setSpectacle(List<Spectacle> spectacle) {
 		this.spectacle = spectacle;
 	}
+	
+	//Reserver la salle
+	public boolean ajouterPlanning(){
+		return dao.create(this);
+	}
+	
+	//TEST
+	public PlanningSalle finfByDate(Date db, Date df)
+	{
+		return dao.findByDate(db, df);
+	}
+	
+	public PlanningSalle find(int id) {
+		return dao.find(id);
+	}
+	
+
+	public String ToString()
+	{
+		return id + " " + dateDebutSal + " " + dateFinSal;
+	}
+	
 
 }

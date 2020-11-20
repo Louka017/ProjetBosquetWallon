@@ -28,7 +28,7 @@ public class AcceuilJFrame extends JFrame {
 	private JPanel contentPane;
 	JMenuBar menuBar;
 	JMenu mnNewMenu;
-	CreationSpectacleJFrame test = new CreationSpectacleJFrame();
+	ReservationSpectacleJFrame ResSpec = new ReservationSpectacleJFrame();
 
 
 	
@@ -60,7 +60,6 @@ public class AcceuilJFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public AcceuilJFrame(Personne p) {
-		System.out.println(p.getDiscriminator());
 		setResizable(false);		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -100,33 +99,39 @@ public class AcceuilJFrame extends JFrame {
 		
 		//BOUTTON ORGANISER SPECTACLE
 		JButton btnOrganiserSpectacle = new JButton("Organiser un spectacle");
+		btnOrganiserSpectacle.setForeground(Color.RED);
+		btnOrganiserSpectacle.setBackground(Color.DARK_GRAY);
 		btnOrganiserSpectacle.setBounds(235, 25, 185, 28);
-		contentPane.add(btnOrganiserSpectacle);
+
 		
 		JButton btnDetail = new JButton("D\u00E9tail");
+		btnDetail.setForeground(Color.RED);
+		btnDetail.setBackground(Color.DARK_GRAY);
 		btnDetail.setBounds(235, 108, 85, 21);
 		contentPane.add(btnDetail);
 		btnOrganiserSpectacle.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				test.setVisible(true);
+				ResSpec.setVisible(true);
 			}
 		});
 		
 		//BOUTTON RESERVER UN SPECTACLE
 		JButton btnReservationSpectacle = new JButton("Rerserver spectacle");
+		btnReservationSpectacle.setForeground(Color.RED);
+		btnReservationSpectacle.setBackground(Color.DARK_GRAY);
 		btnReservationSpectacle.setBounds(235, 63, 185, 28);
+		contentPane.add(btnReservationSpectacle);
 		
-		//CLIENT et ARTISTES
+		
+		//CLIENT
+		
 		
 		//ORGANISATEUR
 		if(p.getDiscriminator().equals("Organisateur")) {
-			contentPane.add(btnReservationSpectacle);
-		}
-
-		//GESTIONNAIRE
-		
+			contentPane.add(btnOrganiserSpectacle);
+		}		
 		
 		
 		

@@ -19,18 +19,31 @@ public class Spectacle implements Serializable{
 	private List<Artiste> artistes;
 	private List<Representation> representations;
 	
+	private PlanningSalle idSalle;
+	int id= idSalle.getId();
+	
+	private Artiste a;
+	int ida = a.getId();
+	
 	//Constructeurs
-	public Spectacle(String titre, int nbrPlaceParClient, Configuration configuration,List<Artiste> artistes,List<Representation> representations) {
+	public Spectacle(String titre, int nbrPlaceParClient,int idSalle,List<Representation> representations) {
 		this.titre = titre;
 		this.nbrPlaceParClient = nbrPlaceParClient;
-		this.configuration = configuration;
-		this.artistes = artistes;
+		this.id =idSalle;
 		this.representations = representations;
 	}
 	
 	public Spectacle()
 	{
 		
+	}
+	
+	public Spectacle(String titre, int nbrPlaceParClient, Configuration configuration,List<Artiste> artistes,List<Representation> representations) {
+		this.titre = titre;
+		this.nbrPlaceParClient = nbrPlaceParClient;
+		this.configuration = configuration;
+		this.artistes = artistes;
+		this.representations = representations;
 	}
 	
 	//Accesseurs
@@ -73,7 +86,20 @@ public class Spectacle implements Serializable{
 		this.representations = representations;
 	}
 	
+	//TEST
+	public int getId() {
+		return id;
+	}
+	public int getida() {
+		return ida;
+	}
+	
 	//Méthodes
+	public boolean ajouterSpectacle() 
+	{
+		return dao.create(this);
+	}
+	
 	public String toString()
 	{
 		return titre;
