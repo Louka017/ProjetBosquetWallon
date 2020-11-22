@@ -428,7 +428,13 @@ public class CreationSpectacleJFrame extends JFrame {
 		}
 	});
 	
-	System.out.println(s);
+	System.out.println(s.getDateDebutSal());
+	var b  = s.finfByDate(s.getDateDebutSal(), s.getDateFinSal());
+
+	System.out.println(b.getDateFinSal());
+	System.out.println(b);
+	System.out.println(b.getId());
+	
 	
 	//VALIDER
 	JButton btnValider = new JButton("VALIDER");

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -70,22 +71,22 @@ public class PlanningSalleDAO implements DAO<PlanningSalle> {
 	}
 	
 	public PlanningSalle findByDate(Date db, Date df) {
-		PlanningSalle s = null;
-		SimpleDateFormat localDateFormat = new SimpleDateFormat("yyyy-MM-dd");	
+		PlanningSalle s = new PlanningSalle();
+		SimpleDateFormat localDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");	
 		
-		
-		
+		Timestamp t = new Timestamp(db.getTime());
+		System.out.println("date format : " + localDateFormat.format(t));
+		t.setNanos(00);
 		try {
-			String query = "SELECT * from PlanningSalle where (DateDebut = " + localDateFormat.format(db) +")";
-			
+			String query = "SELECT * from PlanningSalle where (DateDebut='" + localDateFormat.format(t) +"')";
+			//String query = "SELECT * from PlanningSalle";
+			System.out.println(query);
 			ResultSet result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
 					.executeQuery(query);
-			if (result.first())
-				s = new PlanningSalle(result.getInt("idSalle"),(java.util.Date)result.getDate("DateDebut"), (java.util.Date)result.getDate("DateFin"));
-			
-			
-			System.out.println(s);
-			
+			System.out.println("okMA BIT");
+			if(result.first())
+				s = new PlanningSalle(result.getInt("idSalle"),result.getDate("DateDebut"), result.getDate("DateFin"));
+			System.out.println(s.getDateDebutSal());
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

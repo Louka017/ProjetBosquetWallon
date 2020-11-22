@@ -43,6 +43,9 @@ public class PlanningSalle implements Serializable{
 		this.dateFinSal = dateFinSal;
 	}
 	
+	public PlanningSalle() {
+	}
+
 	//Accesseurs
 	public int getId() {
 		return id;
@@ -92,7 +95,7 @@ public class PlanningSalle implements Serializable{
 	}
 	
 
-	public String ToString()
+	public String toString()
 	{
 		return id + " " + dateDebutSal + " " + dateFinSal;
 	}

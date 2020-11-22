@@ -116,9 +116,9 @@ public class ReservationSpectacleJFrame extends JFrame {
 				
 				
 				
-				PlanningSalle s = new PlanningSalle((java.sql.Date)dateDebut,(java.sql.Date)dateeFin);
+				PlanningSalle s = new PlanningSalle(dateDebut,(java.sql.Date)dateeFin);
 				s.ajouterPlanning();
-
+				System.out.println("reservation : ok");
 				CreationSpectacleJFrame CreSpec = new CreationSpectacleJFrame(s);
 				CreSpec.setVisible(true);		
 			}
