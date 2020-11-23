@@ -13,29 +13,40 @@ public class Spectacle implements Serializable{
 	protected static DAOFactory factory = (DAOFactory)DAOFactory.getFactory(0);
 	protected static SpectacleDAO dao = factory.getSpectacleDAO();
 	
+	private int id;
 	private String titre;
 	private int nbrPlaceParClient;
 	private Configuration configuration;
 	private List<Artiste> artistes;
 	private List<Representation> representations;
+	private int idSalle;
+
 	
-	private PlanningSalle idSalle;
-	int id= idSalle.getId();
-	
-	private Artiste a;
-	int ida = a.getId();
 	
 	//Constructeurs
-	public Spectacle(String titre, int nbrPlaceParClient,int idSalle,List<Representation> representations) {
-		this.titre = titre;
-		this.nbrPlaceParClient = nbrPlaceParClient;
-		this.id =idSalle;
-		this.representations = representations;
-	}
-	
 	public Spectacle()
 	{
 		
+	}
+	
+	public Spectacle(String titre, int nbrPlaceParClient,int idSalle) {
+		this.titre = titre;
+		this.nbrPlaceParClient = nbrPlaceParClient;
+		this.idSalle =idSalle;
+	}
+	
+	public Spectacle(int id,String titre, int nbrPlaceParClient,int idSalle) {
+		this.id = id;
+		this.titre = titre;
+		this.nbrPlaceParClient = nbrPlaceParClient;
+		this.idSalle =idSalle;
+	}
+	
+	public Spectacle(String titre, int nbrPlaceParClient,int idSalle,List<Artiste> artistes) {
+		this.titre = titre;
+		this.nbrPlaceParClient = nbrPlaceParClient;
+		this.idSalle =idSalle;
+		this.artistes = artistes;
 	}
 	
 	public Spectacle(String titre, int nbrPlaceParClient, Configuration configuration,List<Artiste> artistes,List<Representation> representations) {
@@ -47,6 +58,13 @@ public class Spectacle implements Serializable{
 	}
 	
 	//Accesseurs
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public String getTitre() {
 		return titre;
 	}
@@ -86,18 +104,24 @@ public class Spectacle implements Serializable{
 		this.representations = representations;
 	}
 	
-	//TEST
-	public int getId() {
-		return id;
-	}
-	public int getida() {
-		return ida;
-	}
 	
+	public int getIdSalle() {
+		return idSalle;
+	}
+	public void setIdSalle(int idSalle) {
+		this.idSalle = idSalle;
+	}
+
 	//Méthodes
 	public boolean ajouterSpectacle() 
 	{
 		return dao.create(this);
+	}
+	
+	
+	//Liste
+	public List<Spectacle> listeSpectacles(){
+		return dao.listeSpectacles();
 	}
 	
 	public String toString()

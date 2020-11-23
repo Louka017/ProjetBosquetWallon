@@ -118,9 +118,10 @@ public class ReservationSpectacleJFrame extends JFrame {
 				
 				PlanningSalle s = new PlanningSalle(dateDebut,(java.sql.Date)dateeFin);
 				s.ajouterPlanning();
-				System.out.println("reservation : ok");
-				CreationSpectacleJFrame CreSpec = new CreationSpectacleJFrame(s);
-				CreSpec.setVisible(true);		
+				PlanningSalle p = s.finfByDate(dateDebut,(java.sql.Date)dateeFin);
+				
+				CreationSpectacleJFrame CreSpec = new CreationSpectacleJFrame(p);
+				CreSpec.setVisible(true);	
 			}
 		});
 		BtnValider.setBounds(329, 209, 85, 21);

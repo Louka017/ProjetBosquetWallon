@@ -75,18 +75,18 @@ public class PlanningSalleDAO implements DAO<PlanningSalle> {
 		SimpleDateFormat localDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");	
 		
 		Timestamp t = new Timestamp(db.getTime());
-		System.out.println("date format : " + localDateFormat.format(t));
+
 		t.setNanos(00);
 		try {
 			String query = "SELECT * from PlanningSalle where (DateDebut='" + localDateFormat.format(t) +"')";
-			//String query = "SELECT * from PlanningSalle";
-			System.out.println(query);
+
+		
 			ResultSet result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
 					.executeQuery(query);
-			System.out.println("okMA BIT");
+
 			if(result.first())
 				s = new PlanningSalle(result.getInt("idSalle"),result.getDate("DateDebut"), result.getDate("DateFin"));
-			System.out.println(s.getDateDebutSal());
+
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

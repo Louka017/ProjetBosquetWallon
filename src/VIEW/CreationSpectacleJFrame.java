@@ -7,7 +7,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -45,7 +46,10 @@ public class CreationSpectacleJFrame extends JFrame {
 	private JTextField Diamant2;
 	private JTextField Libre2;
 	private JList<Artiste> listeToutLesArtistes;
+	private JList<Artiste> listeChoisit;
+	private List<Artiste> artistes= new ArrayList<>();
 	LoginJFrame frame1 = new LoginJFrame();
+	int placeLibre,placeBronze,placeArgent, placeOr, placeDiamant;
 
 
 	/**
@@ -119,7 +123,7 @@ public class CreationSpectacleJFrame extends JFrame {
 		contentPane.add(lblChoixArtistes);
 		
 		DefaultListModel<Artiste> ArtistesSelectionner = new DefaultListModel<>();
-		JList<Artiste> listeChoisit = new JList<>(ArtistesSelectionner);
+		listeChoisit = new JList<>(ArtistesSelectionner);
 		listeChoisit.setBounds(295, 99, 103, 88);
 		contentPane.add(listeChoisit);
 				
@@ -132,7 +136,10 @@ public class CreationSpectacleJFrame extends JFrame {
 		btnChoisir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					if (!ArtistesSelectionner.contains(listeToutLesArtistes.getSelectedValue()))
+					{
 					ArtistesSelectionner.addElement(listeToutLesArtistes.getSelectedValue());
+					artistes.add((Artiste)listeToutLesArtistes.getSelectedValue());
+					}
 			}
 		});
 		btnChoisir.setBounds(170, 119, 115, 21);
@@ -428,13 +435,8 @@ public class CreationSpectacleJFrame extends JFrame {
 		}
 	});
 	
-	System.out.println(s.getDateDebutSal());
-	var b  = s.finfByDate(s.getDateDebutSal(), s.getDateFinSal());
 
-	System.out.println(b.getDateFinSal());
-	System.out.println(b);
-	System.out.println(b.getId());
-	
+ 	
 	
 	//VALIDER
 	JButton btnValider = new JButton("VALIDER");
@@ -446,8 +448,44 @@ public class CreationSpectacleJFrame extends JFrame {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				//SPECTACLE
+				Spectacle spec = new Spectacle();
 				
-				JOptionPane.showMessageDialog(null, "Spectacle Ajouter 'A MODIFIER' !");
+				//RECUPERATION
+				String Titre = NomSpectacle.getText();
+				if(Libre2.getText().isEmpty()) 
+					placeLibre = 0;
+				else 
+					placeLibre = Integer.parseInt(Libre2.getText());
+																		
+				if(Bronze2.getText().isEmpty())
+					placeBronze = 0;									
+				else
+					placeBronze = Integer.parseInt(Bronze2.getText());
+																		
+				if(Argent2.getText().isEmpty())
+					placeArgent =0;
+				else
+					placeArgent = Integer.parseInt(Argent2.getText());
+				
+				if(Or2.getText().isEmpty())
+					placeOr = 0;
+				else
+					placeOr = Integer.parseInt(Or2.getText());
+				
+				if(Diamant2.getText().isEmpty())
+					placeDiamant = 0;
+				else
+					placeDiamant = Integer.parseInt(Diamant2.getText());
+				
+				int placeTotal = placeLibre + placeBronze + placeArgent + placeOr + placeDiamant;			
+				spec.setArtistes(artistes); 
+	
+				spec = new Spectacle(Titre, placeTotal, s.getId());
+				//AJOUT DB
+				spec.ajouterSpectacle();
+				//CHGMT FRAME
+				JOptionPane.showMessageDialog(null, "Spectacle Ajouter !");
 				frame1.setVisible(true);
 			}
 		});

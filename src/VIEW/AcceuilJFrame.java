@@ -17,8 +17,11 @@ import POJO.*;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JList;
+
 import java.awt.Color;
 
 public class AcceuilJFrame extends JFrame {
@@ -28,6 +31,7 @@ public class AcceuilJFrame extends JFrame {
 	private JPanel contentPane;
 	JMenuBar menuBar;
 	JMenu mnNewMenu;
+	private JList<Spectacle> listeTousLesSpec;
 	ReservationSpectacleJFrame ResSpec = new ReservationSpectacleJFrame();
 
 
@@ -87,15 +91,15 @@ public class AcceuilJFrame extends JFrame {
 		//Liste des spectacles
 		JLabel lblLstSpectacles = new JLabel("Liste des spectacles :");
 		lblLstSpectacles.setForeground(Color.WHITE);
-		lblLstSpectacles.setBounds(21, 40, 123, 13);
+		lblLstSpectacles.setBounds(61, 40, 123, 13);
 		contentPane.add(lblLstSpectacles);
 		
-		//Liste des ARTISTES //A modifier	
-	    //Spectacle mm = new Spectacle();
-	    //List<Spectacle> n = mm.TESTONS();
-		//JList WESH = new JList<>(n.toArray());
-		//WESH.setBounds(21, 63, 123, 123);
-		//contentPane.add(WESH);
+	    Spectacle spec = new Spectacle();
+		DefaultListModel<Spectacle> model = new DefaultListModel<>();
+		model.addAll(spec.listeSpectacles());
+		listeTousLesSpec = new JList<>(model);
+		listeTousLesSpec.setBounds(21, 63, 185, 156);
+		contentPane.add(listeTousLesSpec);
 		
 		//BOUTTON ORGANISER SPECTACLE
 		JButton btnOrganiserSpectacle = new JButton("Organiser un spectacle");

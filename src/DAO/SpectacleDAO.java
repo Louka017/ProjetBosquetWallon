@@ -3,6 +3,8 @@ package DAO;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import POJO.*;
 
@@ -18,9 +20,9 @@ public class SpectacleDAO implements DAO<Spectacle> {
 	//Fonctions
 	public  boolean create(Spectacle obj) {
 		try {
-		String create = "INSERT INTO Spectacle (Titre, NbrPlaceMax, idArtiste, idSalle) "
-				+ "values ('" + obj.getTitre() + "','" + obj.getNbrPlaceParClient() + "','"+ obj.getida()+ "','"+ obj.getId() + "');";
-		System.out.println(create);
+		String create = "INSERT INTO Spectacle (Titre, NbrPlaceMax, idSalle) "
+				+ "values ('" + obj.getTitre() + "','" + obj.getNbrPlaceParClient() + "','"+ obj.getIdSalle() + "');";
+	
 		connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeUpdate(create);
 		}
 		catch(SQLException e) {
@@ -42,6 +44,23 @@ public class SpectacleDAO implements DAO<Spectacle> {
 		return s;
 	}
 
+	
+	public List<Spectacle> listeSpectacles() {
+		List<Spectacle> spectacles = new ArrayList<Spectacle>();
+		try {
+
+			String query = "SELECT * from Spectacle";
+			ResultSet result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeQuery(query);
+				while(result.next()) {
+					Spectacle spectacle = new Spectacle(result.getInt("idSpectacle"), result.getString("Titre"),result.getInt("NbrPlaceMax"), result.getInt("idSalle"));
+					spectacles.add(spectacle);
+				}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return spectacles;
+	}
 
 
 }
