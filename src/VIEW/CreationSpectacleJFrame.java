@@ -48,9 +48,10 @@ public class CreationSpectacleJFrame extends JFrame {
 	private JList<Artiste> listeToutLesArtistes;
 	private JList<Artiste> listeChoisit;
 	private List<Artiste> artistes= new ArrayList<>();
-	LoginJFrame frame1 = new LoginJFrame();
-	int placeLibre,placeBronze,placeArgent, placeOr, placeDiamant;
-
+	RepresentationJFrame frame1 = new RepresentationJFrame();
+	private int placeLibre,placeBronze,placeArgent, placeOr, placeDiamant;
+	private int  prixLibre, prixBronze, prixArgent, prixOr, prixDiamant;
+	private String choice = "";
 
 	/**
 	 * Launch the application.
@@ -186,7 +187,7 @@ public class CreationSpectacleJFrame extends JFrame {
 			lblBronze.setBounds(533, 272, 60, 13);
 			contentPane.add(lblBronze);
 			Bronze = new JTextField();
-			Bronze.setBounds(603, 318, 35, 19);
+			Bronze.setBounds(603, 269, 35, 19);
 			contentPane.add(Bronze);
 			Bronze.setColumns(10);
 		
@@ -197,7 +198,7 @@ public class CreationSpectacleJFrame extends JFrame {
 			lblArgent.setBounds(533, 295, 60, 13);
 			contentPane.add(lblArgent);
 			Argent = new JTextField();
-			Argent.setBounds(603, 269, 35, 19);
+			Argent.setBounds(603, 292, 35, 19);
 			contentPane.add(Argent);
 			Argent.setColumns(10);
 		
@@ -208,7 +209,7 @@ public class CreationSpectacleJFrame extends JFrame {
 			lblOr.setBounds(558, 321, 35, 13);
 			contentPane.add(lblOr);
 			Or = new JTextField();
-			Or.setBounds(603, 295, 35, 19);
+			Or.setBounds(603, 318, 35, 19);
 			contentPane.add(Or);
 			Or.setColumns(10);
 		
@@ -366,7 +367,7 @@ public class CreationSpectacleJFrame extends JFrame {
 				Libre.setVisible(true);
 				lblLibre_1.setVisible(true);
 				Libre2.setVisible(true);
-				
+				choice = "Debout";
 			}
 		}
 	});
@@ -399,6 +400,7 @@ public class CreationSpectacleJFrame extends JFrame {
 				lblEuro1.setVisible(true);
 				lblEuro2.setVisible(true);
 				lblEuro3.setVisible(true);
+				choice = "Concert";
 			}
 		}
 	});
@@ -431,6 +433,7 @@ public class CreationSpectacleJFrame extends JFrame {
 				lblEuro2.setVisible(true);
 				lblEuro3.setVisible(true);
 				lblEuro4.setVisible(true);
+				choice = "Cirque";
 			}	
 		}
 	});
@@ -448,42 +451,117 @@ public class CreationSpectacleJFrame extends JFrame {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				//SPECTACLE
+				//POJOS
 				Spectacle spec = new Spectacle();
+				Configuration conf = new Configuration();
+				Categorie cat = new Categorie();
 				
 				//RECUPERATION
 				String Titre = NomSpectacle.getText();
-				if(Libre2.getText().isEmpty()) 
-					placeLibre = 0;
-				else 
-					placeLibre = Integer.parseInt(Libre2.getText());
-																		
-				if(Bronze2.getText().isEmpty())
-					placeBronze = 0;									
-				else
-					placeBronze = Integer.parseInt(Bronze2.getText());
-																		
-				if(Argent2.getText().isEmpty())
-					placeArgent =0;
-				else
-					placeArgent = Integer.parseInt(Argent2.getText());
 				
-				if(Or2.getText().isEmpty())
-					placeOr = 0;
-				else
-					placeOr = Integer.parseInt(Or2.getText());
+					if(Libre2.getText().isEmpty()) 
+						placeLibre = 0;
+					else 
+						placeLibre = Integer.parseInt(Libre2.getText());
+																			
+					if(Bronze2.getText().isEmpty())
+						placeBronze = 0;									
+					else
+						placeBronze = Integer.parseInt(Bronze2.getText());
+																			
+					if(Argent2.getText().isEmpty())
+						placeArgent =0;
+					else
+						placeArgent = Integer.parseInt(Argent2.getText());
+					
+					if(Or2.getText().isEmpty())
+						placeOr = 0;
+					else
+						placeOr = Integer.parseInt(Or2.getText());
+					
+					if(Diamant2.getText().isEmpty())
+						placeDiamant = 0;
+					else
+						placeDiamant = Integer.parseInt(Diamant2.getText());
 				
-				if(Diamant2.getText().isEmpty())
-					placeDiamant = 0;
-				else
-					placeDiamant = Integer.parseInt(Diamant2.getText());
+				int placeTotal = placeLibre + placeBronze + placeArgent + placeOr + placeDiamant;	
 				
-				int placeTotal = placeLibre + placeBronze + placeArgent + placeOr + placeDiamant;			
+					if(Libre.getText().isEmpty()) 
+						prixLibre = 0;
+					else
+						prixLibre = Integer.parseInt(Libre.getText());
+					
+					if(Bronze2.getText().isEmpty())
+						prixBronze = 0;									
+					else
+						prixBronze = Integer.parseInt(Bronze.getText());
+				
+					if(Argent.getText().isEmpty())
+						prixArgent =0;
+					else
+						prixArgent = Integer.parseInt(Argent.getText());
+					
+					if(Or.getText().isEmpty())
+						prixOr = 0;
+					else
+						prixOr = Integer.parseInt(Or.getText());
+					
+					if(Diamant.getText().isEmpty())
+						prixDiamant = 0;
+					else
+						prixDiamant = Integer.parseInt(Diamant.getText());
+				
 				spec.setArtistes(artistes); 
-	
+				//POJO SPECATCLE
 				spec = new Spectacle(Titre, placeTotal, s.getId());
-				//AJOUT DB
-				spec.ajouterSpectacle();
+					//AJOUT DB
+					spec.ajouterSpectacle();
+				
+					Spectacle spectacle = spec.findByTitre(Titre);
+				//POJO CONFIGURATION
+				conf= new Configuration(choice,spectacle.getId());
+					//AJOUT DB
+					conf.ajouterConfiguration();
+				
+					Configuration configuration = conf.findById(spectacle.getId());
+					
+				//POJO CATEGORIE
+				if(choice.equals("Debout")) {
+					cat= new Categorie("Libre", prixLibre,placeLibre,placeLibre, configuration.getId());
+						//AJOUT DB
+						cat.ajouterCategorie();
+				}
+				
+				if(choice.equals("Concert")) {
+					cat= new Categorie("Bronze", prixBronze,placeBronze,placeBronze, configuration.getId());
+						//AJOUT DB
+						cat.ajouterCategorie();
+					cat= new Categorie("Argent", prixArgent,placeArgent,placeArgent, configuration.getId());
+						//AJOUT DB
+						cat.ajouterCategorie();
+					cat= new Categorie("Or", prixOr,placeOr,placeOr, configuration.getId());
+						//AJOUT DB
+						cat.ajouterCategorie();
+					
+				}
+
+				if(choice.equals("Cirque")) {
+					cat= new Categorie("Bronze", prixBronze,placeBronze,placeBronze, configuration.getId());
+						//AJOUT DB
+						cat.ajouterCategorie();
+					cat= new Categorie("Argent", prixArgent,placeArgent,placeArgent, configuration.getId());
+						//AJOUT DB
+						cat.ajouterCategorie();
+					cat= new Categorie("Or", prixOr,placeOr,placeOr, configuration.getId());
+						//AJOUT DB
+						cat.ajouterCategorie();
+					cat= new Categorie("Diamant", prixDiamant,placeDiamant,placeDiamant, configuration.getId());
+						//AJOUT DB
+						cat.ajouterCategorie();
+				}
+				
+				
+				
 				//CHGMT FRAME
 				JOptionPane.showMessageDialog(null, "Spectacle Ajouter !");
 				frame1.setVisible(true);

@@ -118,12 +118,16 @@ public class Spectacle implements Serializable{
 		return dao.create(this);
 	}
 	
+	public Spectacle findByTitre(String titre) {
+		return dao.findByTitle(titre);
+	}
 	
 	//Liste
 	public List<Spectacle> listeSpectacles(){
 		return dao.listeSpectacles();
 	}
 	
+	//ToString
 	public String toString()
 	{
 		return titre;

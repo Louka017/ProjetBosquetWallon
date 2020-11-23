@@ -18,13 +18,26 @@ public class Categorie implements Serializable {
 	private int prix;
 	private int nbrPlaceDispo;
 	private int nbrPlaceMax;
+	private int idConfiguration;
 	
 	//Constructeur
+	public Categorie() {
+		
+	}
+	
 	public Categorie(String type, int prix, int nbrPlaceDispo, int nbrPlaceMax) {
 		this.type = type;
 		this.prix = prix;
 		this.nbrPlaceDispo = nbrPlaceDispo;
 		this.nbrPlaceMax = nbrPlaceMax;
+	}
+	
+	public Categorie(String type, int prix, int nbrPlaceDispo, int nbrPlaceMax, int idConfiguration) {
+		this.type = type;
+		this.prix = prix;
+		this.nbrPlaceDispo = nbrPlaceDispo;
+		this.nbrPlaceMax = nbrPlaceMax;
+		this.idConfiguration = idConfiguration;
 	}
 	
 	//Accesseurs
@@ -58,4 +71,17 @@ public class Categorie implements Serializable {
 	public void setNbrPlaceMax(int nbrPlaceMax) {
 		this.nbrPlaceMax = nbrPlaceMax;
 	}
+	
+	public int getIdConfiguration() {
+		return idConfiguration;
+	}
+	public void setIdConfiguration(int idConfiguration) {
+		this.idConfiguration = idConfiguration;
+	}
+	
+	//Méthodes
+	public boolean ajouterCategorie() {
+		return dao.create(this);
+	}
+	
 }

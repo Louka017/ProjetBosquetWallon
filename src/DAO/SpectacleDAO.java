@@ -3,7 +3,10 @@ package DAO;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import POJO.*;
@@ -44,6 +47,22 @@ public class SpectacleDAO implements DAO<Spectacle> {
 		return s;
 	}
 
+	
+	public Spectacle findByTitle(String titre) {
+		Spectacle s = null;
+		try {
+			ResultSet result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeQuery("SELECT * FROM Spectacle WHERE Titre = '" + titre + "';");
+			if (result.first()) {
+				s = new Spectacle(result.getInt("idSpectacle"),result.getString("Titre"),result.getInt("NbrPlaceMax"), result.getInt("idSalle")); 
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return s;
+	}
 	
 	public List<Spectacle> listeSpectacles() {
 		List<Spectacle> spectacles = new ArrayList<Spectacle>();

@@ -1,6 +1,9 @@
 package DAO;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import POJO.*;
 
 public class CategorieDAO implements DAO<Categorie> {
@@ -14,7 +17,16 @@ public class CategorieDAO implements DAO<Categorie> {
 	
 	//Fonctions
 	public  boolean create(Categorie obj) {
-		return false;
+		try {
+		String create = "INSERT INTO Categorie (Type, Prix, NbrPlaceDispo, NbrPlaceMax, idConfiguration) "
+				+ "values ('" + obj.getType() + "','" + obj.getPrix() + "','" + obj.getNbrPlaceDispo() + "','" + obj.getNbrPlaceMax()+ "','" + obj.getIdConfiguration() + "');";
+
+		connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeUpdate(create);
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
 	}
 	
 	public  boolean delete(Categorie obj) {
