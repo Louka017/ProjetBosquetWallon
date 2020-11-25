@@ -19,6 +19,15 @@ public class PlanningSalle implements Serializable{
 	private List<Spectacle> spectacle;
 	
 	//Constructeurs
+	public PlanningSalle() {
+	
+	}
+	
+	public PlanningSalle(int id) {
+		this.id = id;
+	}
+	
+	
 	public PlanningSalle(int id, Date dateDebutSal, Date dateFinSal, List<Spectacle> spectacle) {
 		this.id = id;
 		this.dateDebutSal = dateDebutSal;
@@ -42,9 +51,7 @@ public class PlanningSalle implements Serializable{
 		this.dateDebutSal = dateDebutSal;
 		this.dateFinSal = dateFinSal;
 	}
-	
-	public PlanningSalle() {
-	}
+
 
 	//Accesseurs
 	public int getId() {

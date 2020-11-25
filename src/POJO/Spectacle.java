@@ -22,7 +22,6 @@ public class Spectacle implements Serializable{
 	private int idSalle;
 
 	
-	
 	//Constructeurs
 	public Spectacle()
 	{

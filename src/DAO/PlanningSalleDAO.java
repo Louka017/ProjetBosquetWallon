@@ -23,10 +23,7 @@ public class PlanningSalleDAO implements DAO<PlanningSalle> {
 		this.connect = conn;
 	}
 	
-	
-	
-	
-	
+
 	//Fonctions
 	public  boolean create(PlanningSalle obj) {
 
@@ -69,6 +66,7 @@ public class PlanningSalleDAO implements DAO<PlanningSalle> {
 		}
 		return s;
 	}
+	
 	
 	public PlanningSalle findByDate(Date db, Date df) {
 		PlanningSalle s = new PlanningSalle();

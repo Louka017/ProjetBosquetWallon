@@ -48,7 +48,6 @@ public class CreationSpectacleJFrame extends JFrame {
 	private JList<Artiste> listeToutLesArtistes;
 	private JList<Artiste> listeChoisit;
 	private List<Artiste> artistes= new ArrayList<>();
-	RepresentationJFrame frame1 = new RepresentationJFrame();
 	private int placeLibre,placeBronze,placeArgent, placeOr, placeDiamant;
 	private int  prixLibre, prixBronze, prixArgent, prixOr, prixDiamant;
 	private String choice = "";
@@ -72,7 +71,7 @@ public class CreationSpectacleJFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CreationSpectacleJFrame(PlanningSalle s) {
+	public CreationSpectacleJFrame(PlanningSalle s, Personne p) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 735, 452);
@@ -564,6 +563,7 @@ public class CreationSpectacleJFrame extends JFrame {
 				
 				//CHGMT FRAME
 				JOptionPane.showMessageDialog(null, "Spectacle Ajouter !");
+				RepresentationJFrame frame1 = new RepresentationJFrame(spectacle,s,p);
 				frame1.setVisible(true);
 			}
 		});

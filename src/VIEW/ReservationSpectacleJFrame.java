@@ -20,6 +20,7 @@ import javax.swing.SwingConstants;
 import java.awt.Color;
 import com.toedter.calendar.JDateChooser;
 
+import POJO.Personne;
 import POJO.PlanningSalle;
 
 public class ReservationSpectacleJFrame extends JFrame {
@@ -50,7 +51,7 @@ public class ReservationSpectacleJFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ReservationSpectacleJFrame() {
+	public ReservationSpectacleJFrame(Personne personne) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel() {
@@ -114,13 +115,13 @@ public class ReservationSpectacleJFrame extends JFrame {
 				dateDebut = new java.sql.Date (dateDeb.getDate().getTime());
 				dateeFin = new java.sql.Date (dateFin.getDate().getTime());
 				
-				
+
 				
 				PlanningSalle s = new PlanningSalle(dateDebut,(java.sql.Date)dateeFin);
 				s.ajouterPlanning();
 				PlanningSalle p = s.finfByDate(dateDebut,(java.sql.Date)dateeFin);
 				
-				CreationSpectacleJFrame CreSpec = new CreationSpectacleJFrame(p);
+				CreationSpectacleJFrame CreSpec = new CreationSpectacleJFrame(p, personne);
 				CreSpec.setVisible(true);	
 			}
 		});
