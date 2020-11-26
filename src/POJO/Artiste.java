@@ -62,6 +62,6 @@ public class Artiste extends Personne implements Serializable {
 	
 	//Afficher les infos
 	public String toString() {
-		return nom + " " + prenom;
+		return  nom + " " + prenom;
 	}
 }

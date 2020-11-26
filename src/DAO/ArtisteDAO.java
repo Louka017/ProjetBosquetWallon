@@ -23,7 +23,7 @@ public class ArtisteDAO implements DAO<Artiste> {
 		try {
 		String create = "INSERT INTO Personne (Nom,Prenom,Rue,Numero,Ville,CodePostal,Discriminator,Email,MotDePasse) "
 				+ "values ('" + obj.getNom() + "','" + obj.getPrenom() + "','" + obj.getRue() + "','" + obj.getNumero() + "','" + obj.getVille() + "','" + obj.getCp() + "','Artiste','"+ obj.getEmail() + "','" + obj.getPassword() + "');";
-		System.out.println(create);
+
 		connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeUpdate(create);
 		}
 		catch(SQLException e) {

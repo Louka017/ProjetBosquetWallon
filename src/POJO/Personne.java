@@ -22,6 +22,7 @@ public class Personne implements Serializable{
 	protected String email;
 	protected String password;
 	protected String discriminator;
+	private int idSpectacle;
 
 
 	//Constructeurs
@@ -59,6 +60,12 @@ public class Personne implements Serializable{
 		this.id = id;
 		this.discriminator = discriminator;
 	}
+	
+	public Personne(int id, int idSpectacle) {
+		this.id = id;
+		this.idSpectacle = idSpectacle;
+		
+		}
 	
 	public Personne(String email, String password) {
 		this.email=email;
@@ -151,6 +158,13 @@ public class Personne implements Serializable{
 	}
 	
 	
+	public int getIdSpectacle() {
+		return idSpectacle;
+	}
+	public void setIdSpectacle(int idSpectacle) {
+		this.idSpectacle = idSpectacle;
+	}
+	
 	//Méthodes	
 	
 	String regnom = "^[A-Za-z]+$" ;
@@ -190,5 +204,10 @@ public class Personne implements Serializable{
 			return dao.findbyMail(email);
 	}
 
+	//ajouter
+	public boolean ajout()
+	{
+		return dao.create(this);
+	}
 	
 }

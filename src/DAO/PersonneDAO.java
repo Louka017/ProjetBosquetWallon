@@ -16,7 +16,18 @@ public class PersonneDAO implements DAO<Personne> {
 	
 	//Fonctions
 	public  boolean create(Personne obj) {
-		return false;
+		
+		try {
+		String create = "INSERT INTO Personne_Spectacle (idPersonne, idSpectacle) "
+				+ "values ('" + obj.getId() + "','" + obj.getIdSpectacle() + "');";
+
+		connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeUpdate(create);
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
+		
 	}
 	
 	public  boolean delete(Personne obj) {

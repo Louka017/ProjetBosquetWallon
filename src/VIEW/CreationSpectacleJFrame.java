@@ -52,14 +52,15 @@ public class CreationSpectacleJFrame extends JFrame {
 	private int  prixLibre, prixBronze, prixArgent, prixOr, prixDiamant;
 	private String choice = "";
 	int error = 0;
+	Personne personne = new Personne();
 	Spectacle spectacle= new Spectacle();
 	Spectacle spec = new Spectacle();
 	Configuration conf = new Configuration();
+	Configuration configuration = new Configuration();
 	Categorie cat = new Categorie();
 	Categorie cat1 = new Categorie();
 	Categorie cat2 = new Categorie();
 	Categorie cat3 = new Categorie();
-	Configuration configuration = new Configuration();
 
 	/**
 	 * Launch the application.
@@ -161,6 +162,7 @@ public class CreationSpectacleJFrame extends JFrame {
 		btnRetirer.setForeground(Color.RED);
 		btnRetirer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				artistes.remove((Artiste)listeChoisit.getSelectedValue());
 				ArtistesSelectionner.removeElement(listeChoisit.getSelectedValue());
 			}
 		});
@@ -489,8 +491,8 @@ public class CreationSpectacleJFrame extends JFrame {
 						placeDiamant = Integer.parseInt(Diamant2.getText());
 				
 					
-					
 				int placeTotal = placeLibre + placeBronze + placeArgent + placeOr + placeDiamant;	
+				
 				
 					if(Libre.getText().isEmpty()) 
 						prixLibre = 0;
@@ -517,7 +519,6 @@ public class CreationSpectacleJFrame extends JFrame {
 					else
 						prixDiamant = Integer.parseInt(Diamant.getText());
 				
-				spec.setArtistes(artistes);
 				
 
 					
@@ -533,6 +534,15 @@ public class CreationSpectacleJFrame extends JFrame {
 								spec.ajouterSpectacle();
 							
 								spectacle = spec.findByTitre(Titre);
+								
+								//AJOUT DES ARTISTES AU SPECTACLE
+								for(Artiste i : artistes)
+								{
+									personne = personne.findbyMail(i.getEmail());
+									Personne personneSpectacle = new Personne(personne.getId(),spectacle.getId());
+									personneSpectacle.ajout();
+								}
+
 							//POJO CONFIGURATION
 							conf= new Configuration(choice,spectacle.getId());
 								//AJOUT DB
@@ -596,6 +606,13 @@ public class CreationSpectacleJFrame extends JFrame {
 							spec.ajouterSpectacle();
 						
 							spectacle = spec.findByTitre(Titre);
+							//AJOUT DES ARTISTES AU SPECTACLE
+							for(Artiste i : artistes)
+							{
+								personne = personne.findbyMail(i.getEmail());
+								Personne personneSpectacle = new Personne(personne.getId(),spectacle.getId());
+								personneSpectacle.ajout();
+							}
 						//POJO CONFIGURATION
 						conf= new Configuration(choice,spectacle.getId());
 							//AJOUT DB
@@ -671,6 +688,13 @@ public class CreationSpectacleJFrame extends JFrame {
 							spec.ajouterSpectacle();
 						
 							spectacle = spec.findByTitre(Titre);
+							//AJOUT DES ARTISTES AU SPECTACLE
+							for(Artiste i : artistes)
+							{
+								personne = personne.findbyMail(i.getEmail());
+								Personne personneSpectacle = new Personne(personne.getId(),spectacle.getId());
+								personneSpectacle.ajout();
+							}
 						//POJO CONFIGURATION
 						conf= new Configuration(choice,spectacle.getId());
 							//AJOUT DB

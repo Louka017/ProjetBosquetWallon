@@ -92,8 +92,7 @@ public class Representation implements Serializable {
 	}
 	
 	//toString
-	public String toString() {
-		
+	public String toString() {	
 		DateFormat dateFormat = new SimpleDateFormat("hh:mm");
 		String strDate = dateFormat.format(heureDebut); 
 		String strDate2 = dateFormat.format(heureFin);
