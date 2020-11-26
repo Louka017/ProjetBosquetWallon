@@ -51,6 +51,15 @@ public class CreationSpectacleJFrame extends JFrame {
 	private int placeLibre,placeBronze,placeArgent, placeOr, placeDiamant;
 	private int  prixLibre, prixBronze, prixArgent, prixOr, prixDiamant;
 	private String choice = "";
+	int error = 0;
+	Spectacle spectacle= new Spectacle();
+	Spectacle spec = new Spectacle();
+	Configuration conf = new Configuration();
+	Categorie cat = new Categorie();
+	Categorie cat1 = new Categorie();
+	Categorie cat2 = new Categorie();
+	Categorie cat3 = new Categorie();
+	Configuration configuration = new Configuration();
 
 	/**
 	 * Launch the application.
@@ -450,10 +459,6 @@ public class CreationSpectacleJFrame extends JFrame {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				//POJOS
-				Spectacle spec = new Spectacle();
-				Configuration conf = new Configuration();
-				Categorie cat = new Categorie();
 				
 				//RECUPERATION
 				String Titre = NomSpectacle.getText();
@@ -483,6 +488,8 @@ public class CreationSpectacleJFrame extends JFrame {
 					else
 						placeDiamant = Integer.parseInt(Diamant2.getText());
 				
+					
+					
 				int placeTotal = placeLibre + placeBronze + placeArgent + placeOr + placeDiamant;	
 				
 					if(Libre.getText().isEmpty()) 
@@ -510,61 +517,181 @@ public class CreationSpectacleJFrame extends JFrame {
 					else
 						prixDiamant = Integer.parseInt(Diamant.getText());
 				
-				spec.setArtistes(artistes); 
-				//POJO SPECATCLE
-				spec = new Spectacle(Titre, placeTotal, s.getId());
-					//AJOUT DB
-					spec.ajouterSpectacle();
+				spec.setArtistes(artistes);
 				
-					Spectacle spectacle = spec.findByTitre(Titre);
-				//POJO CONFIGURATION
-				conf= new Configuration(choice,spectacle.getId());
-					//AJOUT DB
-					conf.ajouterConfiguration();
-				
-					Configuration configuration = conf.findById(spectacle.getId());
+
 					
 				//POJO CATEGORIE
 				if(choice.equals("Debout")) {
-					cat= new Categorie("Libre", prixLibre,placeLibre,placeLibre, configuration.getId());
 						//AJOUT DB
-						cat.ajouterCategorie();
+						if(cat.verifyDebout(placeLibre) == true) {
+							cat= new Categorie("Libre", prixLibre,placeLibre,placeLibre);
+							
+							//POJO SPECATCLE
+							spec = new Spectacle(Titre, placeTotal, s.getId());
+								//AJOUT DB
+								spec.ajouterSpectacle();
+							
+								spectacle = spec.findByTitre(Titre);
+							//POJO CONFIGURATION
+							conf= new Configuration(choice,spectacle.getId());
+								//AJOUT DB
+								conf.ajouterConfiguration();
+							
+								configuration = conf.findById(spectacle.getId());
+							//POJO CATEGORIE
+							cat= new Categorie("Libre", prixLibre,placeLibre,placeLibre, configuration.getId());
+							cat.ajouterCategorie();
+							
+							//CHGMT FRAME
+							JOptionPane.showMessageDialog(null, "Spectacle Ajouter !");
+							RepresentationJFrame frame1 = new RepresentationJFrame(spectacle,s,p);
+							frame1.setVisible(true);
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "Erreur! Spectacle non ajouter ");
+						}
+						
 				}
+				
+				
+				
+				
+				
+				
+				
 				
 				if(choice.equals("Concert")) {
-					cat= new Categorie("Bronze", prixBronze,placeBronze,placeBronze, configuration.getId());
 						//AJOUT DB
-						cat.ajouterCategorie();
-					cat= new Categorie("Argent", prixArgent,placeArgent,placeArgent, configuration.getId());
+						if(cat.verifyBronze(placeBronze) == true) {
+							cat= new Categorie("Bronze", prixBronze,placeBronze,placeBronze);
+							error = 0;
+						}
+						else{
+							error = 1;
+						}
 						//AJOUT DB
-						cat.ajouterCategorie();
-					cat= new Categorie("Or", prixOr,placeOr,placeOr, configuration.getId());
+						if(cat1.verifyArgent(placeArgent) == true) {
+							cat1= new Categorie("Argent", prixArgent,placeArgent,placeArgent);
+							error = 0;
+						} else {
+							error = 1;
+						}
 						//AJOUT DB
+						if(cat2.verifyOr(placeOr) == true) {
+							cat2= new Categorie("Or", prixOr,placeOr,placeOr);
+							error = 0;
+						} 
+						else {
+							error = 1;
+						}
+						
+					if(error == 1) {
+						JOptionPane.showMessageDialog(null, "Erreur! Spectacle non ajouter ");
+						
+					}else {
+						//POJO SPECATCLE
+						spec = new Spectacle(Titre, placeTotal, s.getId());
+							//AJOUT DB
+							spec.ajouterSpectacle();
+						
+							spectacle = spec.findByTitre(Titre);
+						//POJO CONFIGURATION
+						conf= new Configuration(choice,spectacle.getId());
+							//AJOUT DB
+							conf.ajouterConfiguration();
+						
+							configuration = conf.findById(spectacle.getId());
+						//POJO CATEGORIE
+						cat= new Categorie("Bronze", prixBronze,placeBronze,placeBronze, configuration.getId());
+						cat1= new Categorie("Argent", prixArgent,placeArgent,placeArgent, configuration.getId());
+						cat2= new Categorie("Or", prixOr,placeOr,placeOr, configuration.getId());
 						cat.ajouterCategorie();
-					
+						cat1.ajouterCategorie();
+						cat2.ajouterCategorie();
+						//CHGMT FRAME
+						JOptionPane.showMessageDialog(null, "Spectacle Ajouter !");
+						RepresentationJFrame frame1 = new RepresentationJFrame(spectacle,s,p);
+						frame1.setVisible(true);
+					}
 				}
 
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				if(choice.equals("Cirque")) {
-					cat= new Categorie("Bronze", prixBronze,placeBronze,placeBronze, configuration.getId());
 						//AJOUT DB
-						cat.ajouterCategorie();
-					cat= new Categorie("Argent", prixArgent,placeArgent,placeArgent, configuration.getId());
+					    if(cat.verifyBronze2(placeBronze) == true) {
+					    	cat= new Categorie("Bronze", prixBronze,placeBronze,placeBronze);
+					    	error = 0;
+					    }
+					    else {
+					    	error = 1;
+					    }
 						//AJOUT DB
-						cat.ajouterCategorie();
-					cat= new Categorie("Or", prixOr,placeOr,placeOr, configuration.getId());
+						if(cat1.verifyBronze(placeArgent) == true) {
+							cat1= new Categorie("Argent", prixArgent,placeArgent,placeArgent);
+							error = 0;
+						}
+						else {
+							error = 1;
+						}
 						//AJOUT DB
-						cat.ajouterCategorie();
-					cat= new Categorie("Diamant", prixDiamant,placeDiamant,placeDiamant, configuration.getId());
+						if(cat2.verifyOr2(placeOr) == true) {
+							cat2= new Categorie("Or", prixOr,placeOr,placeOr);
+							error = 0;
+						}
+						else {
+							error = 1;
+						}
 						//AJOUT DB
+						if(cat3.verifyDiamant(placeDiamant) == true) {
+							cat3= new Categorie("Diamant", prixDiamant,placeDiamant,placeDiamant);
+							error = 0;
+						}
+						else {
+							error = 1;
+						}
+					
+					if(error == 1) {
+						JOptionPane.showMessageDialog(null, "Erreur! Spectacle non ajouter ");
+					}
+					else {
+						//POJO SPECATCLE
+						spec = new Spectacle(Titre, placeTotal, s.getId());
+							//AJOUT DB
+							spec.ajouterSpectacle();
+						
+							spectacle = spec.findByTitre(Titre);
+						//POJO CONFIGURATION
+						conf= new Configuration(choice,spectacle.getId());
+							//AJOUT DB
+							conf.ajouterConfiguration();
+						
+							configuration = conf.findById(spectacle.getId());
+						//POJO CATEGORIE
+						cat= new Categorie("Bronze", prixBronze,placeBronze,placeBronze, configuration.getId());
+						cat1= new Categorie("Argent", prixArgent,placeArgent,placeArgent, configuration.getId());
+						cat2= new Categorie("Or", prixOr,placeOr,placeOr, configuration.getId());
+						cat3= new Categorie("Diamant", prixDiamant,placeDiamant,placeDiamant, configuration.getId());
 						cat.ajouterCategorie();
+						cat1.ajouterCategorie();
+						cat2.ajouterCategorie();
+						cat3.ajouterCategorie();
+						//CHGMT FRAME
+						JOptionPane.showMessageDialog(null, "Spectacle Ajouter !");
+						RepresentationJFrame frame1 = new RepresentationJFrame(spectacle,s,p);
+						frame1.setVisible(true);
+					}
 				}
-				
-				
-				
-				//CHGMT FRAME
-				JOptionPane.showMessageDialog(null, "Spectacle Ajouter !");
-				RepresentationJFrame frame1 = new RepresentationJFrame(spectacle,s,p);
-				frame1.setVisible(true);
 			}
 		});
 	}

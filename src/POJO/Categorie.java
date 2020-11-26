@@ -80,8 +80,55 @@ public class Categorie implements Serializable {
 	}
 	
 	//Méthodes
+	
+	//Ajouter
 	public boolean ajouterCategorie() {
 		return dao.create(this);
+	}
+	
+	//Limite places DEBOUT
+	public boolean verifyDebout(int libre) {
+		if(libre < 0 || libre > 8000)
+			return false;
+		return true;
+	}
+	
+	//Limite places CONCERT
+	public boolean verifyBronze(int bronze) {
+		if(bronze < 0 || bronze > 3000)
+			return false;
+		return true;
+	}
+	
+	public boolean verifyArgent(int argent) {
+		if(argent < 0 || argent > 1500)
+			return false;
+		return true;
+	}
+	
+	public boolean verifyOr(int or) {
+		if(or < 0 || or > 500)
+			return false;
+		return true;
+	}
+	
+	//Limite places CIRQUE
+	public boolean verifyBronze2(int bronze) {
+		if(bronze < 0 || bronze > 1500)
+			return false;
+		return true;
+	}
+	
+	public boolean verifyOr2(int or) {
+		if(or < 0 || or > 2000)
+			return false;
+		return true;
+	}
+	
+	public boolean verifyDiamant(int diamant) {
+		if(diamant < 0 || diamant > 1000)
+			return false;
+		return true;
 	}
 	
 }

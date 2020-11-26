@@ -7,8 +7,10 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
-
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -29,8 +31,11 @@ public class ReservationSpectacleJFrame extends JFrame {
 	private JPanel contentPane;
 	Date dateDebut = null;
 	Date dateeFin = null;
-
-
+	String strDateDebut, strDateFin, goodDateDebut, goodDateFin;
+	Date VraiDateDebut;
+	Date VraiDateFin;
+	Date correctDateDebut;
+	Date correctDateFin;
 	
 	/**
 	 * Launch the application.
@@ -112,17 +117,53 @@ public class ReservationSpectacleJFrame extends JFrame {
 		BtnValider.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//RECUPERATION
-				dateDebut = new java.sql.Date (dateDeb.getDate().getTime());
-				dateeFin = new java.sql.Date (dateFin.getDate().getTime());
+				dateDebut = dateDeb.getDate();
+				dateeFin  = dateFin.getDate();
 				
-
+				//FORMAT DATE
+				DateFormat dateFormatLong = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				
-				PlanningSalle s = new PlanningSalle(dateDebut,(java.sql.Date)dateeFin);
+				//CHANGEMENT DATE EN STRING
+				strDateDebut = dateFormatLong.format(dateDebut);
+				strDateFin = dateFormatLong.format(dateeFin);
+				
+				//SEPARER LA DATE ET L'HEURE
+				String[] splitArray = null;
+				String[] splitArray2 = null;
+				splitArray = strDateDebut.split(" ");
+				splitArray2 = strDateFin.split(" ");
+				
+				for(int i = 0; i< splitArray.length;i++){
+					   //RECUPERE JUSTE LA DATE
+						goodDateDebut = splitArray[0];
+				}
+				for(int i = 0; i< splitArray2.length;i++){
+					   //RECUPERE JUSTE LA DATE
+						goodDateFin = splitArray2[0];
+				}
+				
+				//MODIFICATION POUR QUE HEURE = 12h00
+				goodDateDebut = goodDateDebut + " 12:00:00";
+				goodDateFin = goodDateFin + " 12:00:00";
+				
+				//PARSE EN DATE
+				try {
+						VraiDateDebut = dateFormatLong.parse(goodDateDebut);
+						VraiDateFin = dateFormatLong.parse(goodDateFin);
+						long heureDeb = VraiDateDebut.getTime();
+						long heureFin = VraiDateFin.getTime();
+						correctDateDebut = new java.sql.Date (heureDeb);
+					    correctDateFin = new java.sql.Date (heureFin);
+						
+						
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}
+				PlanningSalle s = new PlanningSalle((java.sql.Date)correctDateDebut,(java.sql.Date)correctDateFin);
 				s.ajouterPlanning();
-				PlanningSalle p = s.finfByDate(dateDebut,(java.sql.Date)dateeFin);
-				
-				CreationSpectacleJFrame CreSpec = new CreationSpectacleJFrame(p, personne);
-				CreSpec.setVisible(true);	
+				PlanningSalle planningsalle = s.finfByDate(VraiDateDebut,VraiDateFin);
+				PayementGestionnaireJFrame g = new PayementGestionnaireJFrame(planningsalle, personne);
+				g.setVisible(true);	
 			}
 		});
 		BtnValider.setBounds(329, 209, 85, 21);
