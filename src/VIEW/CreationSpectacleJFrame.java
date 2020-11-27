@@ -81,7 +81,7 @@ public class CreationSpectacleJFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CreationSpectacleJFrame(PlanningSalle s, Personne p) {
+	public CreationSpectacleJFrame(PlanningSalle ps, Personne p) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 735, 452);
@@ -95,7 +95,6 @@ public class CreationSpectacleJFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
 
 		
 		//NOM SPECTACLE
@@ -105,7 +104,6 @@ public class CreationSpectacleJFrame extends JFrame {
 		lblNomSpectacle.setForeground(Color.LIGHT_GRAY);
 		lblNomSpectacle.setBounds(186, 10, 331, 13);
 		contentPane.add(lblNomSpectacle);
-		
 		NomSpectacle = new JTextField();
 		NomSpectacle.setColumns(10);
 		NomSpectacle.setBounds(186, 33, 331, 21);
@@ -117,7 +115,6 @@ public class CreationSpectacleJFrame extends JFrame {
 		lblArtistesPresent.setForeground(Color.LIGHT_GRAY);
 		lblArtistesPresent.setBounds(57, 76, 103, 13);
 		contentPane.add(lblArtistesPresent);
-		
 		Artiste a = new Artiste();
 		DefaultListModel<Artiste> model = new DefaultListModel<>();
 		model.addAll(a.listeArtistes());
@@ -131,13 +128,10 @@ public class CreationSpectacleJFrame extends JFrame {
 		lblChoixArtistes.setForeground(Color.LIGHT_GRAY);
 		lblChoixArtistes.setBounds(295, 76, 103, 13);
 		contentPane.add(lblChoixArtistes);
-		
 		DefaultListModel<Artiste> ArtistesSelectionner = new DefaultListModel<>();
 		listeChoisit = new JList<>(ArtistesSelectionner);
 		listeChoisit.setBounds(295, 99, 103, 88);
 		contentPane.add(listeChoisit);
-				
-		
 		
 		//CHOSIR -->
 		JButton btnChoisir = new JButton("Choisir >>");
@@ -145,16 +139,15 @@ public class CreationSpectacleJFrame extends JFrame {
 		btnChoisir.setBackground(Color.GRAY);
 		btnChoisir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					if (!ArtistesSelectionner.contains(listeToutLesArtistes.getSelectedValue()))
-					{
+				if (!ArtistesSelectionner.contains(listeToutLesArtistes.getSelectedValue()))
+				{
 					ArtistesSelectionner.addElement(listeToutLesArtistes.getSelectedValue());
 					artistes.add((Artiste)listeToutLesArtistes.getSelectedValue());
-					}
+				}
 			}
 		});
 		btnChoisir.setBounds(170, 119, 115, 21);
 		contentPane.add(btnChoisir);	
-		
 		
 		//RETIRER <--
 		JButton btnRetirer = new JButton("<< Retirer");
@@ -168,9 +161,6 @@ public class CreationSpectacleJFrame extends JFrame {
 		});
 		btnRetirer.setBounds(170, 150, 115, 21);
 		contentPane.add(btnRetirer);
-		
-		
-
 		
 		//CONFIGURATION
 		JLabel lblConfiguration = new JLabel("Configuration:");
@@ -199,8 +189,7 @@ public class CreationSpectacleJFrame extends JFrame {
 			Bronze = new JTextField();
 			Bronze.setBounds(603, 269, 35, 19);
 			contentPane.add(Bronze);
-			Bronze.setColumns(10);
-		
+			Bronze.setColumns(10);		
 			
 			JLabel lblArgent = new JLabel("Argent  : ");
 			lblArgent.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -211,7 +200,6 @@ public class CreationSpectacleJFrame extends JFrame {
 			Argent.setBounds(603, 292, 35, 19);
 			contentPane.add(Argent);
 			Argent.setColumns(10);
-		
 			
 			JLabel lblOr = new JLabel("Or : ");
 			lblOr.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -223,7 +211,6 @@ public class CreationSpectacleJFrame extends JFrame {
 			contentPane.add(Or);
 			Or.setColumns(10);
 		
-			
 			JLabel lblDiamant = new JLabel("Diamant : ");
 			lblDiamant.setHorizontalAlignment(SwingConstants.RIGHT);
 			lblDiamant.setForeground(Color.WHITE);
@@ -249,7 +236,6 @@ public class CreationSpectacleJFrame extends JFrame {
 	bgroup.add(RadioDebout);
 	bgroup.add(RadioConcert);
 	bgroup.add(RadioCirque);
-	
 	
 	//PRIX DES PLACES
 	JLabel lblPrix = new JLabel("Prix des places :");
@@ -288,14 +274,12 @@ public class CreationSpectacleJFrame extends JFrame {
 	lblEuro4.setBounds(648, 349, 16, 13);
 	contentPane.add(lblEuro4);
 	
-
 	//NOMBRE DE PLACES
 	JLabel lblNbrPlace = new JLabel("Nombre de places :");
 	lblNbrPlace.setBackground(Color.WHITE);
 	lblNbrPlace.setForeground(Color.LIGHT_GRAY);
 	lblNbrPlace.setBounds(20, 226, 121, 13);
 	contentPane.add(lblNbrPlace);
-	
 	
 	JLabel lblBronze_1 = new JLabel("Bronze : ");
 	lblBronze_1.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -346,7 +330,6 @@ public class CreationSpectacleJFrame extends JFrame {
 	Libre2.setColumns(10);
 	Libre2.setBounds(90, 246, 35, 19);
 	contentPane.add(Libre2);
-	
 	
 	//CONFIGURATION CHOISIE
 	RadioDebout.addActionListener(new ActionListener() {
@@ -447,10 +430,7 @@ public class CreationSpectacleJFrame extends JFrame {
 			}	
 		}
 	});
-	
 
- 	
-	
 	//VALIDER
 	JButton btnValider = new JButton("VALIDER");
 	btnValider.setForeground(Color.RED);
@@ -458,104 +438,105 @@ public class CreationSpectacleJFrame extends JFrame {
 	btnValider.setBounds(281, 295, 160, 108);
 	contentPane.add(btnValider);
 	btnValider.addActionListener(new ActionListener() 
+	{
+		public void actionPerformed(ActionEvent e)
 		{
-			public void actionPerformed(ActionEvent e)
-			{
+			
+			//RECUPERATION
+			String Titre = NomSpectacle.getText();
 				
-				//RECUPERATION
-				String Titre = NomSpectacle.getText();
-				
-					if(Libre2.getText().isEmpty()) 
-						placeLibre = 0;
-					else 
-						placeLibre = Integer.parseInt(Libre2.getText());
+				if(Libre2.getText().isEmpty()) 
+					placeLibre = 0;
+				else 
+					placeLibre = Integer.parseInt(Libre2.getText());
 																			
-					if(Bronze2.getText().isEmpty())
-						placeBronze = 0;									
-					else
-						placeBronze = Integer.parseInt(Bronze2.getText());
+				if(Bronze2.getText().isEmpty())
+					placeBronze = 0;									
+				else
+					placeBronze = Integer.parseInt(Bronze2.getText());
 																			
-					if(Argent2.getText().isEmpty())
-						placeArgent =0;
-					else
-						placeArgent = Integer.parseInt(Argent2.getText());
+				if(Argent2.getText().isEmpty())
+					placeArgent =0;
+				else
+					placeArgent = Integer.parseInt(Argent2.getText());
 					
-					if(Or2.getText().isEmpty())
-						placeOr = 0;
-					else
-						placeOr = Integer.parseInt(Or2.getText());
+				if(Or2.getText().isEmpty())
+					placeOr = 0;
+				else
+					placeOr = Integer.parseInt(Or2.getText());
 					
-					if(Diamant2.getText().isEmpty())
-						placeDiamant = 0;
-					else
-						placeDiamant = Integer.parseInt(Diamant2.getText());
+				if(Diamant2.getText().isEmpty())
+					placeDiamant = 0;
+				else
+					placeDiamant = Integer.parseInt(Diamant2.getText());
 				
-					
+				
 				int placeTotal = placeLibre + placeBronze + placeArgent + placeOr + placeDiamant;	
 				
 				
-					if(Libre.getText().isEmpty()) 
-						prixLibre = 0;
-					else
-						prixLibre = Integer.parseInt(Libre.getText());
+				if(Libre.getText().isEmpty()) 
+					prixLibre = 0;
+				else
+					prixLibre = Integer.parseInt(Libre.getText());
 					
-					if(Bronze2.getText().isEmpty())
-						prixBronze = 0;									
-					else
-						prixBronze = Integer.parseInt(Bronze.getText());
+				if(Bronze2.getText().isEmpty())
+					prixBronze = 0;									
+				else
+					prixBronze = Integer.parseInt(Bronze.getText());
 				
-					if(Argent.getText().isEmpty())
-						prixArgent =0;
-					else
-						prixArgent = Integer.parseInt(Argent.getText());
+				if(Argent.getText().isEmpty())
+					prixArgent =0;
+				else
+					prixArgent = Integer.parseInt(Argent.getText());
 					
-					if(Or.getText().isEmpty())
-						prixOr = 0;
-					else
-						prixOr = Integer.parseInt(Or.getText());
+				if(Or.getText().isEmpty())
+					prixOr = 0;
+				else
+					prixOr = Integer.parseInt(Or.getText());
 					
-					if(Diamant.getText().isEmpty())
-						prixDiamant = 0;
-					else
-						prixDiamant = Integer.parseInt(Diamant.getText());
-				
-				
-
+				if(Diamant.getText().isEmpty())
+					prixDiamant = 0;
+				else
+					prixDiamant = Integer.parseInt(Diamant.getText());	
 					
 				//POJO CATEGORIE
 				if(choice.equals("Debout")) {
-						//AJOUT DB
-						if(cat.verifyDebout(placeLibre) == true) {
+					if(cat.verifyDebout(placeLibre) == true) {
 							cat= new Categorie("Libre", prixLibre,placeLibre,placeLibre);
 							
 							//POJO SPECATCLE
-							spec = new Spectacle(Titre, placeTotal, s.getId());
-								//AJOUT DB
-								spec.ajouterSpectacle();
+							spec = new Spectacle(Titre, placeTotal);
 							
-								spectacle = spec.findByTitre(Titre);
-								
-								//AJOUT DES ARTISTES AU SPECTACLE
-								for(Artiste i : artistes)
-								{
-									personne = personne.findbyMail(i.getEmail());
-									Personne personneSpectacle = new Personne(personne.getId(),spectacle.getId());
-									personneSpectacle.ajout();
-								}
+							//AJOUT DB
+							ps.ajouterSpectacle(spec);
+							
+							spectacle = spec.findByTitre();
+							
+							//AJOUT DES ARTISTES AU SPECTACLE
+							for(Artiste i : artistes)
+							{
+								personne = new Personne(i.getEmail());
+								personne = personne.findbyMail();
+								spectacle.ajouterPlanningSalle(personne);
+							}
 
 							//POJO CONFIGURATION
-							conf= new Configuration(choice,spectacle.getId());
-								//AJOUT DB
-								conf.ajouterConfiguration();
+							conf= new Configuration(choice);
+
+							//AJOUT DB
+							spectacle.ajouterConfiguration(conf);
 							
-								configuration = conf.findById(spectacle.getId());
+							configuration = conf.find(spectacle.getId());
+
 							//POJO CATEGORIE
-							cat= new Categorie("Libre", prixLibre,placeLibre,placeLibre, configuration.getId());
-							cat.ajouterCategorie();
+							cat= new Categorie("Libre", prixLibre,placeLibre,placeLibre);
+							
+							//AJOUT DB
+							configuration.ajouterCategorie(cat);
 							
 							//CHGMT FRAME
 							JOptionPane.showMessageDialog(null, "Spectacle Ajouter !");
-							RepresentationJFrame frame1 = new RepresentationJFrame(spectacle,s,p);
+							RepresentationJFrame frame1 = new RepresentationJFrame(spectacle,ps,p);
 							frame1.setVisible(true);
 						}
 						else {
@@ -563,13 +544,6 @@ public class CreationSpectacleJFrame extends JFrame {
 						}
 						
 				}
-				
-				
-				
-				
-				
-				
-				
 				
 				if(choice.equals("Concert")) {
 						//AJOUT DB
@@ -600,50 +574,46 @@ public class CreationSpectacleJFrame extends JFrame {
 						JOptionPane.showMessageDialog(null, "Erreur! Spectacle non ajouter ");
 						
 					}else {
-						//POJO SPECATCLE
-						spec = new Spectacle(Titre, placeTotal, s.getId());
-							//AJOUT DB
-							spec.ajouterSpectacle();
 						
-							spectacle = spec.findByTitre(Titre);
+							//POJO SPECATCLE
+							spec = new Spectacle(Titre, placeTotal);
+							
+							//AJOUT DB
+							ps.ajouterSpectacle(spec);
+							
+							spectacle = spec.findByTitre();
+
 							//AJOUT DES ARTISTES AU SPECTACLE
 							for(Artiste i : artistes)
 							{
-								personne = personne.findbyMail(i.getEmail());
-								Personne personneSpectacle = new Personne(personne.getId(),spectacle.getId());
-								personneSpectacle.ajout();
+								personne = new Personne(i.getEmail());
+								personne = personne.findbyMail();
+								spectacle.ajouterPlanningSalle(personne);
 							}
-						//POJO CONFIGURATION
-						conf= new Configuration(choice,spectacle.getId());
+							
+							//POJO CONFIGURATION
+							conf= new Configuration(choice);
+
 							//AJOUT DB
-							conf.ajouterConfiguration();
-						
-							configuration = conf.findById(spectacle.getId());
+							spectacle.ajouterConfiguration(conf);	
+							
+							configuration = conf.find(spectacle.getId());
+							
 						//POJO CATEGORIE
-						cat= new Categorie("Bronze", prixBronze,placeBronze,placeBronze, configuration.getId());
-						cat1= new Categorie("Argent", prixArgent,placeArgent,placeArgent, configuration.getId());
-						cat2= new Categorie("Or", prixOr,placeOr,placeOr, configuration.getId());
-						cat.ajouterCategorie();
-						cat1.ajouterCategorie();
-						cat2.ajouterCategorie();
+						cat= new Categorie("Bronze", prixBronze,placeBronze,placeBronze);
+						cat1= new Categorie("Argent", prixArgent,placeArgent,placeArgent);
+						cat2= new Categorie("Or", prixOr,placeOr,placeOr);
+						configuration.ajouterCategorie(cat);
+						configuration.ajouterCategorie(cat1);
+						configuration.ajouterCategorie(cat2);
+						
 						//CHGMT FRAME
 						JOptionPane.showMessageDialog(null, "Spectacle Ajouter !");
-						RepresentationJFrame frame1 = new RepresentationJFrame(spectacle,s,p);
+						RepresentationJFrame frame1 = new RepresentationJFrame(spectacle,ps,p);
 						frame1.setVisible(true);
 					}
 				}
 
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 				if(choice.equals("Cirque")) {
 						//AJOUT DB
 					    if(cat.verifyBronze2(placeBronze) == true) {
@@ -682,37 +652,42 @@ public class CreationSpectacleJFrame extends JFrame {
 						JOptionPane.showMessageDialog(null, "Erreur! Spectacle non ajouter ");
 					}
 					else {
+						
 						//POJO SPECATCLE
-						spec = new Spectacle(Titre, placeTotal, s.getId());
-							//AJOUT DB
-							spec.ajouterSpectacle();
+						spec = new Spectacle(Titre, placeTotal);
 						
-							spectacle = spec.findByTitre(Titre);
-							//AJOUT DES ARTISTES AU SPECTACLE
-							for(Artiste i : artistes)
-							{
-								personne = personne.findbyMail(i.getEmail());
-								Personne personneSpectacle = new Personne(personne.getId(),spectacle.getId());
-								personneSpectacle.ajout();
-							}
+						//AJOUT DB
+						ps.ajouterSpectacle(spec);
+						
+						spectacle = spec.findByTitre();
+						
+						//AJOUT DES ARTISTES AU SPECTACLE
+						for(Artiste i : artistes)
+						{
+							personne = new Personne(i.getEmail());
+							personne = personne.findbyMail();
+							spectacle.ajouterPlanningSalle(personne);
+						}
+						
 						//POJO CONFIGURATION
-						conf= new Configuration(choice,spectacle.getId());
-							//AJOUT DB
-							conf.ajouterConfiguration();
+						conf= new Configuration(choice);
+
+						//AJOUT DB
+						spectacle.ajouterConfiguration(conf);						
+						configuration = conf.find(conf.getId());
 						
-							configuration = conf.findById(spectacle.getId());
 						//POJO CATEGORIE
-						cat= new Categorie("Bronze", prixBronze,placeBronze,placeBronze, configuration.getId());
-						cat1= new Categorie("Argent", prixArgent,placeArgent,placeArgent, configuration.getId());
-						cat2= new Categorie("Or", prixOr,placeOr,placeOr, configuration.getId());
-						cat3= new Categorie("Diamant", prixDiamant,placeDiamant,placeDiamant, configuration.getId());
-						cat.ajouterCategorie();
-						cat1.ajouterCategorie();
-						cat2.ajouterCategorie();
-						cat3.ajouterCategorie();
+						cat= new Categorie("Bronze", prixBronze,placeBronze,placeBronze);
+						cat1= new Categorie("Argent", prixArgent,placeArgent,placeArgent);
+						cat2= new Categorie("Or", prixOr,placeOr,placeOr);
+						cat3= new Categorie("Diamant", prixDiamant,placeDiamant,placeDiamant);
+						configuration.ajouterCategorie(cat);
+						configuration.ajouterCategorie(cat1);
+						configuration.ajouterCategorie(cat2);
+						configuration.ajouterCategorie(cat3);
 						//CHGMT FRAME
 						JOptionPane.showMessageDialog(null, "Spectacle Ajouter !");
-						RepresentationJFrame frame1 = new RepresentationJFrame(spectacle,s,p);
+						RepresentationJFrame frame1 = new RepresentationJFrame(spectacle,ps,p);
 						frame1.setVisible(true);
 					}
 				}

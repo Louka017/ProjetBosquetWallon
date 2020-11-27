@@ -204,11 +204,10 @@ public class InscriptionJFrame extends JFrame {
 				if(rdbtnClient.isSelected())
 				{
 					Client c = new Client(Nom.getText(),Prenom.getText(),Rue.getText(),Integer.parseInt(Numero.getText()),Ville.getText(),Integer.parseInt(CodePostal.getText()),Email.getText(),Mdp.getText());
-					if(c.verifierChamps(Nom.getText(),Prenom.getText(),Rue.getText(),Integer.parseInt(Numero.getText()),Ville.getText(),Integer.parseInt(CodePostal.getText()),Email.getText(),Mdp.getText())) 
+					if(c.verifierChamps())
 					{	
 						c.ajoutClient();
 						JOptionPane.showMessageDialog(null, "Client creer");
-						
 					}
 					else 
 					{
@@ -219,7 +218,7 @@ public class InscriptionJFrame extends JFrame {
 				else if(rdbtnOrganisateur.isSelected())
 				{
 					Organisateur o = new Organisateur(Nom.getText(),Prenom.getText(),Rue.getText(),Integer.parseInt(Numero.getText()),Ville.getText(),Integer.parseInt(CodePostal.getText()),Email.getText(),Mdp.getText());
-					if(o.verifierChamps(Nom.getText(),Prenom.getText(),Rue.getText(),Integer.parseInt(Numero.getText()),Ville.getText(),Integer.parseInt(CodePostal.getText()),Email.getText(),Mdp.getText())) 
+					if(o.verifierChamps()) 
 					{	
 						o.ajoutOrganisateur();
 						JOptionPane.showMessageDialog(null, "Organisateur creer");
@@ -233,7 +232,7 @@ public class InscriptionJFrame extends JFrame {
 				else if(rdbtnArtiste.isSelected())
 				{
 					Artiste a = new Artiste(Nom.getText(),Prenom.getText(),Rue.getText(),Integer.parseInt(Numero.getText()),Ville.getText(),Integer.parseInt(CodePostal.getText()),Email.getText(),Mdp.getText());
-					if(a.verifierChamps(Nom.getText(),Prenom.getText(),Rue.getText(),Integer.parseInt(Numero.getText()),Ville.getText(),Integer.parseInt(CodePostal.getText()),Email.getText(),Mdp.getText())) 
+					if(a.verifierChamps()) 
 					{	
 						a.ajoutArtiste();
 						JOptionPane.showMessageDialog(null, "Artiste creer");

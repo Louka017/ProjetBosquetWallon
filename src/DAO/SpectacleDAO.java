@@ -3,10 +3,7 @@ package DAO;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import POJO.*;
@@ -23,8 +20,8 @@ public class SpectacleDAO implements DAO<Spectacle> {
 	//Fonctions
 	public  boolean create(Spectacle obj) {
 		try {
-		String create = "INSERT INTO Spectacle (Titre, NbrPlaceMax, idSalle) "
-				+ "values ('" + obj.getTitre() + "','" + obj.getNbrPlaceParClient() + "','"+ obj.getIdSalle() + "');";
+		String create = "INSERT INTO Spectacle (Titre, NbrPlaceMax) "
+				+ "values ('" + obj.getTitre() + "','" + obj.getNbrPlaceParClient() + "');";
 	
 		connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeUpdate(create);
 		}
@@ -54,7 +51,7 @@ public class SpectacleDAO implements DAO<Spectacle> {
 			ResultSet result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
 					.executeQuery("SELECT * FROM Spectacle WHERE Titre = '" + titre + "';");
 			if (result.first()) {
-				s = new Spectacle(result.getInt("idSpectacle"),result.getString("Titre"),result.getInt("NbrPlaceMax"), result.getInt("idSalle")); 
+				s = new Spectacle(result.getInt("idSpectacle"),result.getString("Titre"),result.getInt("NbrPlaceMax")); 
 			}
 			
 		} catch (SQLException e) {
@@ -81,5 +78,34 @@ public class SpectacleDAO implements DAO<Spectacle> {
 		return spectacles;
 	}
 
+	
+	public int trouveidSalle(Spectacle obj) {
+		int res=0;
+		try {
+			ResultSet result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeQuery("SELECT * FROM Spectacle WHERE Titre = '" + obj.getTitre() + "';");
+			if (result.first()) {
+				res =  result.getInt("idSalle"); 
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;	
+	}
+	
+	
+	public  boolean ajouterAvecIdSalle(PlanningSalle obj) {
+		try {
+			String update ="UPDATE Spectacle Set IdSalle = '" + obj.getId() + "' WHERE IdSalle = 0;";
+			connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeUpdate(update);
+			
+		} 
+		catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return true;
+	}
 
 }

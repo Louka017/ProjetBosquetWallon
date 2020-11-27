@@ -14,7 +14,9 @@ public class Place implements Serializable {
 	
 	private int prix;
 	private int numPlace;
+	/////////////////////////////////////////////
 	private Representation representation;
+	////////////////////////////////////////////
 	
 	//Constructeur
 	public Place(int numPlace, int prix, Representation representation) {

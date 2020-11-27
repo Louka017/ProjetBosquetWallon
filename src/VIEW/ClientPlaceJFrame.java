@@ -1,6 +1,5 @@
 package VIEW;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -24,6 +23,7 @@ import javax.swing.JRadioButton;
 
 public class ClientPlaceJFrame extends JFrame {
 
+	private static final long serialVersionUID = -3379129441310621571L;
 	private JPanel contentPane;
 	private JTextField textField;
 	private JButton btnValider;
@@ -42,7 +42,6 @@ public class ClientPlaceJFrame extends JFrame {
 	private JRadioButton rdbtnNewRadioButton_8;
 	private JRadioButton rdbtnNewRadioButton_9;
 	private JRadioButton rdbtnNewRadioButton_10;
-
 	/**
 	 * Launch the application.
 	 */
@@ -58,7 +57,6 @@ public class ClientPlaceJFrame extends JFrame {
 			}
 		});
 	}
-
 	/**
 	 * Create the frame.
 	 */

@@ -19,8 +19,8 @@ public class ConfigurationDAO implements DAO<Configuration> {
 	public  boolean create(Configuration obj) {
 		try {
 			String create = "INSERT INTO CONFIGURATION (idConfiguration, Type, idSpectacle) "
-					+ "values ('" + obj.getId() + "','" + obj.getType() + "','"+ obj.getIdSpectacle() + "');";
-		
+					+ "values ('" + obj.getId() + "','" + obj.getType() + "',0);";
+	
 			connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeUpdate(create);
 			}
 			catch(SQLException e) {
@@ -38,8 +38,17 @@ public class ConfigurationDAO implements DAO<Configuration> {
 	}
 	
 	public Configuration find(int Id) {
-		Configuration s = null;
-		return s;
+		Configuration c = null;
+		try {
+			ResultSet result = connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeQuery("SELECT * FROM Configuration WHERE idConfiguration = " + Id + ";");
+			if (result.first())
+				c = new Configuration(result.getInt("idConfiguration"), result.getString("Type"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return c;
 	}
 	
 	public Configuration findById(int id) {
@@ -49,13 +58,26 @@ public class ConfigurationDAO implements DAO<Configuration> {
 			ResultSet result = connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
 					.executeQuery("SELECT * FROM Configuration WHERE idSpectacle = " + id + ";");
 			if (result.first())
-				c = new Configuration(result.getInt("idConfiguration"), result.getString("Type"), result.getInt("idSpectacle"));
+				c = new Configuration(result.getInt("idConfiguration"), result.getString("Type"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
 		return c;
 		
+	}
+	
+	
+	public  boolean AjouterAvecIdSpectacle(Spectacle obj) {
+		try {
+			String update ="UPDATE Configuration SET IdSpectacle = '" + obj.getId() + "' WHERE IdSpectacle = 0;";
+			connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeUpdate(update);
+		} 
+		catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return true;
 	}
 
 

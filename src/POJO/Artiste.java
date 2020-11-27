@@ -39,9 +39,7 @@ public class Artiste extends Personne implements Serializable {
 	String regnum = "^[0-9]+$";
 	String regcp = "^[0-9]{4}$";
 	
-	
-	//Regarder si tous les champs sont correct grâce à des REGEX
-	public boolean verifierChamps(String nom, String prenom, String rue, int numero, String ville, int cp, String email, String password) {
+	public boolean verifierChamps() {
 		String num =  String. valueOf(numero);
 		String cdp = String. valueOf(cp);
 		

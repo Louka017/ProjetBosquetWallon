@@ -23,7 +23,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 
 import java.awt.Color;
-import javax.swing.JTextPane;
 
 public class AcceuilJFrame extends JFrame {
 
@@ -33,11 +32,6 @@ public class AcceuilJFrame extends JFrame {
 	JMenuBar menuBar;
 	JMenu mnNewMenu;
 	private JList<Spectacle> listeTousLesSpec;
-
-	
-
-	
-	
 	/**
 	 * Launch the application.
 	 */
@@ -72,22 +66,18 @@ public class AcceuilJFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
 
 		//MENU BAR
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-
-			JMenu mnNewMenu = new JMenu("Que voulez-vous faire ?");
-			menuBar.add(mnNewMenu);
-
+		JMenu mnNewMenu = new JMenu("Que voulez-vous faire ?");
+		menuBar.add(mnNewMenu);
 			
 		//Liste des spectacles
 		JLabel lblLstSpectacles = new JLabel("Liste des spectacles :");
 		lblLstSpectacles.setForeground(Color.WHITE);
 		lblLstSpectacles.setBounds(54, 10, 123, 13);
 		contentPane.add(lblLstSpectacles);
-		
 	    Spectacle spec = new Spectacle();
 		DefaultListModel<Spectacle> model = new DefaultListModel<>();
 		model.addAll(spec.listeSpectacles());
@@ -95,11 +85,12 @@ public class AcceuilJFrame extends JFrame {
 		listeTousLesSpec.setBounds(21, 33, 166, 186);
 		contentPane.add(listeTousLesSpec);
 		
-		//BOUTTON ORGANISER SPECTACLE
-		JButton btnOrganiserSpectacle = new JButton("Organiser un spectacle");
-		btnOrganiserSpectacle.setForeground(Color.RED);
-		btnOrganiserSpectacle.setBackground(Color.DARK_GRAY);
-		btnOrganiserSpectacle.setBounds(214, 25, 206, 28);
+		//DETAIL
+		JButton btnDetail = new JButton("D\u00E9tail");
+		btnDetail.setForeground(Color.RED);
+		btnDetail.setBackground(Color.DARK_GRAY);
+		btnDetail.setBounds(214, 139, 85, 21);
+		contentPane.add(btnDetail);
 
 		//BOUTON AJOUTER REPRESENTATION
 		JButton btnRepresentation = new JButton("Ajouter une representation");
@@ -109,22 +100,20 @@ public class AcceuilJFrame extends JFrame {
 		btnRepresentation.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e)
-			{
-				
+			{				
 				Spectacle s = listeTousLesSpec.getSelectedValue();
-				PlanningSalle ps = new PlanningSalle(s.getIdSalle());
+				int idSalle = s.trouveidSalle();	
+				PlanningSalle ps = new PlanningSalle(idSalle);
 				RepresentationJFrame Rep = new RepresentationJFrame(s, ps, p);
 				Rep.setVisible(true);
 			}
 		});
-		
-		
-		//DETAIL
-		JButton btnDetail = new JButton("D\u00E9tail");
-		btnDetail.setForeground(Color.RED);
-		btnDetail.setBackground(Color.DARK_GRAY);
-		btnDetail.setBounds(214, 139, 85, 21);
-		contentPane.add(btnDetail);
+
+		//BOUTTON ORGANISER SPECTACLE
+		JButton btnOrganiserSpectacle = new JButton("Organiser un spectacle");
+		btnOrganiserSpectacle.setForeground(Color.RED);
+		btnOrganiserSpectacle.setBackground(Color.DARK_GRAY);
+		btnOrganiserSpectacle.setBounds(214, 25, 206, 28);
 		btnOrganiserSpectacle.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e)
@@ -150,15 +139,10 @@ public class AcceuilJFrame extends JFrame {
 			}
 		});
 		
-
 		//ORGANISATEUR
 		if(p.getDiscriminator().equals("Organisateur")) {
 			contentPane.add(btnRepresentation);
 			contentPane.add(btnOrganiserSpectacle);
-		}		
-		
-		
-		
-		
+		}				
 	}	
 }

@@ -6,8 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -53,7 +52,6 @@ public class PlanningSalleDAO implements DAO<PlanningSalle> {
 	}
 	
 	public PlanningSalle find(int Id) {
-
 		PlanningSalle s = null;
 
 		try {
@@ -91,6 +89,34 @@ public class PlanningSalleDAO implements DAO<PlanningSalle> {
 		}
 		return s;
 	}
+	
+	
+	
+	public int verify(Date db) {
+		SimpleDateFormat localDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");	
+		Timestamp t = new Timestamp(db.getTime());
+		
+		try {
+			ResultSet result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeQuery("SELECT * FROM PlanningSalle WHERE DateDebut = '" + localDateFormat.format(t) + "';");
+			if (result.first()) {
+				System.out.println("on passe dans first de DAO");
+						return 1;
+				}else {
+						return 0;
+				}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 1;
+		}
+		
+	}
+	
+	
+	
+
+	
 
 
 }

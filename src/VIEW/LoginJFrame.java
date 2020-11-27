@@ -29,7 +29,6 @@ public class LoginJFrame extends JFrame {
 	private JTextField Email;
 	private JPasswordField Mdp;
 
-
 	/**
 	 * Launch the application.
 	 */
@@ -101,33 +100,27 @@ public class LoginJFrame extends JFrame {
 				String email = Email.getText();
 				@SuppressWarnings("deprecation")
 				String mdp = Mdp.getText();
+		
+				Personne p = new Personne (email,mdp);			
 				
-				Personne p = new Personne (email,mdp);
-				
-				if (p.verifer(email,mdp) == 1) {
+				if (p.verifer() == 1) {
 					JOptionPane.showMessageDialog(null, "Vous êtes connecté !");
-					
-					p = p.findbyMail(email);
+					p = p.findbyMail();
 					AcceuilJFrame acc = new AcceuilJFrame(p);
 					acc.setVisible(true);
-					
 				}
-				else if(p.verifer(email,mdp) == 0) {
-					
+				else if(p.verifer() == 0) {
 					JOptionPane.showMessageDialog(null, "Aucun compte n'existe avec cette adresse ! Inscrivez-vous.");
 					AcceuilJFrame acc = new AcceuilJFrame(p);
 					acc.setVisible(false);
 				}
-				else if(p.verifer(email,mdp) == 2){
+				else if(p.verifer() == 2){
 					JOptionPane.showMessageDialog(null, "Erreur dans le mot de passe !");
 					AcceuilJFrame acc = new AcceuilJFrame(p);
 					acc.setVisible(false);
 				}
-				
-				
 			}
-		});
-		
+		});	
 		
 		//BOUTTON INSCRIPTION
 		JButton btnInscription = new JButton("S'inscrire");
@@ -135,16 +128,11 @@ public class LoginJFrame extends JFrame {
 		btnInscription.setForeground(Color.RED);
 		btnInscription.setBounds(324, 10, 102, 21);
 		contentPane.add(btnInscription);
-		
-
-		
 		btnInscription.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e) {
 				inscription.setVisible(true);
 			}
-		});
-		
+		});	
 	}
-
 }

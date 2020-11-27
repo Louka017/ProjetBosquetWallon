@@ -16,7 +16,9 @@ public class Commande implements Serializable {
 	private String modePayement;
 	private String modeLivraison;
 	private int cout;
+	/////////////////////////////////////////////////////
 	private List<Place> places;
+	//////////////////////////////////////////////////////
 	
 	//Constructeur
 	public Commande(String modePayement, String modeLivraison, int cout, List<Place> places) {

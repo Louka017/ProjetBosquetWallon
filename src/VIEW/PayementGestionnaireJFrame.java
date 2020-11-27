@@ -1,6 +1,6 @@
 package VIEW;
 
-import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -16,12 +16,16 @@ import POJO.Personne;
 import POJO.PlanningSalle;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.Color;
 
+import POJO.*;
+
 public class PayementGestionnaireJFrame extends JFrame {
 
+	private static final long serialVersionUID = -3108378940868530807L;
 	private JPanel contentPane;
 
 	/**
@@ -43,7 +47,8 @@ public class PayementGestionnaireJFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public PayementGestionnaireJFrame(PlanningSalle s, Personne p) {
+	@SuppressWarnings("deprecation")
+	public PayementGestionnaireJFrame(PlanningSalle ps, Personne p) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel() {
@@ -71,26 +76,40 @@ public class PayementGestionnaireJFrame extends JFrame {
 		lblPrix.setBounds(105, 90, 205, 40);
 		contentPane.add(lblPrix);
 
-		if(s.getDateDebutSal().getDay() == 5 || s.getDateDebutSal().getDay() == 6) {
-			lblPrix.setText("4 500 €");
+		//PAYE PLUS CHER SI DATE DEBUT EST VENDREDI ou SAMEDI
+		if(ps.getDateDebutSal().getDay() == 5 || ps.getDateDebutSal().getDay() == 6) {
+			lblPrix.setText("4500");
 		}
 		else {
-			lblPrix.setText("3 000 €");
+			lblPrix.setText("3000");
 		}
-
-			
 		
 		//VALIDER
 		JButton btnValider = new JButton("PAYER");
 		btnValider.setBounds(151, 188, 120, 40);
 		contentPane.add(btnValider);
+		
+		JLabel lblEuro = new JLabel("\u20AC");
+		lblEuro.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEuro.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		lblEuro.setBounds(336, 91, 45, 40);
+		contentPane.add(lblEuro);
 		btnValider.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CreationSpectacleJFrame CreSpec = new CreationSpectacleJFrame(s, p);
-				CreSpec.setVisible(true);	
+				
+				//AJOUT DE LA RESERVATION DANS LA DB
+				int prix = Integer.parseInt(lblPrix.getText());	
+				Reservation res = new Reservation(prix, prix, "Payer", prix, ps);
+				boolean ajout = p.ajouterReservation(res);
+				if(ajout) {
+					JOptionPane.showMessageDialog(null, "Payement valider");
+					CreationSpectacleJFrame CreSpec = new CreationSpectacleJFrame(ps, p);
+					CreSpec.setVisible(true);	
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Erreur Réservation non effectuée.");
+				}	
 			}
 		});
-		
-		
 	}
 }

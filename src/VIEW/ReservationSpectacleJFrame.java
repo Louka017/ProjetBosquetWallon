@@ -18,15 +18,15 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import com.toedter.calendar.JCalendar;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import com.toedter.calendar.JDateChooser;
 
-import POJO.Personne;
-import POJO.PlanningSalle;
+import POJO.*;
+
 
 public class ReservationSpectacleJFrame extends JFrame {
-
 	private static final long serialVersionUID = -3316631793028294179L;
 	private JPanel contentPane;
 	Date dateDebut = null;
@@ -36,7 +36,8 @@ public class ReservationSpectacleJFrame extends JFrame {
 	Date VraiDateFin;
 	Date correctDateDebut;
 	Date correctDateFin;
-	
+	PlanningSalle ps = null;
+	int valeur ;
 	/**
 	 * Launch the application.
 	 */
@@ -83,20 +84,10 @@ public class ReservationSpectacleJFrame extends JFrame {
 		calendar.setBounds(20, 48, 206, 152);
 		contentPane.add(calendar);
 		
-		/*
-		 *
-		 * 
-		 * Afficher les dates déjà réservées.
-		 * 
-		 * 
-		 */
-		
-		
 		//DATE DE DEBUT
 		JDateChooser dateDeb = new JDateChooser();
 		dateDeb.setBounds(298, 45, 116, 19);
 		contentPane.add(dateDeb);
-		
 		JLabel lblDateDebut = new JLabel("Date de d\u00E9but :");
 		lblDateDebut.setForeground(Color.WHITE);
 		lblDateDebut.setBounds(298, 25, 126, 13);
@@ -107,7 +98,6 @@ public class ReservationSpectacleJFrame extends JFrame {
 		lblDateFin.setForeground(Color.WHITE);
 		lblDateFin.setBounds(298, 96, 83, 13);
 		contentPane.add(lblDateFin);
-		
 		JDateChooser dateFin = new JDateChooser();
 		dateFin.setBounds(298, 119, 116, 19);
 		contentPane.add(dateFin);
@@ -153,17 +143,28 @@ public class ReservationSpectacleJFrame extends JFrame {
 						long heureDeb = VraiDateDebut.getTime();
 						long heureFin = VraiDateFin.getTime();
 						correctDateDebut = new java.sql.Date (heureDeb);
-					    correctDateFin = new java.sql.Date (heureFin);
-						
-						
+					    correctDateFin = new java.sql.Date (heureFin);		
 				} catch (ParseException e1) {
 					e1.printStackTrace();
+				}				
+
+				
+				//CREE UN CONSTRUCTEUR AVEC LES DATES CHOISIES
+				ps = new PlanningSalle((java.sql.Date)correctDateDebut,(java.sql.Date)correctDateFin);
+				valeur = ps.verify();
+				
+				//REGARDE SI LA SALLE EST DEJA LOUER
+				if (valeur == 0) {
+					ps.ajouterPlanning();
+					ps = ps.finfByDate();
+					
+					//FRAME SUIVANTE
+					PayementGestionnaireJFrame g = new PayementGestionnaireJFrame(ps, personne);
+					g.setVisible(true);	
 				}
-				PlanningSalle s = new PlanningSalle((java.sql.Date)correctDateDebut,(java.sql.Date)correctDateFin);
-				s.ajouterPlanning();
-				PlanningSalle planningsalle = s.finfByDate(VraiDateDebut,VraiDateFin);
-				PayementGestionnaireJFrame g = new PayementGestionnaireJFrame(planningsalle, personne);
-				g.setVisible(true);	
+				else {
+						JOptionPane.showMessageDialog(null, "Réservation annulée! La salle est déjà loué à cette date là.");
+				}
 			}
 		});
 		BtnValider.setBounds(329, 209, 85, 21);

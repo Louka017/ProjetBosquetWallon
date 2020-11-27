@@ -20,7 +20,6 @@ public class OrganisateurDAO implements DAO<Organisateur> {
 		try {
 			String create = "INSERT INTO Personne (Nom,Prenom,Rue,Numero,Ville,CodePostal,Discriminator,Email,MotDePasse) "
 					+ "values ('" + obj.getNom() + "','" + obj.getPrenom() + "','" + obj.getRue() + "','" + obj.getNumero() + "','" + obj.getVille() + "','" + obj.getCp() + "','Organisateur','"+ obj.getEmail() + "','" + obj.getPassword() + "');";
-			System.out.println(create);
 			connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeUpdate(create);
 			}
 		catch(SQLException e) {
@@ -33,7 +32,6 @@ public class OrganisateurDAO implements DAO<Organisateur> {
 		
 		try {	
 			String delete = "DELETE FROM Personne where idPersonne = " + obj.getId() + ";";
-			System.out.println(delete);
 			connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeUpdate(delete);
 		}
 		catch(SQLException e) {
@@ -46,7 +44,6 @@ public class OrganisateurDAO implements DAO<Organisateur> {
 		
 		try {	
 			String update = "UPDATE Personne set Nom = '"+ obj.getNom() + "', Prenom = '" + obj.getPrenom() + "', Rue= '" + obj.getRue() + "',Numero= '" + obj.getNumero() + "',Ville= '" + obj.getVille() + "',CodePostal= '" + obj.getCp() + "', Email = '" + obj.getEmail() + "', MotDePasse ='" + obj.getPassword() + "');";
-			System.out.println(update);
 			connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeUpdate(update);
 		}
 		catch(SQLException e) {

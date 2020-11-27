@@ -22,7 +22,9 @@ public class Personne implements Serializable{
 	protected String email;
 	protected String password;
 	protected String discriminator;
-	private int idSpectacle;
+	//////////////////////////////////////////////////////////////////////////
+	private int idSpectacle; //ATTENTION
+	/////////////////////////////////////////////////////////////////////////
 
 
 	//Constructeurs
@@ -70,6 +72,12 @@ public class Personne implements Serializable{
 	public Personne(String email, String password) {
 		this.email=email;
 		this.password = password;
+	}
+	
+	
+	public Personne(String email) {
+		this.email=email;
+		
 	}
 	
 	public Personne() {
@@ -167,30 +175,14 @@ public class Personne implements Serializable{
 	
 	//Méthodes	
 	
-	String regnom = "^[A-Za-z]+$" ;
-	String regmail = "^[A-Za-z0-9-.]+@[A-Za-z]+.(com|be|eu|fr)$";
-	String regrue = "^[A-Za-z -]+$" ;
-	String regnum = "^(([0-9]+) | ([0-9]+(a|b|c|d))) $";
-	String regcp = "^[0-9]{4}$";
-	//Regarder si tous les champs sont correct grâce à des REGEX
-	public boolean verifierChamps(String nom, String prenom, String rue, int numero, String ville, int cp, String email, String password) {
-		String num =  String. valueOf(numero);
-		String cdp = String. valueOf(cp);
-		if(nom.matches(regnom))
-			if(prenom.matches(regnom))
-				if(rue.matches(regrue))
-					if(num.matches(regnum))
-						if(cdp.matches(regcp))
-							if(email.matches(regmail))
-									return true;
-		return false;
-	}
+
 	
 
 	//Verifier mail et mdp
-	public int verifer(String email, String mdp)
+	public int verifer()
 	{
-		return dao.verify(email, mdp);
+		return dao.verify(email, password);
+							//this
 	}
 
 	//Afficher une personne
@@ -200,14 +192,27 @@ public class Personne implements Serializable{
 	}
 	
 	//Trouver une personne par mail
-	public Personne findbyMail(String email) {
-			return dao.findbyMail(email);
+	public Personne findbyMail() {
+			return dao.findbyMail(this);
 	}
 
 	//ajouter
 	public boolean ajout()
 	{
 		return dao.create(this);
+	}
+	
+	//AJOUTER
+	public boolean ajouterReservation(Reservation r) {
+		return r.ajoutReservationAvecIdGestionnaire(this);
+	}
+	
+	
+	//AJOUTER Planning_salle
+	public boolean ajouterPlanningSalle(Spectacle s) {
+		dao.create(this);
+		
+		return dao.create(s);
 	}
 	
 }

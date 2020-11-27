@@ -4,23 +4,19 @@ import java.io.Serializable;
 import DAO.CategorieDAO;
 import DAO.DAOFactory;
 
-
-
 public class Categorie implements Serializable {
 
-	//Attributs
 	private static final long serialVersionUID = 3633610078969934440L;
-
 	protected static DAOFactory factory = (DAOFactory)DAOFactory.getFactory(0);
 	protected static CategorieDAO dao = factory.getCategorieDAO();
 	
+	//Attributs
 	private String type;
 	private int prix;
 	private int nbrPlaceDispo;
 	private int nbrPlaceMax;
-	private int idConfiguration;
-	
-	//Constructeur
+
+	//Constructeurs
 	public Categorie() {
 		
 	}
@@ -31,14 +27,7 @@ public class Categorie implements Serializable {
 		this.nbrPlaceDispo = nbrPlaceDispo;
 		this.nbrPlaceMax = nbrPlaceMax;
 	}
-	
-	public Categorie(String type, int prix, int nbrPlaceDispo, int nbrPlaceMax, int idConfiguration) {
-		this.type = type;
-		this.prix = prix;
-		this.nbrPlaceDispo = nbrPlaceDispo;
-		this.nbrPlaceMax = nbrPlaceMax;
-		this.idConfiguration = idConfiguration;
-	}
+
 	
 	//Accesseurs
 	public String getType() {
@@ -72,15 +61,8 @@ public class Categorie implements Serializable {
 		this.nbrPlaceMax = nbrPlaceMax;
 	}
 	
-	public int getIdConfiguration() {
-		return idConfiguration;
-	}
-	public void setIdConfiguration(int idConfiguration) {
-		this.idConfiguration = idConfiguration;
-	}
 	
 	//Méthodes
-	
 	//Ajouter
 	public boolean ajouterCategorie() {
 		return dao.create(this);
@@ -129,6 +111,12 @@ public class Categorie implements Serializable {
 		if(diamant < 0 || diamant > 1000)
 			return false;
 		return true;
+	}
+	
+	//Ajouter une Categorie
+	public boolean ajouterCategorie(Configuration c) {
+		dao.create(this);
+		return dao.AjouterAvecIdConfiguration(c);
 	}
 	
 }

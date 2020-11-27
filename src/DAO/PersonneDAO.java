@@ -18,8 +18,8 @@ public class PersonneDAO implements DAO<Personne> {
 	public  boolean create(Personne obj) {
 		
 		try {
-		String create = "INSERT INTO Personne_Spectacle (idPersonne, idSpectacle) "
-				+ "values ('" + obj.getId() + "','" + obj.getIdSpectacle() + "');";
+		String create = "INSERT INTO Personne_Spectacle (idPersonne, idSpectacle)"
+				+ "values ('" + obj.getId() + "',0);";
 
 		connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeUpdate(create);
 		}
@@ -29,6 +29,21 @@ public class PersonneDAO implements DAO<Personne> {
 		return true;
 		
 	}
+	
+	public  boolean create(Spectacle obj) {
+		
+		try {
+			String update ="UPDATE Personne_Spectacle SET IdSpectacle = '" + obj.getId() + "' WHERE idSpectacle = 0;";
+
+		connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeUpdate(update);
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
+		
+	}
+	
 	
 	public  boolean delete(Personne obj) {
 		return false;
@@ -54,12 +69,12 @@ public class PersonneDAO implements DAO<Personne> {
 	}
 	
 	
-	public Personne findbyMail(String email) {
+	public Personne findbyMail(Personne obj) {
 		Personne p = null;
 		
 		try {
 			ResultSet result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
-					.executeQuery("SELECT * FROM Personne WHERE Email = '" + email + "';");
+					.executeQuery("SELECT * FROM Personne WHERE Email = '" + obj.getEmail() + "';");
 			if (result.first())
 				p = new Personne(result.getString("Nom"), result.getString("Prenom"), result.getString("Rue"),result.getInt("Numero"),result.getString("Ville"),result.getInt("CodePostal"),result.getString("Email"), result.getString("MotDePasse"), result.getInt("IdPersonne"),result.getString("Discriminator"));
 		} catch (SQLException e) {

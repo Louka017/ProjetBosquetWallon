@@ -204,13 +204,13 @@ public class RepresentationJFrame extends JFrame {
 					long heureFin = date2.getTime();
 					Date heuredb = new java.sql.Date (heureDeb);
 					Date heurefn = new java.sql.Date (heureFin);
+					
 					//POJO
 					if(rdbtnNewRadioButtonJ1.isSelected())
-						rp = new Representation(db,(java.sql.Date) heuredb,(java.sql.Date)heurefn, s.getId());
+					    rp = new Representation(db,(java.sql.Date) heuredb,(java.sql.Date)heurefn,s);
 					
 					if(rdbtnNewRadioButtonJ2.isSelected())
-						rp = new Representation(df,(java.sql.Date) heuredb,(java.sql.Date)heurefn, s.getId());
-						
+						rp = new Representation(df,(java.sql.Date) heuredb,(java.sql.Date)heurefn,s);
 					rp.ajouterRps();	
 				} catch (ParseException e2) {
 				

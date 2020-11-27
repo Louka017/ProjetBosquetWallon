@@ -16,11 +16,13 @@ public class Spectacle implements Serializable{
 	private int id;
 	private String titre;
 	private int nbrPlaceParClient;
+	////////////////////////////////////////////////////////////////////
 	private Configuration configuration;
 	private List<Artiste> artistes;
 	private List<Representation> representations;
-	private int idSalle;
-
+	
+	private long idSalle; //ATTENTION
+	////////////////////////////////////////////////////////////////////////
 	
 	//Constructeurs
 	public Spectacle()
@@ -28,13 +30,26 @@ public class Spectacle implements Serializable{
 		
 	}
 	
-	public Spectacle(String titre, int nbrPlaceParClient,int idSalle) {
+	public Spectacle(int id, String titre, int nbrPlaceParClient)
+	{
+		this.id=id;
+		this.titre = titre;
+		this.nbrPlaceParClient = nbrPlaceParClient;
+	}
+	
+	
+	public Spectacle(String titre, int nbrPlaceParClient) {
+		this.titre = titre;
+		this.nbrPlaceParClient = nbrPlaceParClient;
+	}
+	
+	public Spectacle(String titre, int nbrPlaceParClient,long idSalle) {
 		this.titre = titre;
 		this.nbrPlaceParClient = nbrPlaceParClient;
 		this.idSalle =idSalle;
 	}
 	
-	public Spectacle(int id,String titre, int nbrPlaceParClient,int idSalle) {
+	public Spectacle(int id,String titre, int nbrPlaceParClient,long idSalle) {
 		this.id = id;
 		this.titre = titre;
 		this.nbrPlaceParClient = nbrPlaceParClient;
@@ -58,7 +73,7 @@ public class Spectacle implements Serializable{
 	
 	//Accesseurs
 	public int getId() {
-		return id;
+		return this.id;
 	}
 	public void setId(int id) {
 		this.id = id;
@@ -104,10 +119,10 @@ public class Spectacle implements Serializable{
 	}
 	
 	
-	public int getIdSalle() {
+	public long getIdSalle() {
 		return idSalle;
 	}
-	public void setIdSalle(int idSalle) {
+	public void setIdSalle(long idSalle) {
 		this.idSalle = idSalle;
 	}
 
@@ -117,8 +132,8 @@ public class Spectacle implements Serializable{
 		return dao.create(this);
 	}
 	
-	public Spectacle findByTitre(String titre) {
-		return dao.findByTitle(titre);
+	public Spectacle findByTitre() {
+		return dao.findByTitle(this.titre);
 	}
 	
 	//Liste
@@ -130,5 +145,27 @@ public class Spectacle implements Serializable{
 	public String toString()
 	{
 		return titre;
+	}
+	
+	public int trouveidSalle() {
+		return dao.trouveidSalle(this);
+	}
+	
+	//AjouterViaPlanningSalle
+	public boolean ajoutPectacleAvecIdSalle(PlanningSalle ps) {
+		dao.create(this);
+		
+		return dao.ajouterAvecIdSalle(ps);
+	}
+	
+	//Ajouter Personne_Spectacle
+	public boolean ajouterPlanningSalle(Personne p) {
+		return p.ajouterPlanningSalle(this);
+	}
+	
+	
+	//AjouterCategorie
+	public boolean ajouterConfiguration(Configuration conf) {
+		return conf.ajouterIdSpectacle(this);
 	}
 }

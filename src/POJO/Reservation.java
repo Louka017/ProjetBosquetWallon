@@ -12,27 +12,42 @@ public class Reservation implements Serializable {
 	protected static DAOFactory factory = (DAOFactory)DAOFactory.getFactory(0);
 	protected static ReservationDAO dao = factory.getReservationDAO();
 	
-	private int accompte;
+	private int id;
+	private int acompte;
 	private int solde;
 	private String statut;
 	private int prix;
-	private PlanningSalle planningSale;
+	///////////////////////////////////////
+	private PlanningSalle planningSalle;
+	////////////////////////////////////////
 	
-	//Constructeur
-	public Reservation(int accompte, int solde, String statut, int prix, PlanningSalle planningSale) {
-		this.accompte = accompte;
+	//Constructeurs
+	public Reservation() {
+
+	}
+	
+	
+	public Reservation(int acompte, int solde, String statut, int prix, PlanningSalle planningSalle) {
+		this.acompte = acompte;
 		this.solde = solde;
 		this.statut = statut;
 		this.prix = prix;
-		this.planningSale = planningSale;
+		this.planningSalle = planningSalle;
 	}
 	
 	//Accesseurs
-	public int getAccompte() {
-		return accompte;
+	public int getId() {
+		return id;
 	}
-	public void setAccompte(int accompte) {
-		this.accompte = accompte;
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public int getAcompte() {
+		return acompte;
+	}
+	public void setAcompte(int acompte) {
+		this.acompte = acompte;
 	}
 	
 	
@@ -60,11 +75,23 @@ public class Reservation implements Serializable {
 	}
 	
 	
-	public PlanningSalle getPlanningSale() {
-		return planningSale;
+	public PlanningSalle getPlanningSalle() {
+		return planningSalle;
 	}
-	public void setPlanningSale(PlanningSalle planningSale) {
-		this.planningSale = planningSale;
+	public void setPlanningSale(PlanningSalle planningSalle) {
+		this.planningSalle = planningSalle;
 	}
-
+	
+	
+	public int getIdPlanningSalle() {
+		return planningSalle.getId();
+	}
+	
+	
+	
+	//Ajouter Reservation
+	public boolean ajoutReservationAvecIdGestionnaire(Personne o){
+		dao.create(this);
+		return dao.ajouterOrganisateuraLaResr(o);
+	}
 }

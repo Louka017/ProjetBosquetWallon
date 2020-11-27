@@ -1,6 +1,6 @@
 package VIEW;
 
-import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import POJO.Artiste;
+
 import POJO.Personne;
 import POJO.Representation;
 import POJO.Spectacle;
@@ -26,9 +26,9 @@ import java.awt.Font;
 
 public class ClientReservationSpectacleJFrame extends JFrame {
 
+	private static final long serialVersionUID = -5778600096352586056L;
 	private JPanel contentPane;
 	private JList<Representation> listRepresentations;
-
 	/**
 	 * Launch the application.
 	 */
@@ -44,7 +44,6 @@ public class ClientReservationSpectacleJFrame extends JFrame {
 			}
 		});
 	}
-
 	/**
 	 * Create the frame.
 	 */
@@ -106,7 +105,6 @@ public class ClientReservationSpectacleJFrame extends JFrame {
 			public void actionPerformed(ActionEvent e)
 			{
 				Representation rChoisie = listRepresentations.getSelectedValue();
-
 				ClientPlaceJFrame c = new ClientPlaceJFrame(rChoisie, p);
 				c.setVisible(true);
 			}

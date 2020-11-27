@@ -14,13 +14,25 @@ public class Configuration implements Serializable {
 	
 	private int id;
 	private String type;
+	////////////////////////////////////////////////////////////////////////
 	private Categorie categorie;
-	private int idSpectacle;
+	private int idSpectacle;   //ATTENTION
+	////////////////////////////////////////////////////////////////////////
 	
 	//Constructeur
 	public Configuration() {
 		
 	}
+	
+	public Configuration(String type) {
+		this.type = type;
+	}
+	
+	public Configuration(int id,String type) {
+		this.id = id;
+		this.type = type;
+	}
+	
 	
 	public Configuration(String type, Categorie categorie) {
 		this.type = type;
@@ -79,7 +91,7 @@ public class Configuration implements Serializable {
 		return dao.create(this);
 	}
 	
-	public Configuration findById(int id)
+	public Configuration find(int id)
 	{
 		return dao.findById(id);
 	}	
@@ -87,4 +99,17 @@ public class Configuration implements Serializable {
 	public String toString() {
 		return id + " " + type + " " + categorie + " " + idSpectacle;
 	}
+	
+	
+	public boolean ajouterIdSpectacle(Spectacle s) {
+		dao.create(this);
+		
+		return dao.AjouterAvecIdSpectacle(s);
+	}
+	
+	public boolean ajouterCategorie(Categorie c) {
+
+		return c.ajouterCategorie(this);
+	}
+	
 }

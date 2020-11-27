@@ -19,12 +19,29 @@ public class Representation implements Serializable {
 	private Date date;
 	private Date heureDebut;
 	private Date heureFin;
-	private int idSpectacle;
+	//////////////////////////////////////////////////////////////
+	private Spectacle spectacle;
+	private int idSpectacle; //ATTENTION
+	//////////////////////////////////////////////////////////////
 	
 	//Constructeur
 	public Representation() {
 
 	}
+	
+	public Representation(Date date, Date heureDebut, Date heureFin) {
+		this.date = date;
+		this.heureDebut = heureDebut;
+		this.heureFin = heureFin;
+	}
+	
+	public Representation(Date date, Date heureDebut, Date heureFin, Spectacle spectacle) {
+		this.date = date;
+		this.heureDebut = heureDebut;
+		this.heureFin = heureFin;
+		this.spectacle = spectacle;
+	}
+	
 	
 	public Representation(Date date, Date heureDebut, Date heureFin, int idSpectacle) {
 		this.date = date;
@@ -32,6 +49,7 @@ public class Representation implements Serializable {
 		this.heureFin = heureFin;
 		this.idSpectacle = idSpectacle;
 	}
+	
 	
 	public Representation(int id,Date date, Date heureDebut, Date heureFin, int idSpectacle) {
 		this.id = id;
@@ -73,8 +91,12 @@ public class Representation implements Serializable {
 		this.heureFin = heureFin;
 	}
 	
-	
 	public int getSpectacle() {
+		return spectacle.getId();
+	}
+	
+	
+	public int getidSpectacle() {
 		return idSpectacle;
 	}
 	public void setSpectacle(int idSpectacle) {
