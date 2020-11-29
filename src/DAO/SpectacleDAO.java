@@ -69,7 +69,7 @@ public class SpectacleDAO implements DAO<Spectacle> {
 			ResultSet result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
 					.executeQuery(query);
 				while(result.next()) {
-					Spectacle spectacle = new Spectacle(result.getInt("idSpectacle"), result.getString("Titre"),result.getInt("NbrPlaceMax"), result.getInt("idSalle"));
+					Spectacle spectacle = new Spectacle(result.getInt("idSpectacle"), result.getString("Titre"),result.getInt("NbrPlaceMax"));
 					spectacles.add(spectacle);
 				}	
 		} catch (SQLException e) {
@@ -97,7 +97,7 @@ public class SpectacleDAO implements DAO<Spectacle> {
 	
 	public  boolean ajouterAvecIdSalle(PlanningSalle obj) {
 		try {
-			String update ="UPDATE Spectacle Set IdSalle = '" + obj.getId() + "' WHERE IdSalle = 0;";
+			String update ="UPDATE Spectacle Set idSalle = '" + obj.getId() + "' WHERE idSalle = 0;";
 			connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeUpdate(update);
 			
 		} 

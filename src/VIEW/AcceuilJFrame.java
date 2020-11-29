@@ -104,7 +104,7 @@ public class AcceuilJFrame extends JFrame {
 				Spectacle s = listeTousLesSpec.getSelectedValue();
 				int idSalle = s.trouveidSalle();	
 				PlanningSalle ps = new PlanningSalle(idSalle);
-				RepresentationJFrame Rep = new RepresentationJFrame(s, ps, p);
+				Representation2JFrame Rep = new Representation2JFrame(s, ps, p);
 				Rep.setVisible(true);
 			}
 		});

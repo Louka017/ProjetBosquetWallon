@@ -51,7 +51,7 @@ public class ConfigurationDAO implements DAO<Configuration> {
 		return c;
 	}
 	
-	public Configuration findById(int id) {
+	public Configuration findByIdSpectacle(int id) {
 		Configuration c = null;
 		
 		try {

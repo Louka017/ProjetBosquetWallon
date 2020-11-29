@@ -9,20 +9,16 @@ import DAO.*;
 
 public class Representation implements Serializable {
 
-	//Attributs
 	private static final long serialVersionUID = -7253524476235799528L;
-
 	protected static DAOFactory factory = (DAOFactory) DAOFactory.getFactory(0);
 	protected static RepresentationDAO dao = factory.getRepresentationDAO();
 	
+	//ATTRIBUTS
 	private int id;
 	private Date date;
 	private Date heureDebut;
 	private Date heureFin;
-	//////////////////////////////////////////////////////////////
 	private Spectacle spectacle;
-	private int idSpectacle; //ATTENTION
-	//////////////////////////////////////////////////////////////
 	
 	//Constructeur
 	public Representation() {
@@ -42,24 +38,15 @@ public class Representation implements Serializable {
 		this.spectacle = spectacle;
 	}
 	
-	
-	public Representation(Date date, Date heureDebut, Date heureFin, int idSpectacle) {
-		this.date = date;
-		this.heureDebut = heureDebut;
-		this.heureFin = heureFin;
-		this.idSpectacle = idSpectacle;
-	}
-	
-	
-	public Representation(int id,Date date, Date heureDebut, Date heureFin, int idSpectacle) {
+	public Representation(int id,Date date, Date heureDebut, Date heureFin) {
 		this.id = id;
 		this.date = date;
 		this.heureDebut = heureDebut;
 		this.heureFin = heureFin;
-		this.idSpectacle = idSpectacle;
 	}
 	
-	//Accesseur
+	
+	//ACCESSEURS
 	public int getId() {
 		return id;
 	}
@@ -94,28 +81,25 @@ public class Representation implements Serializable {
 	public int getSpectacle() {
 		return spectacle.getId();
 	}
-	
-	
-	public int getidSpectacle() {
-		return idSpectacle;
+	public void setSpectacle(Spectacle spectacle) {
+		this.spectacle = spectacle;
 	}
-	public void setSpectacle(int idSpectacle) {
-		this.idSpectacle = idSpectacle;
-	}
+
 	
-	//Méthodes
+	//METHODES
+	//Ajouter representation
 	public boolean ajouterRps() {
 		return dao.create(this);
 	}
 	
 	//Liste
-	public List<Representation> listeRepresentations(int idR){
-		return dao.listeRepresentations(idR);
+	public List<Representation> listeRepresentations(int idS){
+		return dao.listeRepresentations(idS);
 	}
 	
-	//toString
+	//Afficher Representation
 	public String toString() {	
-		DateFormat dateFormat = new SimpleDateFormat("hh:mm");
+		DateFormat dateFormat = new SimpleDateFormat("HH:mm");
 		String strDate = dateFormat.format(heureDebut); 
 		String strDate2 = dateFormat.format(heureFin);
 		return date + "       " + strDate + "            " + strDate2;

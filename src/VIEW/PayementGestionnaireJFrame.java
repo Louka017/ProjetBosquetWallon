@@ -27,6 +27,7 @@ public class PayementGestionnaireJFrame extends JFrame {
 
 	private static final long serialVersionUID = -3108378940868530807L;
 	private JPanel contentPane;
+	Reservation reservation = new Reservation();
 
 	/**
 	 * Launch the application.
@@ -62,6 +63,13 @@ public class PayementGestionnaireJFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		JLabel lblEuro = new JLabel("\u20AC");
+		lblEuro.setForeground(Color.WHITE);
+		lblEuro.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEuro.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		lblEuro.setBounds(236, 91, 20, 40);
+		contentPane.add(lblEuro);
+		
 		//MONTANT
 		JLabel lblMontant = new JLabel("Prix de location : ");
 		lblMontant.setForeground(Color.LIGHT_GRAY);
@@ -71,29 +79,21 @@ public class PayementGestionnaireJFrame extends JFrame {
 		contentPane.add(lblMontant);
 		JLabel lblPrix = new JLabel("New label");
 		lblPrix.setForeground(Color.WHITE);
-		lblPrix.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPrix.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblPrix.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		lblPrix.setBounds(105, 90, 205, 40);
+		lblPrix.setBounds(26, 90, 205, 40);
 		contentPane.add(lblPrix);
 
 		//PAYE PLUS CHER SI DATE DEBUT EST VENDREDI ou SAMEDI
-		if(ps.getDateDebutSal().getDay() == 5 || ps.getDateDebutSal().getDay() == 6) {
-			lblPrix.setText("4500");
-		}
-		else {
-			lblPrix.setText("3000");
-		}
+		reservation.setPlanningSale(ps);
+		int nombreDeJoursEntreDBetDF = reservation.calculerDifferenceJour();
+		reservation.calculPrix(nombreDeJoursEntreDBetDF);
+		lblPrix.setText(String.valueOf(reservation.getPrix()));
 		
 		//VALIDER
 		JButton btnValider = new JButton("PAYER");
 		btnValider.setBounds(151, 188, 120, 40);
 		contentPane.add(btnValider);
-		
-		JLabel lblEuro = new JLabel("\u20AC");
-		lblEuro.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEuro.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		lblEuro.setBounds(336, 91, 45, 40);
-		contentPane.add(lblEuro);
 		btnValider.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				

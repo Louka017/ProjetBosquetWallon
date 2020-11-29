@@ -1,31 +1,30 @@
 package POJO;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import DAO.*;
 
 public class Reservation implements Serializable {
 
-	//Attributs
 	private static final long serialVersionUID = 2752339235768498033L;
-
 	protected static DAOFactory factory = (DAOFactory)DAOFactory.getFactory(0);
 	protected static ReservationDAO dao = factory.getReservationDAO();
 	
+	//ATTRIBUTS
 	private int id;
 	private int acompte;
 	private int solde;
 	private String statut;
 	private int prix;
-	///////////////////////////////////////
 	private PlanningSalle planningSalle;
-	////////////////////////////////////////
 	
-	//Constructeurs
+	//CONSTRUCTEURS
 	public Reservation() {
 
 	}
-	
 	
 	public Reservation(int acompte, int solde, String statut, int prix, PlanningSalle planningSalle) {
 		this.acompte = acompte;
@@ -35,7 +34,7 @@ public class Reservation implements Serializable {
 		this.planningSalle = planningSalle;
 	}
 	
-	//Accesseurs
+	//ACCESSEURS
 	public int getId() {
 		return id;
 	}
@@ -86,12 +85,51 @@ public class Reservation implements Serializable {
 	public int getIdPlanningSalle() {
 		return planningSalle.getId();
 	}
-	
-	
-	
-	//Ajouter Reservation
+
+	//METHODES
+	//Ajouter une Reservation
 	public boolean ajoutReservationAvecIdGestionnaire(Personne o){
 		dao.create(this);
 		return dao.ajouterOrganisateuraLaResr(o);
+	}
+	
+	//Calcul du nombre de jour entre Date debut et date fin
+	public int calculerDifferenceJour() {
+		PlanningSalle ps = this.getPlanningSalle();
+		Date db = ps.getDateDebutSal();
+		Date df = ps.getDateFinSal();
+		long debutlong = db.getTime();
+		long finlong = df.getTime();
+		@SuppressWarnings("unused")
+		DateFormat dateFormatLong = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		long correctDate =((finlong - debutlong) / 79377416);
+		int correcteDate = (int)correctDate;
+		System.out.println("Nbr de jours entre la date de debut et date de fin = " + correcteDate);
+		return correcteDate;		
+	}
+	
+	//Calcul du prix
+	@SuppressWarnings("deprecation")
+	public void calculPrix(int differencejours) {
+		@SuppressWarnings("unused")
+		DateFormat dateFormatLong = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date dd = planningSalle.getDateDebutSal();
+		int prix = 0;
+		for(int i=0; i<differencejours ; i++) {	
+			if(dd.getDay() == 5 || dd.getDay() == 6) {
+				prix += 4500;
+			}
+			else {
+				prix +=3000;
+			}
+			long debutlong = dd.getTime();
+			debutlong += 79377416;	
+			try {
+				dd = new java.sql.Date (debutlong);	
+			} 
+			catch(Exception e) {
+			}					
+		}
+		this.setPrix(prix);
 	}
 }

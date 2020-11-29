@@ -6,26 +6,40 @@ import DAO.*;
 
 public class Place implements Serializable {
 
-	//Attriubts
 	private static final long serialVersionUID = -3048706543695775020L;
-
 	protected static DAOFactory factory = (DAOFactory)DAOFactory.getFactory(0);
 	protected static PlaceDAO dao = factory.getPlaceDAO();
 	
+	//ATTRIBUTS
+	private int id;
 	private int prix;
 	private int numPlace;
-	/////////////////////////////////////////////
 	private Representation representation;
-	////////////////////////////////////////////
 	
-	//Constructeur
+	//CONSTRCTEUR
+	public Place() {
+
+	}
+	
+	public Place(int prix) {
+		this.prix = prix;
+	}
+	
 	public Place(int numPlace, int prix, Representation representation) {
 		this.numPlace = numPlace;
 		this.prix = prix;
 		this.representation = representation;
 	}
 	
-	//Accesseurs
+	//ACCESSEURS
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public int getPrix() {
 		return prix;
 	}
@@ -47,6 +61,21 @@ public class Place implements Serializable {
 	}
 	public void setRepresentation(Representation representation) {
 		this.representation = representation;
+	}
+
+	//METHODES
+	public boolean ajout(Representation r) {
+		dao.create(this);
+		
+		return dao.createAvecRepresentation(r);
+	}
+	
+	public boolean ajoutCommande(Commande c) {
+		return dao.createInPlaceCommande(this, c);
+	}
+	
+	public Place findByAll() {
+		return this;
 	}
 
 }

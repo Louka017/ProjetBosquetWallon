@@ -6,13 +6,13 @@ import DAO.*;
 
 public class Artiste extends Personne implements Serializable {
 
-	//Attributs
+	//ATTRIBUTS
 	private static final long serialVersionUID = 9149868084737096938L;
 	
 	protected static DAOFactory factory = (DAOFactory)DAOFactory.getFactory(0);
 	protected static ArtisteDAO dao = factory.getArtisteDAO();
 	
-	//Constructeur
+	//CONSTRUCTEURS
 	public Artiste(String nom, String prenom, String rue, int numero, String ville, int cp, String email, String password, int id) {
 		super(nom, prenom, rue, numero, ville, cp, email, password, id);
 	}
@@ -21,12 +21,11 @@ public class Artiste extends Personne implements Serializable {
 		super(nom, prenom, rue, numero, ville, cp, email, password);
 	}
 
-	public Artiste() {}
+	public Artiste() {
+	}
 	
 	
-	//Méthodes
-	
-	
+	//METHODES
 	//Ajouter un artiste
 	public boolean ajoutArtiste() {
 		return dao.create(this);
@@ -42,18 +41,17 @@ public class Artiste extends Personne implements Serializable {
 	public boolean verifierChamps() {
 		String num =  String. valueOf(numero);
 		String cdp = String. valueOf(cp);
-		
 		if(nom.matches(regnom))
 			if(prenom.matches(regnom))
 				if(rue.matches(regrue))
 					if(num.matches(regnum))
 						if(cdp.matches(regcp))
 							if(email.matches(regmail))
-									return true;
+								return true;
 		return false;
 	}
 	
-	//Liste
+	//Liste d'artistes
 	public List<Artiste> listeArtistes(){
 		return dao.listeArtistes();
 	}

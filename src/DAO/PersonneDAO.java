@@ -87,23 +87,16 @@ public class PersonneDAO implements DAO<Personne> {
 	
 	
 	
-	public int verify(String email, String mdp) {
+	public Personne verify(Personne obj) {
+		Personne p = null;
 		try {
-			ResultSet result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Personne WHERE Email = '" + email + "';");
-			if (result.first()) {
-				if(result.getString("MotDePasse").equals(mdp)) {
-						return 1;
-				}else {
-						return 2;
-				}
-			}else {
-				return 0;
-			}
-			
+			ResultSet result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Personne WHERE Email = '" + obj.getEmail() + "';");
+				if (result.first())
+					 p = new Personne(result.getString("Nom"), result.getString("Prenom"), result.getString("Rue"),result.getInt("Numero"),result.getString("Ville"),result.getInt("CodePostal"),result.getString("Email"), result.getString("MotDePasse"), result.getInt("IdPersonne"));
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return 0;
 		}
+		return p;
 	}
 	
 	

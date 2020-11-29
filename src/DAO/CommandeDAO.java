@@ -1,6 +1,9 @@
 package DAO;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import POJO.*;
 
 public class CommandeDAO implements DAO<Commande> {
@@ -15,7 +18,17 @@ public class CommandeDAO implements DAO<Commande> {
 	
 	//Fonctions
 	public  boolean create(Commande obj) {
-		return false;
+		try {
+		String create = "INSERT INTO Commande (ModePayement, ModeLivraison, Cout)"
+				+ "values ('" + obj.getModePayement() + "','" + obj.getModeLivraison() + "', '" + obj.getCout() + "');";
+	
+		connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeUpdate(create);
+		 
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
 	}
 	
 	public  boolean delete(Commande obj) {
@@ -29,6 +42,34 @@ public class CommandeDAO implements DAO<Commande> {
 	public Commande find(int Id) {
 		Commande s = null;
 		return s;
+	}
+	
+	public  boolean updateAvecIdPersonne(Personne obj) {
+		try {
+			String update ="UPDATE Commande Set idPersonne = '" + obj.getId() + "' WHERE idPersonne = 0;";
+			connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeUpdate(update);	
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+	
+	
+	public Commande findByAll(String payement, String livraison, int cout, Personne p) {
+		Commande c = null;
+		try {
+			ResultSet result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeQuery("SELECT * FROM Commande WHERE ModePayement = '" + payement + "' AND ModeLivraison= '"+ livraison+"' AND Cout = '"+ cout +"' AND idPersonne = '"+p.getId()+"' ;");
+			if (result.first()) {
+				c = new Commande(result.getInt("idCommande"),result.getString("ModePayement"),result.getString("ModeLivraison"),result.getInt("Cout")); 
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return c;
 	}
 
 

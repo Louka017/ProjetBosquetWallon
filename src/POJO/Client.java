@@ -10,10 +10,10 @@ public class Client  extends Personne implements Serializable {
 	protected static DAOFactory factory = (DAOFactory)DAOFactory.getFactory(0);
 	protected static ClientDAO dao = factory.getClientDAO();
 	
-	//Attribut
+	//ATTRIBUT
 	private List<Commande> commandes;
 
-	//Constructeurs
+	//CONSTRUCTEURS
 	public Client(String nom, String prenom, String rue, int numero, String ville, int cp, String email, String password, int id) {
 		super(nom, prenom, rue, numero, ville, cp, email, password, id);	
 	}
@@ -22,12 +22,20 @@ public class Client  extends Personne implements Serializable {
 		super(nom, prenom, rue, numero, ville, cp, email, password);
 	}
 	
-	//Méthodes
+	//ACCESSEURS
+	public List<Commande> getCommandes() {
+		return commandes;
+	}
+	
+	public void setCommandes(List<Commande> commandes) {
+		this.commandes = commandes;
+	}
+	
+	//METHODES
 	//Ajouter un client
 	public boolean ajoutClient() {
 		return dao.create(this);
 	}
-	
 	
 	//Regarder si tous les champs sont correct grâce à des REGEX
 	String regnom = "^[A-Za-z]+$" ;
@@ -35,11 +43,10 @@ public class Client  extends Personne implements Serializable {
 	String regrue = "^[A-Za-z -]+$" ;
 	String regnum = "^[0-9]+$";
 	String regcp = "^[0-9]{4}$";
-
+	
 	public boolean verifierChamps() {
 		String num =  String. valueOf(numero);
-		String cdp = String. valueOf(cp);
-		
+		String cdp = String. valueOf(cp);		
 		if(nom.matches(regnom))
 			if(prenom.matches(regnom))
 				if(rue.matches(regrue))
@@ -49,9 +56,4 @@ public class Client  extends Personne implements Serializable {
 								return true;
 		return false;
 	}
-	
-
-	
-	
-	
 }

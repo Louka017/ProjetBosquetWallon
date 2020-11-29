@@ -8,8 +8,9 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-
+import java.util.List;
 
 import POJO.*;
 
@@ -100,7 +101,6 @@ public class PlanningSalleDAO implements DAO<PlanningSalle> {
 			ResultSet result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
 					.executeQuery("SELECT * FROM PlanningSalle WHERE DateDebut = '" + localDateFormat.format(t) + "';");
 			if (result.first()) {
-				System.out.println("on passe dans first de DAO");
 						return 1;
 				}else {
 						return 0;
@@ -113,6 +113,22 @@ public class PlanningSalleDAO implements DAO<PlanningSalle> {
 		
 	}
 	
+	
+	public List<PlanningSalle> verify() {
+		List<PlanningSalle> ps = new ArrayList<PlanningSalle>();
+		try {
+			String query = "SELECT * from PlanningSalle WHERE idSalle > 0";
+			ResultSet result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeQuery(query);
+				while(result.next()) {
+					PlanningSalle planning = new PlanningSalle(result.getInt("idSalle"),result.getDate("DateDebut"),result.getDate("DateFin"));
+					ps.add(planning);
+				}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ps;
+	}
 	
 	
 

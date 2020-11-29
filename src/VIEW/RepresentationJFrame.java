@@ -28,9 +28,11 @@ import POJO.PlanningSalle;
 import POJO.Representation;
 import POJO.Spectacle;
 import javax.swing.JRadioButton;
+import com.toedter.calendar.JCalendar;
 
 public class RepresentationJFrame extends JFrame {
 
+	private static final long serialVersionUID = 3149333708461873234L;
 	private JPanel contentPane;
 	private JTextField HeureDebut;
 	private JTextField HeureFin;
@@ -38,7 +40,12 @@ public class RepresentationJFrame extends JFrame {
 	private JTextField MinFin;
 	Representation rp = new Representation();
 	String strDateDebut, strHeureDebut, strDateFin, strHeureFin;
-
+	
+	String goodDateDebut9 = null;
+	Date VraiDateDebut = null;
+	long heureDeb = 0;
+	Date correctDateDebut = null;
+	
 	
 	/**
 	 * Launch the application.
@@ -61,7 +68,7 @@ public class RepresentationJFrame extends JFrame {
 	 */
 	public RepresentationJFrame(Spectacle s, PlanningSalle ps, Personne p) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 583, 294);
 		//JPANEL
 		contentPane = new JPanel() {
 			private static final long serialVersionUID = 3827614812064042101L;
@@ -106,7 +113,7 @@ public class RepresentationJFrame extends JFrame {
 		
 		//VALIDER
 		JButton btnValider = new JButton("Valider");
-		btnValider.setBounds(274, 186, 85, 21);
+		btnValider.setBounds(168, 216, 85, 21);
 		contentPane.add(btnValider);
 		
 		//LABEL
@@ -130,44 +137,31 @@ public class RepresentationJFrame extends JFrame {
 		lblNewMin_1.setBounds(223, 111, 45, 13);
 		contentPane.add(lblNewMin_1);
 		
-		JLabel lblNewLabelDate = new JLabel("Date : ");
-		lblNewLabelDate.setForeground(Color.WHITE);
-		lblNewLabelDate.setBounds(36, 22, 45, 13);
-		contentPane.add(lblNewLabelDate);
-		
-		//RECUPERATION PLANNING
-		PlanningSalle pp = ps.find(ps.getId());
-		
-		//RADIO 1
-		JRadioButton rdbtnNewRadioButtonJ1 = new JRadioButton("New radio button");
-		rdbtnNewRadioButtonJ1.setSelected(true);
-		rdbtnNewRadioButtonJ1.setBounds(101, 18, 103, 21);
-			//CONVERSTION DE LA DATE EN STRING
-			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy"); 
-			
-        	String myDateDebut = dateFormat.format(pp.getDateDebutSal());  
-        	rdbtnNewRadioButtonJ1.setText(myDateDebut);
-		contentPane.add(rdbtnNewRadioButtonJ1);
-		
-		//RADIO 2
-		JRadioButton rdbtnNewRadioButtonJ2 = new JRadioButton("New radio button");
-		rdbtnNewRadioButtonJ2.setBounds(227, 18, 103, 21);
-			//CONVERSTION DE LA DATE EN STRING
-			String myDateFin = dateFormat.format(pp.getDateFinSal());  
-			rdbtnNewRadioButtonJ2.setText(myDateFin);
-		contentPane.add(rdbtnNewRadioButtonJ2);
-		
-		//RADIOGROUP
-		ButtonGroup bgroup = new ButtonGroup();
-		bgroup.add(rdbtnNewRadioButtonJ1);
-		bgroup.add(rdbtnNewRadioButtonJ2);
-		
+		//CALENDAR
+		JCalendar calendar = new JCalendar();
+		calendar.setBounds(325, 36, 206, 152);
+		contentPane.add(calendar);		
 		
 		btnValider.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e)
 			{	
-				//RECUPERATION
+				//FORMAT DE DATE
+				DateFormat dateFormatCourt = new SimpleDateFormat("yyyy-MM-dd"); 
+				DateFormat dateFormatLong = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+				//DATE CALENDAR
+				Date daterecup = calendar.getDate();
+				String strDateDebut2 = dateFormatCourt.format(daterecup);
+				try {
+						VraiDateDebut = dateFormatCourt.parse(strDateDebut2);
+						heureDeb = VraiDateDebut.getTime();
+						correctDateDebut = new java.sql.Date (heureDeb);	
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}	
+				
+				//RECUPERATION HEURE
 				String h1 = HeureDebut.getText();
 				String h2 = HeureFin.getText();
 				String m1 = MinDebut.getText();
@@ -175,27 +169,11 @@ public class RepresentationJFrame extends JFrame {
 				//TRANSFORME EN HEURE CORRECTE LA RECUPERATION
 				String heuredeb = h1 + ":" + m1;
 				String heurefin = h2 + ":" + m2;
-				//RECUPERE LA DATE DU J.1 et J.2 DE LA LOCATION DE LA SALLE 
-				Date db = (Date)pp.getDateDebutSal();
-				Date df = (Date)pp.getDateFinSal();
-				//FORMAT DE DATE
-				DateFormat dateFormatCourt = new SimpleDateFormat("yyyy-MM-dd"); 
-				DateFormat dateFormatLong = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 				//AJOUTE L'HEURE DE LA REPRESENTATION au J
-				if(rdbtnNewRadioButtonJ1.isSelected()){
-					strDateDebut = dateFormatCourt.format(db);	
-					strHeureDebut = strDateDebut +" "+ heuredeb+":00";
-					strDateFin = dateFormatCourt.format(db);	
-					strHeureFin = strDateDebut +" "+ heurefin+":00";
-				}
-				else if(rdbtnNewRadioButtonJ2.isSelected())
-				{
-					strDateDebut = dateFormatCourt.format(df);	
-					strHeureDebut = strDateDebut +" "+ heuredeb+":00";
-					strDateFin = dateFormatCourt.format(df);	
-					strHeureFin = strDateDebut +" "+ heurefin+":00";
-				}
-				
+				strDateDebut = dateFormatCourt.format(correctDateDebut);	
+				strHeureDebut = strDateDebut +" "+ heuredeb+":00";
+				strDateFin = dateFormatCourt.format(correctDateDebut);	
+				strHeureFin = strDateDebut +" "+ heurefin+":00";
 				//TRANSFORME LE STRING EN DATE
 				try {
 					Date date =dateFormatLong.parse(strHeureDebut);
@@ -204,16 +182,12 @@ public class RepresentationJFrame extends JFrame {
 					long heureFin = date2.getTime();
 					Date heuredb = new java.sql.Date (heureDeb);
 					Date heurefn = new java.sql.Date (heureFin);
-					
+			
 					//POJO
-					if(rdbtnNewRadioButtonJ1.isSelected())
-					    rp = new Representation(db,(java.sql.Date) heuredb,(java.sql.Date)heurefn,s);
-					
-					if(rdbtnNewRadioButtonJ2.isSelected())
-						rp = new Representation(df,(java.sql.Date) heuredb,(java.sql.Date)heurefn,s);
+					rp = new Representation(correctDateDebut,(java.sql.Date) heuredb,(java.sql.Date)heurefn,s);
 					rp.ajouterRps();	
-				} catch (ParseException e2) {
-				
+				} 
+				catch (ParseException e2) {
 					e2.printStackTrace();
 				}
 			

@@ -3,6 +3,8 @@ package DAO;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import POJO.*;
 
@@ -57,4 +59,38 @@ public class CategorieDAO implements DAO<Categorie> {
 		return true;
 	}
 
+	
+	public Categorie findByIdConfiguration(int id) {
+		Categorie c = null;
+		
+		try {
+			ResultSet result = connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeQuery("SELECT * FROM Categorie WHERE idConfiguration = " + id + ";");
+			if (result.first())
+				c = new Categorie(result.getInt("idCategorie"), result.getString("Type"),result.getInt("Prix"),result.getInt("NbrPlaceDispo"),result.getInt("NbrPlaceMax"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return c;
+	}
+	
+	public List<Categorie> findAllByIdConfiguration(int id){
+		List<Categorie> categories = new ArrayList<Categorie>();
+		try {
+
+			String query = "SELECT * FROM Categorie WHERE idConfiguration = " + id + ";";
+			ResultSet result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeQuery(query);
+				while(result.next()) {
+					Categorie	c = new Categorie(result.getInt("idCategorie"), result.getString("Type"),result.getInt("Prix"),result.getInt("NbrPlaceDispo"),result.getInt("NbrPlaceMax"));
+					categories.add(c);
+				}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return categories;
+	}
+	
+	
 }

@@ -109,16 +109,15 @@ public class LoginJFrame extends JFrame {
 					AcceuilJFrame acc = new AcceuilJFrame(p);
 					acc.setVisible(true);
 				}
-				else if(p.verifer() == 0) {
-					JOptionPane.showMessageDialog(null, "Aucun compte n'existe avec cette adresse ! Inscrivez-vous.");
-					AcceuilJFrame acc = new AcceuilJFrame(p);
-					acc.setVisible(false);
-				}
 				else if(p.verifer() == 2){
 					JOptionPane.showMessageDialog(null, "Erreur dans le mot de passe !");
-					AcceuilJFrame acc = new AcceuilJFrame(p);
-					acc.setVisible(false);
+
 				}
+				else if(p.verifer() == 0) {
+					JOptionPane.showMessageDialog(null, "Aucun compte n'existe avec cette adresse ! Inscrivez-vous.");
+
+				}
+				
 			}
 		});	
 		

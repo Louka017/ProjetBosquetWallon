@@ -526,7 +526,7 @@ public class CreationSpectacleJFrame extends JFrame {
 							//AJOUT DB
 							spectacle.ajouterConfiguration(conf);
 							
-							configuration = conf.find(spectacle.getId());
+							configuration = conf.find(spectacle);
 
 							//POJO CATEGORIE
 							cat= new Categorie("Libre", prixLibre,placeLibre,placeLibre);
@@ -597,7 +597,7 @@ public class CreationSpectacleJFrame extends JFrame {
 							//AJOUT DB
 							spectacle.ajouterConfiguration(conf);	
 							
-							configuration = conf.find(spectacle.getId());
+							configuration = conf.find(spectacle);
 							
 						//POJO CATEGORIE
 						cat= new Categorie("Bronze", prixBronze,placeBronze,placeBronze);
@@ -674,7 +674,7 @@ public class CreationSpectacleJFrame extends JFrame {
 
 						//AJOUT DB
 						spectacle.ajouterConfiguration(conf);						
-						configuration = conf.find(conf.getId());
+						configuration = conf.find(spectacle);
 						
 						//POJO CATEGORIE
 						cat= new Categorie("Bronze", prixBronze,placeBronze,placeBronze);

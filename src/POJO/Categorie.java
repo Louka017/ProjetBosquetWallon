@@ -1,6 +1,8 @@
 package POJO;
 
 import java.io.Serializable;
+import java.util.List;
+
 import DAO.CategorieDAO;
 import DAO.DAOFactory;
 
@@ -10,13 +12,14 @@ public class Categorie implements Serializable {
 	protected static DAOFactory factory = (DAOFactory)DAOFactory.getFactory(0);
 	protected static CategorieDAO dao = factory.getCategorieDAO();
 	
-	//Attributs
+	//ATTRIBUTS
+	private int id;
 	private String type;
 	private int prix;
 	private int nbrPlaceDispo;
 	private int nbrPlaceMax;
 
-	//Constructeurs
+	//CONSTRUCTEURS
 	public Categorie() {
 		
 	}
@@ -28,8 +31,22 @@ public class Categorie implements Serializable {
 		this.nbrPlaceMax = nbrPlaceMax;
 	}
 
+	public Categorie(int id, String type, int prix, int nbrPlaceDispo, int nbrPlaceMax) {
+		this.id = id;
+		this.type = type;
+		this.prix = prix;
+		this.nbrPlaceDispo = nbrPlaceDispo;
+		this.nbrPlaceMax = nbrPlaceMax;
+	}
 	
-	//Accesseurs
+	//ACCESSEURS
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public String getType() {
 		return type;
 	}
@@ -38,7 +55,7 @@ public class Categorie implements Serializable {
 	}
 	
 	
-	public float getPrix() {
+	public int getPrix() {
 		return prix;
 	}
 	public void setPrix(int prix) {
@@ -119,4 +136,11 @@ public class Categorie implements Serializable {
 		return dao.AjouterAvecIdConfiguration(c);
 	}
 	
+	public Categorie findByConfiguration(Configuration c) {
+		return dao.findByIdConfiguration(c.getId());
+	}
+	
+	public List<Categorie> findAllByConfiguration(Configuration c) {
+		return dao.findAllByIdConfiguration(c.getId());
+	}
 }

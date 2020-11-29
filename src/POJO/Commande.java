@@ -7,20 +7,31 @@ import DAO.*;
 
 public class Commande implements Serializable {
 
-	//Attributs
-	private static final long serialVersionUID = -7833218115888236671L;
-	
+	private static final long serialVersionUID = -7833218115888236671L;	
 	protected static DAOFactory factory = (DAOFactory)DAOFactory.getFactory(0);
 	protected static CommandeDAO dao = factory.getCommandeDAO();
 	
+	//ATTRIBUTS
+	private int id;
 	private String modePayement;
 	private String modeLivraison;
 	private int cout;
-	/////////////////////////////////////////////////////
 	private List<Place> places;
-	//////////////////////////////////////////////////////
 	
-	//Constructeur
+	//CONSTRUCTEURS
+	public Commande(String modePayement, String modeLivraison, int cout) {
+		this.modePayement = modePayement;
+		this.modeLivraison = modeLivraison;
+		this.cout = cout;
+	}
+	
+	public Commande(int id,String modePayement, String modeLivraison, int cout) {
+		this.setId(id);
+		this.modePayement = modePayement;
+		this.modeLivraison = modeLivraison;
+		this.cout = cout;
+	}
+	
 	public Commande(String modePayement, String modeLivraison, int cout, List<Place> places) {
 		this.modePayement = modePayement;
 		this.modeLivraison = modeLivraison;
@@ -28,7 +39,15 @@ public class Commande implements Serializable {
 		this.places = places;
 	}
 	
-	//Accesseurs
+	//ACCESSEURS
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public String getModePayement() {
 		return modePayement;
 	}
@@ -61,7 +80,15 @@ public class Commande implements Serializable {
 	}
 
 
+	//METHODES
+	public boolean ajoutAvecPersonne(Personne p) {
+		dao.create(this);
+		return dao.updateAvecIdPersonne(p);
+	}
 	
-	
+	public Commande findByAll(Personne p) {
+		return dao.findByAll(this.getModePayement(), this.getModeLivraison(), this.getCout(), p);
+	}
+
 
 }

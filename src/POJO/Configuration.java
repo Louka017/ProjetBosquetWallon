@@ -6,20 +6,16 @@ import DAO.*;
 
 public class Configuration implements Serializable {
 
-	//Attributs
 	private static final long serialVersionUID = -4973296506746715437L;
-
 	protected static DAOFactory factory = (DAOFactory)DAOFactory.getFactory(0);
 	protected static ConfigurationDAO dao = factory.getConfigurationDAO();
-	
+
+	//ATTRIBUTS
 	private int id;
 	private String type;
-	////////////////////////////////////////////////////////////////////////
 	private Categorie categorie;
-	private int idSpectacle;   //ATTENTION
-	////////////////////////////////////////////////////////////////////////
 	
-	//Constructeur
+	//CONSTRUCTEURS
 	public Configuration() {
 		
 	}
@@ -39,10 +35,6 @@ public class Configuration implements Serializable {
 		this.categorie = categorie;
 	}
 	
-	public Configuration(String type, int idSpectacle) {
-		this.type = type;
-		this.idSpectacle = idSpectacle;
-	}
 	
 	public Configuration(int id, String type, Categorie categorie) {
 		this.id = id;
@@ -50,13 +42,7 @@ public class Configuration implements Serializable {
 		this.categorie = categorie;
 	}
 	
-	public Configuration(int id, String type, int idSpectacle) {
-		this.id = id;
-		this.type = type;
-		this.idSpectacle = idSpectacle;
-	}
-	
-	//Accesseurs
+	//ACCESSEURS
 	public int getId() {
 		return id;
 	}
@@ -79,37 +65,36 @@ public class Configuration implements Serializable {
 		this.categorie = categorie;
 	}
 	
-	public int getIdSpectacle() {
-		return idSpectacle;
-	}
-	public void setIdSpectacle(int idSpectacle) {
-		this.idSpectacle = idSpectacle;
+	public int getNbrResteCategorie() {
+		return categorie.getNbrPlaceDispo();
 	}
 
-	//Méthodes
+	//METHODES
+	//Ajouter une configuration
 	public boolean ajouterConfiguration() {
 		return dao.create(this);
 	}
-	
-	public Configuration find(int id)
-	{
-		return dao.findById(id);
-	}	
-	
-	public String toString() {
-		return id + " " + type + " " + categorie + " " + idSpectacle;
-	}
-	
-	
+
 	public boolean ajouterIdSpectacle(Spectacle s) {
 		dao.create(this);
-		
 		return dao.AjouterAvecIdSpectacle(s);
 	}
 	
+	//Trouver une configuration
+	public Configuration find(Spectacle s)
+	{
+		return dao.findByIdSpectacle(s.getId());
+	}	
+	
+	//Afficher une configuration
+	public String toString() {
+		return id + " " + type + " " + categorie;
+	}
+	
+	//Envoye l'objet pour ajouter une categorie
 	public boolean ajouterCategorie(Categorie c) {
-
 		return c.ajouterCategorie(this);
 	}
 	
+
 }

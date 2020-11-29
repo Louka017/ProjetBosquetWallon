@@ -16,13 +16,11 @@ public class Spectacle implements Serializable{
 	private int id;
 	private String titre;
 	private int nbrPlaceParClient;
-	////////////////////////////////////////////////////////////////////
 	private Configuration configuration;
 	private List<Artiste> artistes;
 	private List<Representation> representations;
 	
-	private long idSalle; //ATTENTION
-	////////////////////////////////////////////////////////////////////////
+
 	
 	//Constructeurs
 	public Spectacle()
@@ -43,25 +41,7 @@ public class Spectacle implements Serializable{
 		this.nbrPlaceParClient = nbrPlaceParClient;
 	}
 	
-	public Spectacle(String titre, int nbrPlaceParClient,long idSalle) {
-		this.titre = titre;
-		this.nbrPlaceParClient = nbrPlaceParClient;
-		this.idSalle =idSalle;
-	}
-	
-	public Spectacle(int id,String titre, int nbrPlaceParClient,long idSalle) {
-		this.id = id;
-		this.titre = titre;
-		this.nbrPlaceParClient = nbrPlaceParClient;
-		this.idSalle =idSalle;
-	}
-	
-	public Spectacle(String titre, int nbrPlaceParClient,int idSalle,List<Artiste> artistes) {
-		this.titre = titre;
-		this.nbrPlaceParClient = nbrPlaceParClient;
-		this.idSalle =idSalle;
-		this.artistes = artistes;
-	}
+
 	
 	public Spectacle(String titre, int nbrPlaceParClient, Configuration configuration,List<Artiste> artistes,List<Representation> representations) {
 		this.titre = titre;
@@ -101,7 +81,7 @@ public class Spectacle implements Serializable{
 	public void setConfiguration(Configuration configuration) {
 		this.configuration = configuration;
 	}
-	
+
 	
 	public List<Artiste> getArtistes() {
 		return artistes;
@@ -119,12 +99,7 @@ public class Spectacle implements Serializable{
 	}
 	
 	
-	public long getIdSalle() {
-		return idSalle;
-	}
-	public void setIdSalle(long idSalle) {
-		this.idSalle = idSalle;
-	}
+
 
 	//Méthodes
 	public boolean ajouterSpectacle() 
@@ -168,4 +143,7 @@ public class Spectacle implements Serializable{
 	public boolean ajouterConfiguration(Configuration conf) {
 		return conf.ajouterIdSpectacle(this);
 	}
+	
+
+
 }

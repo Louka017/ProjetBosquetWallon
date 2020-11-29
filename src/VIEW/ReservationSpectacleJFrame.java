@@ -21,6 +21,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Color;
+import java.awt.Component;
+
 import com.toedter.calendar.JDateChooser;
 
 import POJO.*;
@@ -36,8 +38,8 @@ public class ReservationSpectacleJFrame extends JFrame {
 	Date VraiDateFin;
 	Date correctDateDebut;
 	Date correctDateFin;
-	PlanningSalle ps = null;
-	int valeur ;
+	PlanningSalle ps = new PlanningSalle();
+	boolean valeur ;
 	/**
 	 * Launch the application.
 	 */
@@ -72,17 +74,26 @@ public class ReservationSpectacleJFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		//LABEL DATES DISPO
-		JLabel lblDisponibilite = new JLabel("Voir les dates disponibles pour louer la salle :");
+		JLabel lblDisponibilite = new JLabel("Dates disponibles pour louer la salle :");
 		lblDisponibilite.setForeground(Color.WHITE);
 		lblDisponibilite.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDisponibilite.setBounds(23, 25, 179, 13);
+		lblDisponibilite.setBounds(0, 25, 251, 13);
 		contentPane.add(lblDisponibilite);
+		
+		//OBTENIR UN FORMAT DATE CORRECT
+		DateFormat dateFormatLong2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
 		//CALENDRIER
 		JCalendar calendar = new JCalendar();
 		calendar.getDayChooser().getDayPanel().setForeground(Color.BLACK);
 		calendar.setBounds(20, 48, 206, 152);
 		contentPane.add(calendar);
+		
+		//ICI LE BAIL
+		System.out.println("Bail en ligne 93 RESERVATIONSPECTACLEJFRAME");
+		Component[] tab = calendar.getDayChooser().getDayPanel().getComponents();
+		tab[7].setEnabled(false);
+		
 		
 		//DATE DE DEBUT
 		JDateChooser dateDeb = new JDateChooser();
@@ -110,31 +121,10 @@ public class ReservationSpectacleJFrame extends JFrame {
 				dateDebut = dateDeb.getDate();
 				dateeFin  = dateFin.getDate();
 				
-				//FORMAT DATE
+				//OBTENIR UN FORMAT DATE CORRECT
 				DateFormat dateFormatLong = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				
-				//CHANGEMENT DATE EN STRING
-				strDateDebut = dateFormatLong.format(dateDebut);
-				strDateFin = dateFormatLong.format(dateeFin);
-				
-				//SEPARER LA DATE ET L'HEURE
-				String[] splitArray = null;
-				String[] splitArray2 = null;
-				splitArray = strDateDebut.split(" ");
-				splitArray2 = strDateFin.split(" ");
-				
-				for(int i = 0; i< splitArray.length;i++){
-					   //RECUPERE JUSTE LA DATE
-						goodDateDebut = splitArray[0];
-				}
-				for(int i = 0; i< splitArray2.length;i++){
-					   //RECUPERE JUSTE LA DATE
-						goodDateFin = splitArray2[0];
-				}
-				
-				//MODIFICATION POUR QUE HEURE = 12h00
-				goodDateDebut = goodDateDebut + " 12:00:00";
-				goodDateFin = goodDateFin + " 12:00:00";
+				goodDateDebut = ps.obtenirEnFormatCorrect(dateDebut);
+				goodDateFin = ps.obtenirEnFormatCorrect(dateeFin);
 				
 				//PARSE EN DATE
 				try {
@@ -147,14 +137,13 @@ public class ReservationSpectacleJFrame extends JFrame {
 				} catch (ParseException e1) {
 					e1.printStackTrace();
 				}				
-
 				
 				//CREE UN CONSTRUCTEUR AVEC LES DATES CHOISIES
 				ps = new PlanningSalle((java.sql.Date)correctDateDebut,(java.sql.Date)correctDateFin);
 				valeur = ps.verify();
 				
 				//REGARDE SI LA SALLE EST DEJA LOUER
-				if (valeur == 0) {
+				if (valeur == true) {
 					ps.ajouterPlanning();
 					ps = ps.finfByDate();
 					

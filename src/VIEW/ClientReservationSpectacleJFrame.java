@@ -12,12 +12,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-
+import POJO.Categorie;
+import POJO.Configuration;
 import POJO.Personne;
 import POJO.Representation;
 import POJO.Spectacle;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
@@ -28,6 +30,8 @@ public class ClientReservationSpectacleJFrame extends JFrame {
 
 	private static final long serialVersionUID = -5778600096352586056L;
 	private JPanel contentPane;
+	Configuration conf = new Configuration();
+	Categorie cat = new Categorie();
 	private JList<Representation> listRepresentations;
 	/**
 	 * Launch the application.
@@ -104,9 +108,16 @@ public class ClientReservationSpectacleJFrame extends JFrame {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				Representation rChoisie = listRepresentations.getSelectedValue();
-				ClientPlaceJFrame c = new ClientPlaceJFrame(rChoisie, p);
-				c.setVisible(true);
+				conf = conf.find(s);
+				cat  = cat.findByConfiguration(conf);
+				if(cat.getNbrPlaceDispo() < 1) {
+					JOptionPane.showMessageDialog(null, "Désolé, toutes les places ont été vendues");
+				}
+				else {
+					Representation rChoisie = listRepresentations.getSelectedValue();
+					ClientPlaceJFrame c = new ClientPlaceJFrame(rChoisie, p, s);
+					c.setVisible(true);
+				}
 			}
 		});
 	}

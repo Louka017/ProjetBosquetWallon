@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Date;
 import POJO.*;
 
 public class RepresentationDAO implements DAO<Representation> {
@@ -60,7 +59,7 @@ public class RepresentationDAO implements DAO<Representation> {
 			ResultSet result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
 					.executeQuery(query);
 				while(result.next()) {
-					Representation representation = new Representation(result.getInt("idRepresentation"),result.getDate("Date"),result.getTime("HeureDebut"),result.getTime("HeureFin"),result.getInt("idSpectacle"));
+					Representation representation = new Representation(result.getInt("idRepresentation"),result.getDate("Date"),result.getTime("HeureDebut"),result.getTime("HeureFin"));
 					representations.add(representation);
 				}	
 		} catch (SQLException e) {

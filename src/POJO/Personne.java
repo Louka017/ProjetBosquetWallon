@@ -6,12 +6,11 @@ import DAO.PersonneDAO;
 
 public class Personne implements Serializable{
 
-	//Attributs
-	private static final long serialVersionUID = -6819381459685578597L;
-	
+	private static final long serialVersionUID = -6819381459685578597L;	
 	protected static DAOFactory factory = (DAOFactory)DAOFactory.getFactory(0);
 	protected static PersonneDAO dao = factory.getPersonneDAO();
 	
+	//ATTRIBUTS
 	protected int id;
 	protected String nom;
 	protected String prenom;
@@ -22,13 +21,22 @@ public class Personne implements Serializable{
 	protected String email;
 	protected String password;
 	protected String discriminator;
-	//////////////////////////////////////////////////////////////////////////
-	private int idSpectacle; //ATTENTION
-	/////////////////////////////////////////////////////////////////////////
 
-
-	//Constructeurs
-	public Personne(String nom, String prenom, String rue, int numero, String ville, int cp, String email, String password, int id) {
+	//CONSTRUCTEURS
+	public Personne() {
+		
+	}
+	
+	public Personne(String email) {
+		this.email=email;
+	}
+	
+	public Personne(String email, String password) {
+		this.email=email;
+		this.password = password;
+	}
+	
+	public Personne(String nom, String prenom,String rue, int numero, String ville, int cp, String email, String password) {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.rue = rue;
@@ -38,8 +46,8 @@ public class Personne implements Serializable{
 		this.email = email;
 		this.password = password;
 	}
-	
-	public Personne(String nom, String prenom,String rue, int numero, String ville, int cp, String email, String password) {
+
+	public Personne(String nom, String prenom, String rue, int numero, String ville, int cp, String email, String password, int id) {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.rue = rue;
@@ -61,32 +69,11 @@ public class Personne implements Serializable{
 		this.password = password;
 		this.id = id;
 		this.discriminator = discriminator;
-	}
+	}	
 	
-	public Personne(int id, int idSpectacle) {
-		this.id = id;
-		this.idSpectacle = idSpectacle;
-		
-		}
-	
-	public Personne(String email, String password) {
-		this.email=email;
-		this.password = password;
-	}
-	
-	
-	public Personne(String email) {
-		this.email=email;
-		
-	}
-	
-	public Personne() {
-		
-	}
-	
-	//Accesseurs
+	//ACCESSEURS
 	public int getId() {
-		return id;
+		return this.id;
 	}
 	public void setId(int id) {
 		this.id = id;
@@ -141,7 +128,6 @@ public class Personne implements Serializable{
 	}
 	
 	
-	
 	public String getEmail() {
 		return email;
 	}
@@ -165,29 +151,22 @@ public class Personne implements Serializable{
 		this.discriminator = discriminator;
 	}
 	
-	
-	public int getIdSpectacle() {
-		return idSpectacle;
-	}
-	public void setIdSpectacle(int idSpectacle) {
-		this.idSpectacle = idSpectacle;
-	}
-	
 	//Méthodes	
-	
-
-	
-
 	//Verifier mail et mdp
-	public int verifer()
-	{
-		return dao.verify(email, password);
-							//this
+	public int verifer(){
+		Personne p = dao.verify(this);
+		
+		if(this.email.equals(p.getEmail())) {
+			if(this.password.equals(p.getPassword())) {
+				return 1;		
+			}
+			return 2; 
+		}
+		return 0;
 	}
 
 	//Afficher une personne
-	public String ToString()
-	{
+	public String ToString(){
 		return nom + " " + prenom;
 	}
 	
@@ -196,22 +175,19 @@ public class Personne implements Serializable{
 			return dao.findbyMail(this);
 	}
 
-	//ajouter
-	public boolean ajout()
-	{
+	//Ajouter une personne
+	public boolean ajout(){
 		return dao.create(this);
 	}
 	
-	//AJOUTER
+	//Ajouter une réservation en lui envoyant l'objet personne
 	public boolean ajouterReservation(Reservation r) {
 		return r.ajoutReservationAvecIdGestionnaire(this);
 	}
 	
-	
-	//AJOUTER Planning_salle
+	//Ajouter une Personne suivi de l'IdSpectale 
 	public boolean ajouterPlanningSalle(Spectacle s) {
 		dao.create(this);
-		
 		return dao.create(s);
 	}
 	
