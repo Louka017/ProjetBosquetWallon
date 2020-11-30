@@ -6,7 +6,11 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -53,6 +57,7 @@ public class ClientPlaceJFrame extends JFrame {
 	private Configuration conf = new Configuration();
 	private Categorie cat = new Categorie();
 	private List<Categorie> cats= new ArrayList<>();
+	private List<Categorie> categories= new ArrayList<>();
 	private JTextField Libre;
 	private JTextField Bronze;
 	private JTextField Argent;
@@ -69,8 +74,8 @@ public class ClientPlaceJFrame extends JFrame {
 	private JLabel lblVraiprix_3;
 	private JLabel lblVraiprix_4;
 	private int prixLibre, prixBronze, prixArgent, prixOr, prixDiamant;
-	private String strprixLibre, strprixBronze, strprixArgent, strprixOr, strprixDiamant;
-	private int nbrLibreInt, nbrBronzeInt, nbrArgentInt, nbrOrInt, nbrDiamantInt;
+	private String strprixLibre ="0", strprixBronze ="0", strprixArgent ="0", strprixOr ="0", strprixDiamant ="0";
+	private int nbrLibreInt = 0, nbrBronzeInt =0, nbrArgentInt=0, nbrOrInt=0, nbrDiamantInt=0;
 	private int goodprixBronze=0, goodprixArgent=1,goodprixOr=2, goodprixDiamant=3;
 	private int goodprixLibre=0, cpt=0;
 	private JLabel lblEuro;
@@ -124,7 +129,7 @@ public class ClientPlaceJFrame extends JFrame {
 		lblPrix.setForeground(Color.WHITE);
 		lblPrix.setBackground(Color.WHITE);
 		lblPrix.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPrix.setBounds(852, 24, 45, 13);
+		lblPrix.setBounds(852, 24, 35, 13);
 		
 		lblPrix_1 = new JLabel("Prix :");
 		lblPrix_1.setForeground(Color.WHITE);
@@ -150,7 +155,7 @@ public class ClientPlaceJFrame extends JFrame {
 		lblEuro = new JLabel("\u20AC");
 		lblEuro.setForeground(Color.WHITE);
 		lblEuro.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEuro.setBounds(943, 24, 45, 13);
+		lblEuro.setBounds(960, 24, 28, 13);
 
 		
 		lblEuro_1 = new JLabel("\u20AC");
@@ -249,53 +254,33 @@ public class ClientPlaceJFrame extends JFrame {
 		
 
 		//AFFICHER PRIX
-		if(cats.size() == 1) {
 			for (Categorie i : cats) {
+				if(i.getType().equals("Libre")) 
 				strprixLibre = String.valueOf((i.getPrix()));
-				strprixBronze = "0";
-				strprixArgent = "0";
-				strprixOr= "0";
+
+				if(i.getType().equals("Bronze")) 
+				strprixBronze= String.valueOf((i.getPrix()));
+	
+				if(i.getType().equals("Argent")) 
+				strprixArgent= String.valueOf((i.getPrix()));
+
+				if(i.getType().equals("Or")) 
+				strprixOr= String.valueOf((i.getPrix()));
+
+				if(i.getType().equals("Diamant")) 
+				strprixDiamant= String.valueOf((i.getPrix()));
+
 			}
 			
-		}else if(cats.size() == 3) {
-			for (Categorie i : cats) {
-				if(goodprixBronze == cpt) {
-					strprixBronze= String.valueOf((i.getPrix()));
-					}
-				if(goodprixArgent == cpt) {
-					strprixArgent= String.valueOf((i.getPrix()));
-				}
-				if(goodprixOr == cpt) {
-					strprixOr= String.valueOf((i.getPrix()));
-				}
-				strprixLibre="0";
-				strprixDiamant="0";
-				cpt++ ;
-			}
-		}else if(cats.size() == 4) {
-			for (Categorie i : cats) {
-				if(goodprixBronze == cpt) {
-					strprixBronze= String.valueOf((i.getPrix()));
-				}
-				if(goodprixArgent == cpt) {
-					strprixArgent= String.valueOf((i.getPrix()));
-				}
-				if(goodprixOr == cpt) {
-					strprixOr= String.valueOf((i.getPrix()));
-				}
-				if(goodprixDiamant == cpt) {
-					strprixDiamant= String.valueOf((i.getPrix()));
-				}
-				strprixLibre="0";
-				cpt++ ;
-			}
-		}
+		
+		
 
 
 
 		
 		//AFFICHAGE DES CONFIGURATION
 		 type = conf.getType();
+		 
 		if(type.equals("Debout")) {
 			contentPane.add(lblLibre);
 			contentPane.add(Libre);
@@ -397,8 +382,28 @@ public class ClientPlaceJFrame extends JFrame {
 			
 			rdbtnNewRadioButton_10 = new JRadioButton("Virement SEPA (\u00E0 effectuer dans les 7 jours)");
 			rdbtnNewRadioButton_10.setBounds(146, 288, 241, 21);
-			contentPane.add(rdbtnNewRadioButton_10);
-		
+			
+			//VERIFICATION POUR PAYEMENT SEPA
+			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			Date date = new Date();
+			String test = dateFormat.format(date);
+			try {
+				date =dateFormat.parse(test);
+			} catch (ParseException e1) {
+				e1.printStackTrace();
+			}
+			
+			//DATE DU JOUR EN (DATE) ET (LONG)
+			long dateday = date.getTime();
+			Date dd = new java.sql.Date (dateday);
+			
+			//DATE REPRESENTATION EN (DATE) ET (LONG)
+			long daterepres = r.getDate().getTime();
+			Date datelimite = new java.sql.Date (daterepres - (79377416*21));
+			
+			//VERIFICATION
+			if(dd.equals(datelimite)||dd.before(datelimite))
+				contentPane.add(rdbtnNewRadioButton_10);
 			
 		//RADIO GROUP	
 		ButtonGroup bgroup = new ButtonGroup();
@@ -447,7 +452,6 @@ public class ClientPlaceJFrame extends JFrame {
 					nbrDiamantInt = Integer.parseInt(Diamant.getText());
 				
 				//PRIX TOTAL
-				System.out.println("prix bronze = " +strprixBronze);
 				
 				int cout = (nbrLibreInt*Integer.parseInt(strprixLibre)) +(nbrBronzeInt*Integer.parseInt(strprixBronze)) + (nbrArgentInt*Integer.parseInt(strprixArgent)) + (nbrOrInt*Integer.parseInt(strprixOr)) + (nbrDiamantInt*Integer.parseInt(strprixDiamant));
 				
@@ -493,37 +497,61 @@ public class ClientPlaceJFrame extends JFrame {
 				for(int i=0; i<nbrLibreInt; i++ ) {
 					Place place = new Place(Integer.parseInt(strprixLibre));
 					place.ajout(r);
-					Place goodplace = place.findByAll();
-					goodplace.ajoutCommande(comm);
 				}
 				
 				for(int i=0; i<nbrBronzeInt; i++ ) {
 					Place place = new Place(Integer.parseInt(strprixBronze));
 					place.ajout(r);
-					Place goodplace = place.findByAll();
-					goodplace.ajoutCommande(comm);
 				}
 				
 				for(int i=0; i<nbrArgentInt; i++ ) {
 					Place place = new Place(Integer.parseInt(strprixArgent));
 					place.ajout(r);
-					Place goodplace = place.findByAll();
-					goodplace.ajoutCommande(comm);
 				}
 				
 				for(int i=0; i<nbrOrInt; i++ ) {
 					Place place = new Place(Integer.parseInt(strprixOr));
 					place.ajout(r);
-					Place goodplace = place.findByAll();
-					goodplace.ajoutCommande(comm);
 				}
 				
 				for(int i=0; i<nbrDiamantInt; i++ ) {
 					Place place = new Place(Integer.parseInt(strprixDiamant));
 					place.ajout(r);
-					Place goodplace = place.findByAll();
-					goodplace.ajoutCommande(comm);
 				}
+				
+				//DECREMENTATION
+				
+				categories = cat.findAllByConfigurationAndRepresentation(conf, r);
+				
+				for(Categorie ca : categories) {
+					if(ca.getType().equals("Libre")) {
+						int NbrDispo = (ca.getNbrPlaceDispo() - nbrLibreInt);
+						ca.setNbrPlaceDispo(NbrDispo);
+						ca.update();
+					}
+					if(ca.getType().equals("Bronze")) {
+						int NbrDispo = (ca.getNbrPlaceDispo() - nbrBronzeInt);
+						ca.setNbrPlaceDispo(NbrDispo);
+						ca.update();
+					}
+					if(ca.getType().equals("Argent")) {
+						int NbrDispo = (ca.getNbrPlaceDispo() - nbrArgentInt);
+						ca.setNbrPlaceDispo(NbrDispo);
+						ca.update();
+					}	
+					if(ca.getType().equals("Or")) {
+						int NbrDispo = (ca.getNbrPlaceDispo() - nbrOrInt);
+						ca.setNbrPlaceDispo(NbrDispo);
+						ca.update();
+					}
+					if(ca.getType().equals("Diamant")) {
+						int NbrDispo = (ca.getNbrPlaceDispo() - nbrDiamantInt);
+						ca.setNbrPlaceDispo(NbrDispo);
+						ca.update();
+					}
+				}
+				
+				
 				
 				
 				

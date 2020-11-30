@@ -118,7 +118,10 @@ public class PlanningSalle implements Serializable {
 
 	//Afficher un PlanningSalle
 	public String toString() {
-		return id + " " + dateDebutSal + " " + dateFinSal;
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyyy");
+		String strDate = dateFormat.format(dateDebutSal); 
+		String strDate2 = dateFormat.format(dateFinSal);
+		return "  " + id + "                        " + strDate + "                        " + strDate2;
 	}
 
 	//Verifier la disponibilité de la salle
@@ -156,6 +159,10 @@ public class PlanningSalle implements Serializable {
 		return goodDate;
 	}
 	
+	//Trouver tous les planningsalle
+	public List<PlanningSalle> findAllPlanningSalle(){
+		return dao.findAll();
+	}
 
 
 }

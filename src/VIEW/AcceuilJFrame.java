@@ -54,7 +54,7 @@ public class AcceuilJFrame extends JFrame {
 	public AcceuilJFrame(Personne p) {
 		setResizable(false);		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 449, 355);
 		//JPANEL
 		contentPane = new JPanel() {
 			private static final long serialVersionUID = 3827614812064042101L;
@@ -82,14 +82,14 @@ public class AcceuilJFrame extends JFrame {
 		DefaultListModel<Spectacle> model = new DefaultListModel<>();
 		model.addAll(spec.listeSpectacles());
 		listeTousLesSpec = new JList<>(model);
-		listeTousLesSpec.setBounds(21, 33, 166, 186);
+		listeTousLesSpec.setBounds(21, 33, 166, 262);
 		contentPane.add(listeTousLesSpec);
 		
 		//DETAIL
 		JButton btnDetail = new JButton("D\u00E9tail");
 		btnDetail.setForeground(Color.RED);
 		btnDetail.setBackground(Color.DARK_GRAY);
-		btnDetail.setBounds(214, 139, 85, 21);
+		btnDetail.setBounds(270, 144, 85, 21);
 		contentPane.add(btnDetail);
 
 		//BOUTON AJOUTER REPRESENTATION
@@ -104,6 +104,7 @@ public class AcceuilJFrame extends JFrame {
 				Spectacle s = listeTousLesSpec.getSelectedValue();
 				int idSalle = s.trouveidSalle();	
 				PlanningSalle ps = new PlanningSalle(idSalle);
+				ps = ps.find(idSalle);
 				Representation2JFrame Rep = new Representation2JFrame(s, ps, p);
 				Rep.setVisible(true);
 			}
@@ -139,10 +140,33 @@ public class AcceuilJFrame extends JFrame {
 			}
 		});
 		
+		
+		//BOUTTON GESTIONNAIRE
+		JButton btnGestionnaire = new JButton("Voir les plannings");
+		btnGestionnaire.setForeground(Color.RED);
+		btnGestionnaire.setBackground(Color.DARK_GRAY);
+		btnGestionnaire.setBounds(214, 175, 206, 28);
+		btnGestionnaire.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Personne pp = p.findbyMail();
+				GestionnaireJFrame frame = new GestionnaireJFrame(pp);
+				frame.setVisible(true);
+			}
+		});
+		
+		
+		
+		
 		//ORGANISATEUR
 		if(p.getDiscriminator().equals("Organisateur")) {
 			contentPane.add(btnRepresentation);
 			contentPane.add(btnOrganiserSpectacle);
-		}				
+		}
+		//GESTIONNAIRE
+		if(p.getDiscriminator().equals("Gestionnaire")) {
+		contentPane.add(btnGestionnaire);
+		contentPane.add(btnRepresentation);
+		contentPane.add(btnOrganiserSpectacle);
+		}
 	}	
 }

@@ -57,18 +57,5 @@ public class PlaceDAO implements DAO<Place> {
 		return true;
 	}
 	
-	//PEUT ETRE SUPPRIMER
-	public boolean createInPlaceCommande(Place obj, Commande c) {
-		try {
-		String create = "INSERT INTO Place_Commande (idPlace, idCommande)" 
-									+ "values ('" + obj.getId() + "','" + c.getId()+"');";
-	
-		connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeUpdate(create);
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-		return true;
-	
-	}
+
 }

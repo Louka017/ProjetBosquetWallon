@@ -1,6 +1,7 @@
 package POJO;
 
 import java.io.Serializable;
+import java.util.List;
 
 import DAO.*;
 
@@ -14,6 +15,7 @@ public class Gestionnaire extends Personne implements Serializable{
 	private PlanningSalle planningSalle;
 
 	//CONSTRUCTEURS
+	
 	public Gestionnaire(String nom, String prenom, String rue, int numero, String ville, int cp, String email, String password, int id) {
 		super(nom, prenom, rue, numero, ville, cp, email, password, id);
 		
@@ -31,5 +33,11 @@ public class Gestionnaire extends Personne implements Serializable{
 
 	public void setPlanningSalle(PlanningSalle planningSalle) {
 		this.planningSalle = planningSalle;
+	}
+	
+	//METHODES
+	public List<PlanningSalle> findAllPlanningSalle(){
+		PlanningSalle ps = new PlanningSalle();
+		return ps.findAllPlanningSalle();
 	}
 }

@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import POJO.*;
 
@@ -66,6 +69,34 @@ public class RepresentationDAO implements DAO<Representation> {
 			e.printStackTrace();
 		}
 		return representations;
+	}
+
+	
+	public Representation findByDate(Date date, Date heureDebut, Date heureFindate) {
+		Representation s = null;
+		
+		SimpleDateFormat localDateFormat = new SimpleDateFormat("yyyy-MM-dd");	
+		SimpleDateFormat localDateFormatLong = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Timestamp t = new Timestamp(date.getTime());
+		t.setNanos(00);
+		Timestamp u = new Timestamp(heureDebut.getTime());
+		u.setNanos(00);
+		Timestamp v = new Timestamp(heureFindate.getTime());
+		v.setNanos(00);
+		
+		try {
+			String query = "SELECT * from Representation where (Date='" + localDateFormat.format(t) +"') and (HeureDebut = '"+localDateFormatLong.format(u)+"') and (HeureFin ='"+localDateFormatLong.format(v)+"') ";
+			
+			ResultSet result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeQuery(query);
+			
+			if (result.first())
+				s = new Representation(result.getInt("idRepresentation"), result.getDate("Date"),result.getDate("HeureDebut"),result.getDate("HeureFin"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return s;
 	}
 
 

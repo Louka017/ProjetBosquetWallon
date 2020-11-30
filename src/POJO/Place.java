@@ -70,12 +70,7 @@ public class Place implements Serializable {
 		return dao.createAvecRepresentation(r);
 	}
 	
-	public boolean ajoutCommande(Commande c) {
-		return dao.createInPlaceCommande(this, c);
-	}
-	
-	public Place findByAll() {
-		return this;
-	}
 
+	
+	
 }

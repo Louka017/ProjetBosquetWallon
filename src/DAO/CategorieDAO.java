@@ -93,4 +93,48 @@ public class CategorieDAO implements DAO<Categorie> {
 	}
 	
 	
+	public boolean ajouterAvecReresentation(int id) {
+		try {
+			String update ="UPDATE Categorie SET idRepresentation = '" + id + "' WHERE idRepresentation = 0;";
+			connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeUpdate(update);
+		} 
+		catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return true;
+	}
+	
+
+	public List<Categorie> findAllByConfigurationAndRepresentation(Configuration c, Representation r){
+		List<Categorie> categories = new ArrayList<Categorie>();
+		try {
+
+			String query = "SELECT * FROM Categorie WHERE (idConfiguration = '" + c.getId() + "') AND (idRepresentation ='"+r.getId()+"');";
+			ResultSet result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeQuery(query);
+				while(result.next()) {
+					Categorie	cat = new Categorie(result.getInt("idCategorie"), result.getString("Type"),result.getInt("Prix"),result.getInt("NbrPlaceDispo"),result.getInt("NbrPlaceMax"));
+					categories.add(cat);
+				}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return categories;
+	}
+	
+	public boolean updateWithInt (Categorie obj) {
+		try {	
+			String update = "UPDATE Categorie  set Type = '"+ obj.getType() + "', Prix = '" + obj.getPrix() + "', NbrPlaceDispo= '" + obj.getNbrPlaceDispo() + "',NbrPlaceMax= '" + obj.getNbrPlaceMax() + "'WHERE (idConfiguration = '" + obj.getId() + "') ;";
+			System.out.println(update);
+			connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeUpdate(update);
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+	
+	
+	
 }

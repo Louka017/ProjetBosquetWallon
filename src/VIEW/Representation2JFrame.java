@@ -12,10 +12,12 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -24,6 +26,8 @@ import javax.swing.border.EmptyBorder;
 
 import com.toedter.calendar.JCalendar;
 
+import POJO.Categorie;
+import POJO.Configuration;
 import POJO.Personne;
 import POJO.PlanningSalle;
 import POJO.Representation;
@@ -39,11 +43,15 @@ public class Representation2JFrame extends JFrame {
 	private JTextField MinFin;
 	Representation rp = new Representation();
 	String strDateDebut, strHeureDebut, strDateFin, strHeureFin;
-	
+	int error = 0;
+	Date heuredb, heurefn,date,date2;
 	String goodDateDebut9 = null;
 	Date VraiDateDebut = null;
 	long heureDeb = 0;
 	Date correctDateDebut = null;
+	Configuration conf = new Configuration();
+	Categorie cat = new Categorie();
+	private List<Categorie> cats;
 	
 	
 	/**
@@ -160,39 +168,85 @@ public class Representation2JFrame extends JFrame {
 					e1.printStackTrace();
 				}	
 				
-				//RECUPERATION HEURE
-				String h1 = HeureDebut.getText();
-				String h2 = HeureFin.getText();
-				String m1 = MinDebut.getText();
-				String m2 = MinFin.getText();
-				//TRANSFORME EN HEURE CORRECTE LA RECUPERATION
-				String heuredeb = h1 + ":" + m1;
-				String heurefin = h2 + ":" + m2;
-				//AJOUTE L'HEURE DE LA REPRESENTATION au J
-				strDateDebut = dateFormatCourt.format(correctDateDebut);	
-				strHeureDebut = strDateDebut +" "+ heuredeb+":00";
-				strDateFin = dateFormatCourt.format(correctDateDebut);	
-				strHeureFin = strDateDebut +" "+ heurefin+":00";
-				//TRANSFORME LE STRING EN DATE
-				try {
-					Date date =dateFormatLong.parse(strHeureDebut);
-					Date date2= dateFormatLong.parse(strHeureFin);
-					long heureDeb = date.getTime();
-					long heureFin = date2.getTime();
-					Date heuredb = new java.sql.Date (heureDeb);
-					Date heurefn = new java.sql.Date (heureFin);
-			
-					//POJO
-					rp = new Representation(correctDateDebut,(java.sql.Date) heuredb,(java.sql.Date)heurefn,s);
-					rp.ajouterRps();	
-				} 
-				catch (ParseException e2) {
-					e2.printStackTrace();
+				//VERIFICATION DE LA DATE
+				rp.setDate(correctDateDebut);
+				if(rp.verifyDateRepresentation(ps)) {
+					//RECUPERATION HEURE
+					String h1 = HeureDebut.getText();
+					String h2 = HeureFin.getText();
+					String m1 = MinDebut.getText();
+					String m2 = MinFin.getText();
+					//TRANSFORME EN HEURE CORRECTE LA RECUPERATION
+					String heuredeb = h1 + ":" + m1;
+					String heurefin = h2 + ":" + m2;
+					//AJOUTE L'HEURE DE LA REPRESENTATION au J
+					strDateDebut = dateFormatCourt.format(correctDateDebut);	
+					strHeureDebut = strDateDebut +" "+ heuredeb+":00";
+					strDateFin = dateFormatCourt.format(correctDateDebut);	
+					strHeureFin = strDateDebut +" "+ heurefin+":00";
+					//TRANSFORME LE STRING EN DATE
+					try {
+						error = 0;
+						date =dateFormatLong.parse(strHeureDebut);
+						date2= dateFormatLong.parse(strHeureFin);
+						long heureDeb = date.getTime();
+						long heureFin = date2.getTime();
+						heuredb = new java.sql.Date (heureDeb);
+						heurefn = new java.sql.Date (heureFin);
+				
+						//VERIFICATION HEURE DEBUT < HEURE DE FIN
+						if(date.getHours() > date2.getHours()) {
+							error = 1;
+							if(error == 0) {
+								if(date.getMinutes() >= date2.getMinutes()) { 
+									error = 1;
+								}
+							}
+						}
+						
+						
+						//POJO
+						rp = new Representation(correctDateDebut,(java.sql.Date) heuredb,(java.sql.Date)heurefn,s);
+						
+						//VERIFICATION QUE LA REPRESENTATION PEUT ETRE CREE
+						if(rp.verifyHeureRepresentation(ps,date,date2) == 1) {
+							//AJOUT DB
+							if(error == 0) {
+								rp.ajouterRps();
+								rp = rp.findByDate();
+								conf = conf.find(s);
+								cats = cat.findAllByConfiguration(conf);
+								
+								for(Categorie i : cats) {
+									i.ajouterCategorie(conf);
+									i.ajouterAvecReresentation(rp);
+								}
+								
+							}
+						}else {
+							error = 404;
+						}
+						
+					} 
+					catch (ParseException e2) {
+						e2.printStackTrace();
+					}
+				
+					if(error == 0) {
+					JOptionPane.showMessageDialog(null, "Représentation creer");
+					AcceuilJFrame frame = new AcceuilJFrame(p);
+					frame.setVisible(true);
+					}
+					else if(error == 404) {
+						JOptionPane.showMessageDialog(null, "Une séance existe déjà durant ces heures la.");
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Veuillez saisir une Heure de début inférieur à l'heure de fin");
+					}
 				}
-			
-				JOptionPane.showMessageDialog(null, "Représentation creer");
-				//CreationRepresentationJFrame frame = new CreationRepresentationJFrame();
-				//frame.setVisible(true);
+				else {
+					JOptionPane.showMessageDialog(null, "Veuillez saisir un jour de votre planning de location");
+				}
 			}
 		});
 	}

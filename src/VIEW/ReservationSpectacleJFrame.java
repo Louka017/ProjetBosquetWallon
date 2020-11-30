@@ -89,12 +89,6 @@ public class ReservationSpectacleJFrame extends JFrame {
 		calendar.setBounds(20, 48, 206, 152);
 		contentPane.add(calendar);
 		
-		//ICI LE BAIL
-		System.out.println("Bail en ligne 93 RESERVATIONSPECTACLEJFRAME");
-		Component[] tab = calendar.getDayChooser().getDayPanel().getComponents();
-		tab[7].setEnabled(false);
-		
-		
 		//DATE DE DEBUT
 		JDateChooser dateDeb = new JDateChooser();
 		dateDeb.setBounds(298, 45, 116, 19);

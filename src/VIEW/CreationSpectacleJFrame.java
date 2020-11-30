@@ -29,6 +29,7 @@ import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import java.awt.Color;
 import javax.swing.SwingConstants;
+import javax.swing.JCheckBox;
 
 public class CreationSpectacleJFrame extends JFrame {
 
@@ -46,21 +47,23 @@ public class CreationSpectacleJFrame extends JFrame {
 	private JTextField Diamant2;
 	private JTextField Libre2;
 	private JList<Artiste> listeToutLesArtistes;
-	private JList<Artiste> listeChoisit;
-	private List<Artiste> artistes= new ArrayList<>();
-	private int placeLibre,placeBronze,placeArgent, placeOr, placeDiamant;
-	private int  prixLibre, prixBronze, prixArgent, prixOr, prixDiamant;
-	private String choice = "";
-	int error = 0;
 	Personne personne = new Personne();
 	Spectacle spectacle= new Spectacle();
 	Spectacle spec = new Spectacle();
 	Configuration conf = new Configuration();
 	Configuration configuration = new Configuration();
+	private List<Artiste> artistes= new ArrayList<>();
 	Categorie cat = new Categorie();
 	Categorie cat1 = new Categorie();
 	Categorie cat2 = new Categorie();
 	Categorie cat3 = new Categorie();
+	private JList<Artiste> listeChoisit;
+	private int placeLibre,placeBronze,placeArgent, placeOr, placeDiamant;
+	private int  prixLibre, prixBronze, prixArgent, prixOr, prixDiamant;
+	private String choice = "";
+	int error = 0;
+	boolean visible = false;
+	private JTextField NbrParClient;
 
 	/**
 	 * Launch the application.
@@ -106,7 +109,7 @@ public class CreationSpectacleJFrame extends JFrame {
 		contentPane.add(lblNomSpectacle);
 		NomSpectacle = new JTextField();
 		NomSpectacle.setColumns(10);
-		NomSpectacle.setBounds(186, 33, 331, 21);
+		NomSpectacle.setBounds(246, 33, 210, 21);
 		contentPane.add(NomSpectacle);
 		
 		//ARTISTES DISPONIBLES
@@ -431,6 +434,33 @@ public class CreationSpectacleJFrame extends JFrame {
 		}
 	});
 
+	
+	//NbrParClient
+	JCheckBox chckbxNewCheckBox = new JCheckBox("Nombre Limite par client");
+	chckbxNewCheckBox.setBounds(526, 6, 171, 21);
+	contentPane.add(chckbxNewCheckBox);
+	NbrParClient = new JTextField();
+	NbrParClient.setBounds(568, 34, 45, 19);
+	NbrParClient.setColumns(10);
+	contentPane.add(NbrParClient);
+	NbrParClient.setVisible(visible);
+			chckbxNewCheckBox.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if (e.getSource() == chckbxNewCheckBox) {
+						if(visible==false)
+						{
+							visible=true;
+							NbrParClient.setVisible(visible);
+						}
+						else
+						{
+							visible=false;
+							NbrParClient.setVisible(visible);
+						}
+					}
+				}
+			});
+			
 	//VALIDER
 	JButton btnValider = new JButton("VALIDER");
 	btnValider.setForeground(Color.RED);
@@ -441,7 +471,6 @@ public class CreationSpectacleJFrame extends JFrame {
 	{
 		public void actionPerformed(ActionEvent e)
 		{
-			
 			//RECUPERATION
 			String Titre = NomSpectacle.getText();
 				
@@ -471,7 +500,7 @@ public class CreationSpectacleJFrame extends JFrame {
 					placeDiamant = Integer.parseInt(Diamant2.getText());
 				
 				
-				int placeTotal = placeLibre + placeBronze + placeArgent + placeOr + placeDiamant;	
+				int placeTotal = spec.calculNombrePlaceTotal(placeLibre,placeBronze,placeArgent,placeOr,placeDiamant);
 				
 				
 				if(Libre.getText().isEmpty()) 
@@ -499,13 +528,22 @@ public class CreationSpectacleJFrame extends JFrame {
 				else
 					prixDiamant = Integer.parseInt(Diamant.getText());	
 					
+				
+				
+				
 				//POJO CATEGORIE
 				if(choice.equals("Debout")) {
 					if(cat.verifyDebout(placeLibre) == true) {
-							cat= new Categorie("Libre", prixLibre,placeLibre,placeLibre);
 							
 							//POJO SPECATCLE
+						if(chckbxNewCheckBox.isSelected()) {
+							String strNbr = NbrParClient.getText();
+							int goodNbr = Integer.parseInt(strNbr);
+							spec = new Spectacle(Titre, goodNbr);
+						}
+						else {
 							spec = new Spectacle(Titre, placeTotal);
+						}
 							
 							//AJOUT DB
 							ps.ajouterSpectacle(spec);
@@ -529,7 +567,8 @@ public class CreationSpectacleJFrame extends JFrame {
 							configuration = conf.find(spectacle);
 
 							//POJO CATEGORIE
-							cat= new Categorie("Libre", prixLibre,placeLibre,placeLibre);
+							cat = new Categorie("Libre", prixLibre,placeLibre,placeLibre);
+							
 							
 							//AJOUT DB
 							configuration.ajouterCategorie(cat);
@@ -545,8 +584,11 @@ public class CreationSpectacleJFrame extends JFrame {
 						
 				}
 				
+				
+				
+				
 				if(choice.equals("Concert")) {
-						//AJOUT DB
+						
 						if(cat.verifyBronze(placeBronze) == true) {
 							cat= new Categorie("Bronze", prixBronze,placeBronze,placeBronze);
 							error = 0;
@@ -554,14 +596,14 @@ public class CreationSpectacleJFrame extends JFrame {
 						else{
 							error = 1;
 						}
-						//AJOUT DB
+						
 						if(cat1.verifyArgent(placeArgent) == true) {
 							cat1= new Categorie("Argent", prixArgent,placeArgent,placeArgent);
 							error = 0;
 						} else {
 							error = 1;
 						}
-						//AJOUT DB
+						
 						if(cat2.verifyOr(placeOr) == true) {
 							cat2= new Categorie("Or", prixOr,placeOr,placeOr);
 							error = 0;
@@ -570,13 +612,20 @@ public class CreationSpectacleJFrame extends JFrame {
 							error = 1;
 						}
 						
-					if(error == 1) {
-						JOptionPane.showMessageDialog(null, "Erreur! Spectacle non ajouter ");
+						if(error == 1) {
+							JOptionPane.showMessageDialog(null, "Erreur! Spectacle non ajouter ");
 						
-					}else {
+						}else {
 						
 							//POJO SPECATCLE
-							spec = new Spectacle(Titre, placeTotal);
+							if(chckbxNewCheckBox.isSelected()) {
+								String strNbr = NbrParClient.getText();
+								int goodNbr = Integer.parseInt(strNbr);
+								spec = new Spectacle(Titre, goodNbr);
+							}
+							else {
+								spec = new Spectacle(Titre, placeTotal);
+							}
 							
 							//AJOUT DB
 							ps.ajouterSpectacle(spec);
@@ -599,7 +648,7 @@ public class CreationSpectacleJFrame extends JFrame {
 							
 							configuration = conf.find(spectacle);
 							
-						//POJO CATEGORIE
+						//POJO CATEGORIE ET AJOUT DB
 						cat= new Categorie("Bronze", prixBronze,placeBronze,placeBronze);
 						cat1= new Categorie("Argent", prixArgent,placeArgent,placeArgent);
 						cat2= new Categorie("Or", prixOr,placeOr,placeOr);
@@ -615,7 +664,7 @@ public class CreationSpectacleJFrame extends JFrame {
 				}
 
 				if(choice.equals("Cirque")) {
-						//AJOUT DB
+	
 					    if(cat.verifyBronze2(placeBronze) == true) {
 					    	cat= new Categorie("Bronze", prixBronze,placeBronze,placeBronze);
 					    	error = 0;
@@ -623,7 +672,7 @@ public class CreationSpectacleJFrame extends JFrame {
 					    else {
 					    	error = 1;
 					    }
-						//AJOUT DB
+				
 						if(cat1.verifyBronze(placeArgent) == true) {
 							cat1= new Categorie("Argent", prixArgent,placeArgent,placeArgent);
 							error = 0;
@@ -631,7 +680,7 @@ public class CreationSpectacleJFrame extends JFrame {
 						else {
 							error = 1;
 						}
-						//AJOUT DB
+				
 						if(cat2.verifyOr2(placeOr) == true) {
 							cat2= new Categorie("Or", prixOr,placeOr,placeOr);
 							error = 0;
@@ -639,7 +688,7 @@ public class CreationSpectacleJFrame extends JFrame {
 						else {
 							error = 1;
 						}
-						//AJOUT DB
+				
 						if(cat3.verifyDiamant(placeDiamant) == true) {
 							cat3= new Categorie("Diamant", prixDiamant,placeDiamant,placeDiamant);
 							error = 0;
@@ -654,7 +703,14 @@ public class CreationSpectacleJFrame extends JFrame {
 					else {
 						
 						//POJO SPECATCLE
-						spec = new Spectacle(Titre, placeTotal);
+						if(chckbxNewCheckBox.isSelected()) {
+							String strNbr = NbrParClient.getText();
+							int goodNbr = Integer.parseInt(strNbr);
+							spec = new Spectacle(Titre, goodNbr);
+						}
+						else {
+							spec = new Spectacle(Titre, placeTotal);
+						}
 						
 						//AJOUT DB
 						ps.ajouterSpectacle(spec);
@@ -676,7 +732,7 @@ public class CreationSpectacleJFrame extends JFrame {
 						spectacle.ajouterConfiguration(conf);						
 						configuration = conf.find(spectacle);
 						
-						//POJO CATEGORIE
+						//POJO CATEGORIE ET AJOUT DB
 						cat= new Categorie("Bronze", prixBronze,placeBronze,placeBronze);
 						cat1= new Categorie("Argent", prixArgent,placeArgent,placeArgent);
 						cat2= new Categorie("Or", prixOr,placeOr,placeOr);

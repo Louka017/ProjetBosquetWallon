@@ -143,4 +143,16 @@ public class Categorie implements Serializable {
 	public List<Categorie> findAllByConfiguration(Configuration c) {
 		return dao.findAllByIdConfiguration(c.getId());
 	}
+	
+	public boolean ajouterAvecReresentation(Representation r) {
+		return dao.ajouterAvecReresentation(r.getId());
+	}
+	
+	public List<Categorie>findAllByConfigurationAndRepresentation(Configuration c, Representation r) {
+		return dao.findAllByConfigurationAndRepresentation(c,r);
+	}
+	
+	public boolean update() {
+		return dao.updateWithInt(this);
+	}
 }

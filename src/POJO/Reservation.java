@@ -17,8 +17,8 @@ public class Reservation implements Serializable {
 	private int id;
 	private int acompte;
 	private int solde;
-	private String statut;
 	private int prix;
+	private String statut;
 	private PlanningSalle planningSalle;
 	
 	//CONSTRUCTEURS

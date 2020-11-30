@@ -28,6 +28,11 @@ public class Spectacle implements Serializable{
 		
 	}
 	
+	public Spectacle(int id)
+	{
+		this.id=id;
+	}
+	
 	public Spectacle(int id, String titre, int nbrPlaceParClient)
 	{
 		this.id=id;
@@ -102,16 +107,18 @@ public class Spectacle implements Serializable{
 
 
 	//Méthodes
+	//Ajouter Spectacle
 	public boolean ajouterSpectacle() 
 	{
 		return dao.create(this);
 	}
 	
+	//Trouver un spectacle
 	public Spectacle findByTitre() {
 		return dao.findByTitle(this.titre);
 	}
 	
-	//Liste
+	//Liste des spectacles
 	public List<Spectacle> listeSpectacles(){
 		return dao.listeSpectacles();
 	}
@@ -122,6 +129,7 @@ public class Spectacle implements Serializable{
 		return titre;
 	}
 	
+	//Recupérer l'idSalle
 	public int trouveidSalle() {
 		return dao.trouveidSalle(this);
 	}
@@ -145,5 +153,12 @@ public class Spectacle implements Serializable{
 	}
 	
 
+	//Calculer le nombre de place totale pour un spectacle
+	public int calculNombrePlaceTotal(int a, int b, int c, int d, int e) {
+		int total = a+b+c+d+e;
+		this.setNbrPlaceParClient(total);
+		return total;
+		
+	}
 
 }

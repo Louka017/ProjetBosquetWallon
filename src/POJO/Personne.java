@@ -1,6 +1,8 @@
 package POJO;
 
 import java.io.Serializable;
+import java.util.List;
+
 import DAO.DAOFactory;
 import DAO.PersonneDAO;
 
@@ -21,6 +23,7 @@ public class Personne implements Serializable{
 	protected String email;
 	protected String password;
 	protected String discriminator;
+	private Gestionnaire g;
 
 	//CONSTRUCTEURS
 	public Personne() {
@@ -151,7 +154,14 @@ public class Personne implements Serializable{
 		this.discriminator = discriminator;
 	}
 	
-	//Méthodes	
+	public Gestionnaire getGestionnaire() {
+		return g;
+	}
+	public void setGetionnaire(Gestionnaire g) {
+		this.g = g;
+	}
+	
+	//METHODES	
 	//Verifier mail et mdp
 	public int verifer(){
 		Personne p = dao.verify(this);
@@ -175,7 +185,7 @@ public class Personne implements Serializable{
 			return dao.findbyMail(this);
 	}
 
-	//Ajouter une personne
+	//Ajouter un artiste à un spectacle
 	public boolean ajout(){
 		return dao.create(this);
 	}
@@ -189,6 +199,16 @@ public class Personne implements Serializable{
 	public boolean ajouterPlanningSalle(Spectacle s) {
 		dao.create(this);
 		return dao.create(s);
+	}
+	
+	//Trouver Gestionnaire
+	public Gestionnaire findGestionnaire(){
+		return dao.findGestionnaire(this.id);
+	}
+	//Trouver tous les planning salle
+	public List<PlanningSalle> findAllPlanningSalle(){
+		Gestionnaire gestio = (this.findGestionnaire());
+		return gestio.findAllPlanningSalle();
 	}
 	
 }

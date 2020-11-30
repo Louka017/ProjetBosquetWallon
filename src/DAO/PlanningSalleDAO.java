@@ -67,6 +67,24 @@ public class PlanningSalleDAO implements DAO<PlanningSalle> {
 	}
 	
 	
+	public List<PlanningSalle> findAll(){
+		List<PlanningSalle> ps = new ArrayList<PlanningSalle>();
+		try {
+
+			String query = "SELECT * from PlanningSalle";
+			ResultSet result = this.connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeQuery(query);
+				while(result.next()) {
+					PlanningSalle p= new PlanningSalle(result.getInt("idSalle"), result.getDate("DateDebut"),result.getDate("DateFin"));
+					ps.add(p);
+				}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ps;
+	}
+	
+	
 	public PlanningSalle findByDate(Date db, Date df) {
 		PlanningSalle s = new PlanningSalle();
 		SimpleDateFormat localDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");	

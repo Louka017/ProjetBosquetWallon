@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import POJO.Categorie;
 import POJO.Personne;
 import POJO.PlanningSalle;
 import POJO.Representation;
@@ -40,11 +41,12 @@ public class RepresentationJFrame extends JFrame {
 	private JTextField MinFin;
 	Representation rp = new Representation();
 	String strDateDebut, strHeureDebut, strDateFin, strHeureFin;
-	
+	int error = 0;
 	String goodDateDebut9 = null;
 	Date VraiDateDebut = null;
 	long heureDeb = 0;
 	Date correctDateDebut = null;
+	Date heuredb, heurefn,date,date2;
 	
 	
 	/**
@@ -146,6 +148,7 @@ public class RepresentationJFrame extends JFrame {
 		{
 			public void actionPerformed(ActionEvent e)
 			{	
+				
 				//FORMAT DE DATE
 				DateFormat dateFormatCourt = new SimpleDateFormat("yyyy-MM-dd"); 
 				DateFormat dateFormatLong = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -161,39 +164,70 @@ public class RepresentationJFrame extends JFrame {
 					e1.printStackTrace();
 				}	
 				
-				//RECUPERATION HEURE
-				String h1 = HeureDebut.getText();
-				String h2 = HeureFin.getText();
-				String m1 = MinDebut.getText();
-				String m2 = MinFin.getText();
-				//TRANSFORME EN HEURE CORRECTE LA RECUPERATION
-				String heuredeb = h1 + ":" + m1;
-				String heurefin = h2 + ":" + m2;
-				//AJOUTE L'HEURE DE LA REPRESENTATION au J
-				strDateDebut = dateFormatCourt.format(correctDateDebut);	
-				strHeureDebut = strDateDebut +" "+ heuredeb+":00";
-				strDateFin = dateFormatCourt.format(correctDateDebut);	
-				strHeureFin = strDateDebut +" "+ heurefin+":00";
-				//TRANSFORME LE STRING EN DATE
-				try {
-					Date date =dateFormatLong.parse(strHeureDebut);
-					Date date2= dateFormatLong.parse(strHeureFin);
-					long heureDeb = date.getTime();
-					long heureFin = date2.getTime();
-					Date heuredb = new java.sql.Date (heureDeb);
-					Date heurefn = new java.sql.Date (heureFin);
-			
-					//POJO
-					rp = new Representation(correctDateDebut,(java.sql.Date) heuredb,(java.sql.Date)heurefn,s);
-					rp.ajouterRps();	
-				} 
-				catch (ParseException e2) {
-					e2.printStackTrace();
+				//VERIFICATION DE LA DATE
+				rp.setDate(correctDateDebut);
+				if(rp.verifyDateRepresentation(ps)) {
+					//RECUPERATION HEURE
+					String h1 = HeureDebut.getText();
+					String h2 = HeureFin.getText();
+					String m1 = MinDebut.getText();
+					String m2 = MinFin.getText();
+					//TRANSFORME EN HEURE CORRECTE LA RECUPERATION
+					String heuredeb = h1 + ":" + m1;
+					String heurefin = h2 + ":" + m2;
+					//AJOUTE L'HEURE DE LA REPRESENTATION au J
+					strDateDebut = dateFormatCourt.format(correctDateDebut);	
+					strHeureDebut = strDateDebut +" "+ heuredeb+":00";
+					strDateFin = dateFormatCourt.format(correctDateDebut);	
+					strHeureFin = strDateDebut +" "+ heurefin+":00";
+					//TRANSFORME LE STRING EN DATE
+					try {
+						error = 0;
+						date =dateFormatLong.parse(strHeureDebut);
+						date2= dateFormatLong.parse(strHeureFin);
+						long heureDeb = date.getTime();
+						long heureFin = date2.getTime();
+						heuredb = new java.sql.Date (heureDeb);
+						heurefn = new java.sql.Date (heureFin);
+						
+						if(date.getHours() > date2.getHours()) {
+							error = 1;
+							if(error == 0) {
+								if(date.getMinutes() >= date2.getMinutes()) { 
+									error = 1;
+								}
+							}
+						}
+						//POJO ET AJOUT DB
+						if(error == 0) {
+						rp = new Representation(correctDateDebut,(java.sql.Date) heuredb,(java.sql.Date)heurefn,s);
+						rp.ajouterRps();
+						rp = rp.findByDate();
+						
+						Categorie cat = new Categorie();
+						cat.ajouterAvecReresentation(rp);
+						
+						
+						}
+					} 
+					catch (ParseException e2) {
+						e2.printStackTrace();
+					}
+				
+
+					if(error == 0) {
+					JOptionPane.showMessageDialog(null, "Représentation creer");
+					AcceuilJFrame frame = new AcceuilJFrame(p);
+					frame.setVisible(true);
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Veuillez saisir une Heure de début inférieur à l'heure de fin");
+					}
+					
 				}
-			
-				JOptionPane.showMessageDialog(null, "Représentation creer");
-				AcceuilJFrame frame = new AcceuilJFrame(p);
-				frame.setVisible(true);
+				else {
+					JOptionPane.showMessageDialog(null, "Veuillez saisir un jour de votre planning de location");
+				}
 			}
 		});
 	}

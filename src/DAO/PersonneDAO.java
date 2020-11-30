@@ -85,6 +85,21 @@ public class PersonneDAO implements DAO<Personne> {
 	}
 	
 	
+	public Gestionnaire findGestionnaire(int id) {
+		Gestionnaire g = null;
+		
+		try {
+			ResultSet result = connect.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
+					.executeQuery("SELECT * FROM Personne WHERE idPersonne = " + id + ";");
+			if (result.first())
+				g = new Gestionnaire(result.getString("Nom"), result.getString("Prenom"), result.getString("Rue"),result.getInt("Numero"),result.getString("Ville"),result.getInt("CodePostal"),result.getString("Email"), result.getString("MotDePasse"), result.getInt("IdPersonne"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return g;
+	}
+	
 	
 	
 	public Personne verify(Personne obj) {
